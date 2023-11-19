@@ -1013,8 +1013,7 @@ def main():
                 input=dts_str,
                 stdout=file,
                 shell=True,
-                text=True)
-
+                universal_newlines=True)
     # Emit the address map as a dot file if requested.
     if args.graph:
         with open(args.graph, "w") as file:

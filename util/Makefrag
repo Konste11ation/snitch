@@ -1,5 +1,5 @@
 # Support for local override
-BENDER		   ?= bender
+BENDER		   ?= ${ROOT}/bender_pkg/./bender
 DASM 	       ?= spike-dasm
 VLT			   ?= verilator
 VERIBLE_FMT    ?= verible-verilog-format
@@ -38,6 +38,7 @@ VLT_FLAGS    += -Wno-UNSIGNED
 VLT_FLAGS    += -Wno-UNOPTFLAT
 VLT_FLAGS    += -Wno-fatal
 VLT_FLAGS    += --unroll-count 1024
+
 VLT_BENDER   += -t rtl -t cv64a6_imafdc_sv39
 VLT_SOURCES  := $(shell ${BENDER} script flist ${VLT_BENDER} | ${SED_SRCS})
 VLT_CFLAGS   += -std=c++14 -pthread

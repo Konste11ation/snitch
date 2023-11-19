@@ -37,7 +37,7 @@ ADDRMAPGEN ?= $(ROOT)/util/addrmapgen.py
 
 CLANG_FORMAT ?= $(shell which clang-format-12.0.1)
 
-VSIM = vsim -64
+VSIM = vsim
 VLOG = vlog -64
 
 #########################
@@ -57,7 +57,9 @@ CFG = cfg/lru.hjson
 #####################
 # Simulator options #
 #####################
+QUESTA_64BIT = -64
 
+VSIM_FLAGS += ${QUESTA_64BIT}
 VSIM_FLAGS += -t 1ps
 VSIM_FLAGS += -voptargs=+acc
 VSIM_FLAGS += -do "log -r /*; run -a"
@@ -186,7 +188,7 @@ update-source: $(CFG)
 		--testharness-sv test/testharness.sv.tpl \
 		--bootdata ../../ip/snitch_cluster/test/bootdata.cc.tpl
 	@echo "[SOLDER]  Device Tree"
-	@$(OCCAMYGEN) --cfg $(CFG) --outdir . --dts test/occamy.dts
+	@$(OCCAMYGEN) --cfg $(CFG) --outdir src --dts test/occamy.dts
 	@echo "[VERIBLE] Formatting"
 	@verible-verilog-format --inplace src/occamy_quadrant_s1.sv src/occamy_pkg.sv src/occamy_soc.sv src/occamy_top.sv src/occamy_xilinx.sv src/occamy_cva6.sv
 

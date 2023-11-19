@@ -4,9 +4,10 @@
 # Snitch System
 
 This monolithic repository hosts software and hardware for the Snitch generator and generated systems.
-# Test
-Occamy-mac
-Fanchen Kong
+# Author
+This repo is maintained by Fanchen Kong as the master thesis at KU Leuven
+Supervisor: Prof. Marian Verhelst
+Daily Supervisor: Giuseppe Maria Sarda & Guilherme Pereira Paim
 
 ## Getting Started
 

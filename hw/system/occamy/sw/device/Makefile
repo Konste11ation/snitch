@@ -6,6 +6,7 @@
 
 # Add user applications to APPS variable
 APPS = offload
+APPS += axpy
 
 TARGET ?= all
 
