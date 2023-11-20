@@ -32,6 +32,7 @@ dependencies:
     git: https://github.com/pulp-platform/register_interface.git
     version: 0.3.8
   clint: {git: https://github.com/pulp-platform/clint.git, rev: v0.1.0}
+  hwpe-mac-engine:    { git: https://github.com/KULeuven-MICAS/hwpe-mac-engine.git, rev: 5d3b4525b665169fc8321c8a811f3c83ad3c72e8 }
 sources:
   # Level 0:
   - src/occamy_cluster_wrapper.sv
@@ -67,6 +68,16 @@ sources:
     files:
       - test/uartdpi/uartdpi.sv
       - test/testharness.sv
+  # hwpe_mac
+  - files:
+      # Level 0
+      - ../../ip/snax_hwpe_mac/src/snax_hwpe_ctrl.sv
+      - ../../ip/snax_hwpe_mac/src/snax_hwpe_to_reqrsp.sv
+      - ../../ip/snax_hwpe_mac/src/snax_mac.sv
+  # snax gemm
+  - files:
+      # Level 0
+      - ../../ip/snax_gemm/src/snax_gemm.sv
 # - target: any(simulation, verilator)
 #   files:
 #   - test/tb_memory.sv

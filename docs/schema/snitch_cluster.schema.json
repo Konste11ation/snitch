@@ -416,6 +416,16 @@
                                     "description": "Enable Smallfloat vector extension (SIMD).",
                                     "default": false
                                 },
+                                "snax_acc": {
+                                    "type": "number",
+                                    "description": "Enable SNAX accelerators. Interger Coded",
+                                    "default": 1
+                                },  
+                                "snax_tcdm_ports": {
+                                    "type": "number",
+                                    "description": "Number of SNAX TCDM ports per core",
+                                    "default": 4
+                                },                                
                                 "num_int_outstanding_loads": {
                                     "type": "number",
                                     "description": "Number of outstanding integer loads. Determines the buffer size in the core's load/store unit.",

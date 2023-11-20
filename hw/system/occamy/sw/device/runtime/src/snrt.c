@@ -14,3 +14,5 @@
 #include "occamy_start.c"
 #include "sync.c"
 #include "team.c"
+#include "printf.c"
+#include "putchar.c"

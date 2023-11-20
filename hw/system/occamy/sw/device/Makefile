@@ -7,6 +7,7 @@
 # Add user applications to APPS variable
 APPS = offload
 APPS += axpy
+APPS += snax-mac
 
 TARGET ?= all
 

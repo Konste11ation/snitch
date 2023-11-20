@@ -73,8 +73,8 @@ module occamy_soc
     output logic [1:0] spm_wide_rerror_o,
 
     // Interrupts and debug requests
-    input logic [9:0] mtip_i,
-    input logic [9:0] msip_i,
+    input logic [4:0] mtip_i,
+    input logic [4:0] msip_i,
     input logic [1:0] eip_i,
     input logic [0:0] debug_req_i,
 
@@ -152,7 +152,7 @@ module occamy_soc
   assign QuadrantInterXbarAddrmap = '{
   '{ idx: 0, start_addr: 48'h00000000, end_addr: 48'h10000000 },
   '{ idx: 0, start_addr: 48'h11000000, end_addr: 48'h20000000000 },
-  '{ idx: 1, start_addr: 48'h10000000, end_addr: 48'h10040000 }
+  '{ idx: 1, start_addr: 48'h10000000, end_addr: 48'h10080000 }
 };
 
   quadrant_inter_xbar_in_req_t   [1:0] quadrant_inter_xbar_in_req;
@@ -249,7 +249,7 @@ module occamy_soc
   '{ idx: 0, start_addr: 48'h10000000000, end_addr: 48'h20000000000 },
   '{ idx: 1, start_addr: 48'h80000000, end_addr: 48'h100000000 },
   '{ idx: 1, start_addr: 48'h1000000000, end_addr: 48'h1200000000 },
-  '{ idx: 2, start_addr: 48'h10000000, end_addr: 48'h10040000 },
+  '{ idx: 2, start_addr: 48'h10000000, end_addr: 48'h10080000 },
   '{ idx: 3, start_addr: 48'h00000000, end_addr: 48'h10000000 },
   '{ idx: 3, start_addr: 48'h11000000, end_addr: 48'h70080000 },
   '{ idx: 4, start_addr: 48'h71000000, end_addr: 48'h71100000 },
@@ -938,8 +938,8 @@ module occamy_soc
       .test_mode_i(test_mode_i),
       .tile_id_i(6'd0),
       .meip_i('0),
-      .mtip_i(mtip_i[9:1]),
-      .msip_i(msip_i[9:1]),
+      .mtip_i(mtip_i[4:1]),
+      .msip_i(msip_i[4:1]),
       .quadrant_narrow_out_req_o(narrow_out_0_req),
       .quadrant_narrow_out_rsp_i(narrow_out_0_rsp),
       .quadrant_narrow_in_req_i(narrow_in_0_req),

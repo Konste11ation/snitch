@@ -23,6 +23,7 @@ sources:
   # Level 0:
   - src/snitch_pma_pkg.sv
   - src/riscv_instr.sv
+  - src/csr_snax_def.sv
   # Level 1:
   - src/snitch_pkg.sv
   # Level 2:

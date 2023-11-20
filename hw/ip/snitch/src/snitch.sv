@@ -108,7 +108,7 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
   localparam logic [31:0] DmBaseAddress = 0;
   localparam int RegWidth = RVE ? 4 : 5;
   /// Total physical address portion.
-  localparam int unsigned PPNSize = AddrWidth - PAGE_SHIFT;
+  localparam int unsigned PPNSize = AddrWidth - PageShift;
   localparam bit NSX = XF16 | XF16ALT | XF8 | XFVEC;
 
   logic illegal_inst, illegal_csr;
@@ -125,9 +125,10 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
   logic wfi_d, wfi_q;
   logic [31:0] consec_pc;
   // Immediates
-  logic [31:0] iimm, uimm, jimm, bimm, simm;
+  logic [31:0] iimm, uimm, jimm, bimm, simm, csrimm;
   /* verilator lint_off WIDTH */
   assign iimm = $signed({inst_data_i[31:20]});
+  assign csrimm = {inst_data_i[31:20]};
   assign uimm = {inst_data_i[31:12], 12'b0};
   assign jimm = $signed({inst_data_i[31],
                                   inst_data_i[19:12], inst_data_i[20], inst_data_i[30:21], 1'b0});
@@ -212,7 +213,9 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
   alu_op_e alu_op;
 
   typedef enum logic [3:0] {
-    None, Reg, IImmediate, UImmediate, JImmediate, SImmediate, SFImmediate, PC, CSR, CSRImmmediate
+    None, Reg, IImmediate, UImmediate, JImmediate,
+    SImmediate, SFImmediate, PC,
+    CSR, CSRImmmediate, CSRAddrImmediate
   } op_select_e;
   op_select_e opa_select, opb_select;
 
@@ -232,6 +235,7 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
   // -----
   logic [31:0] csr_rvalue;
   logic csr_en;
+  logic csr_dump;
 
   localparam logic M = 0;
   localparam logic S = 1;
@@ -348,7 +352,7 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
   // ---------
   // L0 ITLB
   // ---------
-  assign itlb_va = va_t'(pc_q[31:PAGE_SHIFT]);
+  assign itlb_va = va_t'(pc_q[31:PageShift]);
 
   if (VMSupport) begin : gen_itlb
     snitch_l0_tlb #(
@@ -393,10 +397,10 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
   // ---------------------------
   // TODO(paulsc) Add CSR-based segmentation solution for case without VM without sudden jump.
   // Mulitplexer using and/or as this signal is likely timing critical.
-  assign inst_addr_o[PPNSize+PAGE_SHIFT-1:PAGE_SHIFT] =
+  assign inst_addr_o[PPNSize+PageShift-1:PageShift] =
       ({(PPNSize){trans_active}} & itlb_pa)
-    | (~{(PPNSize){trans_active}} & {{{AddrWidth-32}{1'b0}}, pc_q[31:PAGE_SHIFT]});
-  assign inst_addr_o[PAGE_SHIFT-1:0] = pc_q[PAGE_SHIFT-1:0];
+    | (~{(PPNSize){trans_active}} & {{{AddrWidth-32}{1'b0}}, pc_q[31:PageShift]});
+  assign inst_addr_o[PageShift-1:0] = pc_q[PageShift-1:0];
   assign inst_cacheable_o = snitch_pma_pkg::is_inside_cacheable_regions(SnitchPMACfg, inst_addr_o);
   assign inst_valid_o = ~wfi_q;
 
@@ -756,64 +760,129 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
         opa_select = Reg;
         opb_select = IImmediate;
       end
+
+      //---------------------------------------------
       // CSR Instructions
+      //---------------------------------------------
+
       CSRRW: begin // Atomic Read/Write CSR
-        opa_select = Reg;
-        opb_select = None;
-        rd_select = RdBypass;
-        rd_bypass = csr_rvalue;
-        csr_en = valid_instr;
+        if((csrimm >= csr_snax_def::CSR_SNAX_BEGIN) &&
+          ((csrimm <= csr_snax_def::CSR_SNAX_END))) begin
+          acc_qvalid_o    = valid_instr;
+          opa_select      = Reg;
+          opb_select      = CSRAddrImmediate;
+          acc_qreq_o.addr = SNAX_CSR;
+        end else begin
+          opa_select      = Reg;
+          opb_select      = None;
+          rd_select       = RdBypass;
+          rd_bypass       = csr_rvalue;
+          csr_en          = valid_instr;
+        end
       end
+
       CSRRWI: begin
-        opa_select = CSRImmmediate;
-        opb_select = None;
-        rd_select = RdBypass;
-        rd_bypass = csr_rvalue;
-        csr_en = valid_instr;
+        if((csrimm >= csr_snax_def::CSR_SNAX_BEGIN) &&
+          ((csrimm <= csr_snax_def::CSR_SNAX_END))) begin
+          acc_qvalid_o    = valid_instr;
+          opa_select      = CSRImmmediate;
+          opb_select      = CSRAddrImmediate;
+          acc_qreq_o.addr = SNAX_CSR;
+        end else begin
+          opa_select      = CSRImmmediate;
+          opb_select      = None;
+          rd_select       = RdBypass;
+          rd_bypass       = csr_rvalue;
+          csr_en          = valid_instr;
+        end
       end
+
       CSRRS: begin  // Atomic Read and Set Bits in CSR
-          alu_op = LOr;
-          opa_select = Reg;
-          opb_select = CSR;
-          rd_select = RdBypass;
-          rd_bypass = csr_rvalue;
-          csr_en = valid_instr;
+        if((csrimm >= csr_snax_def::CSR_SNAX_BEGIN) &&
+          ((csrimm <= csr_snax_def::CSR_SNAX_END))) begin
+          write_rd        = 1'b0;
+          uses_rd         = 1'b1;
+          acc_qvalid_o    = valid_instr;
+          opa_select      = None;
+          opb_select      = CSRAddrImmediate; // Just reading so nothing to write
+          acc_register_rd = 1'b1;
+          acc_qreq_o.addr = SNAX_CSR;
+        end else begin
+          alu_op          = LOr;
+          opa_select      = Reg;
+          opb_select      = CSR;
+          rd_select       = RdBypass;
+          rd_bypass       = csr_rvalue;
+          csr_en          = valid_instr;
+        end
       end
+
       CSRRSI: begin
-        // offload CSR enable to FP SS
-        if (inst_data_i[31:20] != CSR_SSR) begin
-          alu_op = LOr;
-          opa_select = CSRImmmediate;
-          opb_select = CSR;
-          rd_select = RdBypass;
-          rd_bypass = csr_rvalue;
-          csr_en = valid_instr;
+        if((csrimm >= csr_snax_def::CSR_SNAX_BEGIN) &&
+          ((csrimm <= csr_snax_def::CSR_SNAX_END))) begin
+          write_rd        = 1'b0;
+          uses_rd         = 1'b1;
+          acc_qvalid_o    = valid_instr;
+          opa_select      = None;
+          opb_select      = CSRAddrImmediate; // Just reading so nothing to write
+          acc_register_rd = 1'b1;
+          acc_qreq_o.addr = SNAX_CSR;
+        end else if (inst_data_i[31:20] != CSR_SSR) begin // offload CSR enable to FP SS
+          alu_op          = LOr;
+          opa_select      = CSRImmmediate;
+          opb_select      = CSR;
+          rd_select       = RdBypass;
+          rd_bypass       = csr_rvalue;
+          csr_en          = valid_instr;
         end else begin
           write_rd = 1'b0;
-          acc_qvalid_o = valid_instr;
+          acc_qvalid_o    = valid_instr;
         end
       end
+
       CSRRC: begin // Atomic Read and Clear Bits in CSR
-        alu_op = LNAnd;
-        opa_select = Reg;
-        opb_select = CSR;
-        rd_select = RdBypass;
-        rd_bypass = csr_rvalue;
-        csr_en = valid_instr;
-      end
-      CSRRCI: begin
-        if (inst_data_i[31:20] != CSR_SSR) begin
-          alu_op = LNAnd;
-          opa_select = CSRImmmediate;
-          opb_select = CSR;
-          rd_select = RdBypass;
-          rd_bypass = csr_rvalue;
-          csr_en = valid_instr;
+        if((csrimm >= csr_snax_def::CSR_SNAX_BEGIN) &&
+          ((csrimm <= csr_snax_def::CSR_SNAX_END))) begin
+          write_rd        = 1'b0;
+          uses_rd         = 1'b1;
+          acc_qvalid_o    = valid_instr;
+          opa_select      = None;
+          opb_select      = CSRAddrImmediate; // Just reading so nothing to write
+          acc_register_rd = 1'b1;
+          acc_qreq_o.addr = SNAX_CSR;
         end else begin
-          write_rd = 1'b0;
-          acc_qvalid_o = valid_instr;
+          alu_op          = LNAnd;
+          opa_select      = Reg;
+          opb_select      = CSR;
+          rd_select       = RdBypass;
+          rd_bypass       = csr_rvalue;
+          csr_en          = valid_instr;
         end
       end
+
+      CSRRCI: begin
+        if((csrimm >= csr_snax_def::CSR_SNAX_BEGIN) &&
+          ((csrimm <= csr_snax_def::CSR_SNAX_END))) begin
+          write_rd        = 1'b0;
+          uses_rd         = 1'b1;
+          acc_qvalid_o    = valid_instr;
+          opa_select      = None;
+          opb_select      = CSRAddrImmediate; // Just reading so nothing to write
+          acc_register_rd = 1'b1;
+          acc_qreq_o.addr = SNAX_CSR;
+        end else if (inst_data_i[31:20] != CSR_SSR) begin
+          alu_op          = LNAnd;
+          opa_select      = CSRImmmediate;
+          opb_select      = CSR;
+          rd_select       = RdBypass;
+          rd_bypass       = csr_rvalue;
+          csr_en          = valid_instr;
+        end else begin
+          write_rd        = 1'b0;
+          acc_qvalid_o    = valid_instr;
+        end
+      end
+
       ECALL: ecall = 1'b1;
       EBREAK: ebreak = 1'b1;
       // Environment return
@@ -2238,7 +2307,8 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
 
   // CSR logic
   always_comb begin
-    csr_rvalue = '0;
+    csr_rvalue = 1'b0;
+    csr_dump = 1'b0;
     illegal_csr = '0;
     priv_lvl_d = priv_lvl_q;
     // registers
@@ -2333,7 +2403,7 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
             csr_rvalue = instret_q[63:32];
           end
           `endif
-          CSR_MSEG: begin
+          CsrMseg: begin
             csr_rvalue = mseg_q;
             if (!exception) mseg_d = alu_result[$bits(mseg_q)-1:0];
           end
@@ -2468,7 +2538,10 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
               if (!exception) fcsr_d = fcsr_t'(alu_result[9:0]);
             end else illegal_csr = 1'b1;
           end
-          default: csr_rvalue = '0;
+          default: begin
+            csr_rvalue = 1'b0;
+            csr_dump = 1'b1;
+          end
         endcase
       end else illegal_csr = 1'b1;
     end
@@ -2477,28 +2550,28 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
     if (valid_instr) begin
       // Exceptions
       // Illegal Instructions.
-      if (illegal_inst || illegal_csr) cause_d[M] = ILLEGAL_INSTR;
+      if (illegal_inst || illegal_csr) cause_d[M] = IllegalInstr;
       // Environment Calls.
       if (ecall) begin
         unique case (priv_lvl_q)
-          PrivLvlM: cause_d[M] = ENV_CALL_MMODE;
-          PrivLvlS: cause_d[M] = ENV_CALL_SMODE;
-          PrivLvlU: cause_d[M] = ENV_CALL_UMODE;
-          default: cause_d[M] = ENV_CALL_MMODE;
+          PrivLvlM: cause_d[M] = EnvCallMMode;
+          PrivLvlS: cause_d[M] = EnvCallSMode;
+          PrivLvlU: cause_d[M] = EnvCallUMode;
+          default: cause_d[M] = EnvCallMMode;
         endcase
       end
 
-      if (ebreak) cause_d[M] = BREAKPOINT;
+      if (ebreak) cause_d[M] = Breakpoint;
       // Page faults.
       if (dtlb_trans_valid && dtlb_page_fault) begin
-        if (is_store) cause_d[M] = STORE_PAGE_FAULT;
-        if (is_load)  cause_d[M] = LOAD_PAGE_FAULT;
+        if (is_store) cause_d[M] = StorePageFault;
+        if (is_load)  cause_d[M] = LoadPageFault;
       end
-      if (itlb_trans_valid && itlb_page_fault) cause_d[M] = INSTR_PAGE_FAULT;
-      if (inst_addr_misaligned) cause_d[M] = INSTR_ADDR_MISALIGNED;
+      if (itlb_trans_valid && itlb_page_fault) cause_d[M] = InstrPageFault;
+      if (inst_addr_misaligned) cause_d[M] = InstrAddrMisaligned;
       // Misaligned load/stores
-      if (ld_addr_misaligned) cause_d[M] = LD_ADDR_MISALIGNED;
-      if (st_addr_misaligned) cause_d[M] = ST_ADDR_MISALIGNED;
+      if (ld_addr_misaligned) cause_d[M] = LoadAddrMisaligned;
+      if (st_addr_misaligned) cause_d[M] = StoreAddrMisaligned;
 
       // Interrupts.
       if (interrupt) begin
@@ -2552,6 +2625,17 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
     dcsr_d.prv = dm::priv_lvl_t'(dm::PRIV_LVL_M);
   end
 
+  // pragma translate_off
+  always_ff @(posedge clk_i or posedge rst_i) begin
+    // Display CSR write if the CSR does not exist
+    if (!rst_i && csr_dump && inst_valid_o && inst_ready_i && !stall) begin
+      // $timeformat(-9, 0, " ns", 0);
+      $display("[DUMP] %t Core %3d: 0x%3h = 0x%08h, %d, %f",
+        $time, hart_id_i, inst_data_i[31:20], alu_result, alu_result, $bitstoshortreal(alu_result));
+    end
+  end
+  // pragma translate_on
+
   snitch_regfile #(
     .DATA_WIDTH     ( 32       ),
     .NR_READ_PORTS  ( 2        ),
@@ -2589,6 +2673,7 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
       SFImmediate, SImmediate: opb = simm;
       PC: opb = pc_q;
       CSR: opb = csr_rvalue;
+      CSRAddrImmediate: opb = csrimm;
       default: opb = '0;
     endcase
   end
@@ -2679,7 +2764,7 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
   // --------------------
   // L0 DTLB
   // --------------------
-  assign dtlb_va = va_t'(alu_result[31:PAGE_SHIFT]);
+  assign dtlb_va = va_t'(alu_result[31:PageShift]);
 
   if (VMSupport) begin : gen_dtlb
     snitch_l0_tlb #(
@@ -2728,10 +2813,10 @@ module snitch import snitch_pkg::*; import riscv_instr::*; #(
   assign dtlb_valid = (lsu_tlb_qvalid & trans_active) | ((is_fp_load | is_fp_store) & trans_active);
 
   // Mulitplexer using and/or as this signal is likely timing critical.
-  assign ls_paddr[PPNSize+PAGE_SHIFT-1:PAGE_SHIFT] =
+  assign ls_paddr[PPNSize+PageShift-1:PageShift] =
           ({(PPNSize){trans_active}} & dtlb_pa) |
-          (~{(PPNSize){trans_active}} & {mseg_q, alu_result[31:PAGE_SHIFT]});
-  assign ls_paddr[PAGE_SHIFT-1:0] = alu_result[PAGE_SHIFT-1:0];
+          (~{(PPNSize){trans_active}} & {mseg_q, alu_result[31:PageShift]});
+  assign ls_paddr[PageShift-1:0] = alu_result[PageShift-1:0];
 
   assign lsu_qvalid = lsu_tlb_qvalid & trans_ready;
   assign lsu_tlb_qready = lsu_qready & trans_ready;

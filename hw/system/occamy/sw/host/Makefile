@@ -8,7 +8,9 @@
 APPS  = hello_world
 APPS += offload
 APPS += axpy
-
+APPS += snax-mac
+#APPS += snax-mac-simple/untiled
+#APPS += snax-mac-simple/tiled
 TARGET ?= all
 
 SUBDIRS = $(addprefix apps/,$(APPS))

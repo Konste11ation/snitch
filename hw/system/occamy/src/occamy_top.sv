@@ -135,7 +135,7 @@ module occamy_top
   end
 
   // Machine timer and machine software interrupt pending.
-  logic [9:0] mtip, msip;
+  logic [4:0] mtip, msip;
   // Supervisor and machine-mode external interrupt pending.
   logic [1:0] eip;
   logic [0:0] debug_req;
@@ -724,7 +724,7 @@ module occamy_top
   logic [63:0] sba_addr_long;
 
   dm_top #(
-      // .NrHarts (10),
+      // .NrHarts (5),
       .NrHarts(1),
       .BusWidth(64),
       .DmBaseAddress('h0)
