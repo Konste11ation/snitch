@@ -9,6 +9,7 @@ APPS  = hello_world
 APPS += offload
 APPS += axpy
 APPS += snax-mac
+APPS += snax-mac-mc
 #APPS += snax-mac-simple/untiled
 #APPS += snax-mac-simple/tiled
 TARGET ?= all

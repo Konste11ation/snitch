@@ -5,7 +5,6 @@
 
 #include "data.h"
 int main() {
-    // Set err value for checking
     int err = 0;
 
     uint32_t final_output;
