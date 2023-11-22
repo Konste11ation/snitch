@@ -5,10 +5,10 @@
 
 This monolithic repository hosts software and hardware for the Snitch generator and generated systems.
 # Author
-This repo is maintained by Fanchen Kong as the master thesis at KU Leuven
-Supervisor: Prof. Marian Verhelst
-Daily Supervisor: Giuseppe Maria Sarda & Guilherme Pereira Paim
-
+- This repo is maintained by Fanchen Kong as the master thesis at MICAS, KU Leuven
+- Supervisor: Prof. Marian Verhelst
+- Daily Supervisor: Giuseppe Maria Sarda & Guilherme Pereira Paim
+- Special Thanks: Ryan Antonio & Xiaoling Yi
 ## Getting Started
 
 To get started, check out the [getting started guide](https://pulp-platform.github.io/snitch/ug/getting_started/).
