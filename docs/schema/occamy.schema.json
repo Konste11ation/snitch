@@ -316,6 +316,11 @@
                     "default": 4,
                     "description": "Number of clusters in an S1 quadrant."
                 },
+                "en_floonoc" : {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Enable the FlooNoC inside an S1 quadrant. 0 means using xbar"
+                },
                 "ro_cache_cfg": {
                     "type": "object",
                     "description": "Constant cache configuration.",

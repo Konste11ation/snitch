@@ -68,21 +68,105 @@ module clint_reg_top #(
   // Define SW related signals
   // Format: <reg>_<field>_{wd|we|qs}
   //        or <reg>_{wd|we|qs} if field == 1 or 0
-  logic msip_p_0_qs;
-  logic msip_p_0_wd;
-  logic msip_p_0_we;
-  logic msip_p_1_qs;
-  logic msip_p_1_wd;
-  logic msip_p_1_we;
-  logic msip_p_2_qs;
-  logic msip_p_2_wd;
-  logic msip_p_2_we;
-  logic msip_p_3_qs;
-  logic msip_p_3_wd;
-  logic msip_p_3_we;
-  logic msip_p_4_qs;
-  logic msip_p_4_wd;
-  logic msip_p_4_we;
+  logic msip_0_p_0_qs;
+  logic msip_0_p_0_wd;
+  logic msip_0_p_0_we;
+  logic msip_0_p_1_qs;
+  logic msip_0_p_1_wd;
+  logic msip_0_p_1_we;
+  logic msip_0_p_2_qs;
+  logic msip_0_p_2_wd;
+  logic msip_0_p_2_we;
+  logic msip_0_p_3_qs;
+  logic msip_0_p_3_wd;
+  logic msip_0_p_3_we;
+  logic msip_0_p_4_qs;
+  logic msip_0_p_4_wd;
+  logic msip_0_p_4_we;
+  logic msip_0_p_5_qs;
+  logic msip_0_p_5_wd;
+  logic msip_0_p_5_we;
+  logic msip_0_p_6_qs;
+  logic msip_0_p_6_wd;
+  logic msip_0_p_6_we;
+  logic msip_0_p_7_qs;
+  logic msip_0_p_7_wd;
+  logic msip_0_p_7_we;
+  logic msip_0_p_8_qs;
+  logic msip_0_p_8_wd;
+  logic msip_0_p_8_we;
+  logic msip_0_p_9_qs;
+  logic msip_0_p_9_wd;
+  logic msip_0_p_9_we;
+  logic msip_0_p_10_qs;
+  logic msip_0_p_10_wd;
+  logic msip_0_p_10_we;
+  logic msip_0_p_11_qs;
+  logic msip_0_p_11_wd;
+  logic msip_0_p_11_we;
+  logic msip_0_p_12_qs;
+  logic msip_0_p_12_wd;
+  logic msip_0_p_12_we;
+  logic msip_0_p_13_qs;
+  logic msip_0_p_13_wd;
+  logic msip_0_p_13_we;
+  logic msip_0_p_14_qs;
+  logic msip_0_p_14_wd;
+  logic msip_0_p_14_we;
+  logic msip_0_p_15_qs;
+  logic msip_0_p_15_wd;
+  logic msip_0_p_15_we;
+  logic msip_0_p_16_qs;
+  logic msip_0_p_16_wd;
+  logic msip_0_p_16_we;
+  logic msip_0_p_17_qs;
+  logic msip_0_p_17_wd;
+  logic msip_0_p_17_we;
+  logic msip_0_p_18_qs;
+  logic msip_0_p_18_wd;
+  logic msip_0_p_18_we;
+  logic msip_0_p_19_qs;
+  logic msip_0_p_19_wd;
+  logic msip_0_p_19_we;
+  logic msip_0_p_20_qs;
+  logic msip_0_p_20_wd;
+  logic msip_0_p_20_we;
+  logic msip_0_p_21_qs;
+  logic msip_0_p_21_wd;
+  logic msip_0_p_21_we;
+  logic msip_0_p_22_qs;
+  logic msip_0_p_22_wd;
+  logic msip_0_p_22_we;
+  logic msip_0_p_23_qs;
+  logic msip_0_p_23_wd;
+  logic msip_0_p_23_we;
+  logic msip_0_p_24_qs;
+  logic msip_0_p_24_wd;
+  logic msip_0_p_24_we;
+  logic msip_0_p_25_qs;
+  logic msip_0_p_25_wd;
+  logic msip_0_p_25_we;
+  logic msip_0_p_26_qs;
+  logic msip_0_p_26_wd;
+  logic msip_0_p_26_we;
+  logic msip_0_p_27_qs;
+  logic msip_0_p_27_wd;
+  logic msip_0_p_27_we;
+  logic msip_0_p_28_qs;
+  logic msip_0_p_28_wd;
+  logic msip_0_p_28_we;
+  logic msip_0_p_29_qs;
+  logic msip_0_p_29_wd;
+  logic msip_0_p_29_we;
+  logic msip_0_p_30_qs;
+  logic msip_0_p_30_wd;
+  logic msip_0_p_30_we;
+  logic msip_0_p_31_qs;
+  logic msip_0_p_31_wd;
+  logic msip_0_p_31_we;
+  logic msip_1_qs;
+  logic msip_1_wd;
+  logic msip_1_we;
   logic [31:0] mtimecmp_low0_qs;
   logic [31:0] mtimecmp_low0_wd;
   logic mtimecmp_low0_we;
@@ -113,6 +197,174 @@ module clint_reg_top #(
   logic [31:0] mtimecmp_high4_qs;
   logic [31:0] mtimecmp_high4_wd;
   logic mtimecmp_high4_we;
+  logic [31:0] mtimecmp_low5_qs;
+  logic [31:0] mtimecmp_low5_wd;
+  logic mtimecmp_low5_we;
+  logic [31:0] mtimecmp_high5_qs;
+  logic [31:0] mtimecmp_high5_wd;
+  logic mtimecmp_high5_we;
+  logic [31:0] mtimecmp_low6_qs;
+  logic [31:0] mtimecmp_low6_wd;
+  logic mtimecmp_low6_we;
+  logic [31:0] mtimecmp_high6_qs;
+  logic [31:0] mtimecmp_high6_wd;
+  logic mtimecmp_high6_we;
+  logic [31:0] mtimecmp_low7_qs;
+  logic [31:0] mtimecmp_low7_wd;
+  logic mtimecmp_low7_we;
+  logic [31:0] mtimecmp_high7_qs;
+  logic [31:0] mtimecmp_high7_wd;
+  logic mtimecmp_high7_we;
+  logic [31:0] mtimecmp_low8_qs;
+  logic [31:0] mtimecmp_low8_wd;
+  logic mtimecmp_low8_we;
+  logic [31:0] mtimecmp_high8_qs;
+  logic [31:0] mtimecmp_high8_wd;
+  logic mtimecmp_high8_we;
+  logic [31:0] mtimecmp_low9_qs;
+  logic [31:0] mtimecmp_low9_wd;
+  logic mtimecmp_low9_we;
+  logic [31:0] mtimecmp_high9_qs;
+  logic [31:0] mtimecmp_high9_wd;
+  logic mtimecmp_high9_we;
+  logic [31:0] mtimecmp_low10_qs;
+  logic [31:0] mtimecmp_low10_wd;
+  logic mtimecmp_low10_we;
+  logic [31:0] mtimecmp_high10_qs;
+  logic [31:0] mtimecmp_high10_wd;
+  logic mtimecmp_high10_we;
+  logic [31:0] mtimecmp_low11_qs;
+  logic [31:0] mtimecmp_low11_wd;
+  logic mtimecmp_low11_we;
+  logic [31:0] mtimecmp_high11_qs;
+  logic [31:0] mtimecmp_high11_wd;
+  logic mtimecmp_high11_we;
+  logic [31:0] mtimecmp_low12_qs;
+  logic [31:0] mtimecmp_low12_wd;
+  logic mtimecmp_low12_we;
+  logic [31:0] mtimecmp_high12_qs;
+  logic [31:0] mtimecmp_high12_wd;
+  logic mtimecmp_high12_we;
+  logic [31:0] mtimecmp_low13_qs;
+  logic [31:0] mtimecmp_low13_wd;
+  logic mtimecmp_low13_we;
+  logic [31:0] mtimecmp_high13_qs;
+  logic [31:0] mtimecmp_high13_wd;
+  logic mtimecmp_high13_we;
+  logic [31:0] mtimecmp_low14_qs;
+  logic [31:0] mtimecmp_low14_wd;
+  logic mtimecmp_low14_we;
+  logic [31:0] mtimecmp_high14_qs;
+  logic [31:0] mtimecmp_high14_wd;
+  logic mtimecmp_high14_we;
+  logic [31:0] mtimecmp_low15_qs;
+  logic [31:0] mtimecmp_low15_wd;
+  logic mtimecmp_low15_we;
+  logic [31:0] mtimecmp_high15_qs;
+  logic [31:0] mtimecmp_high15_wd;
+  logic mtimecmp_high15_we;
+  logic [31:0] mtimecmp_low16_qs;
+  logic [31:0] mtimecmp_low16_wd;
+  logic mtimecmp_low16_we;
+  logic [31:0] mtimecmp_high16_qs;
+  logic [31:0] mtimecmp_high16_wd;
+  logic mtimecmp_high16_we;
+  logic [31:0] mtimecmp_low17_qs;
+  logic [31:0] mtimecmp_low17_wd;
+  logic mtimecmp_low17_we;
+  logic [31:0] mtimecmp_high17_qs;
+  logic [31:0] mtimecmp_high17_wd;
+  logic mtimecmp_high17_we;
+  logic [31:0] mtimecmp_low18_qs;
+  logic [31:0] mtimecmp_low18_wd;
+  logic mtimecmp_low18_we;
+  logic [31:0] mtimecmp_high18_qs;
+  logic [31:0] mtimecmp_high18_wd;
+  logic mtimecmp_high18_we;
+  logic [31:0] mtimecmp_low19_qs;
+  logic [31:0] mtimecmp_low19_wd;
+  logic mtimecmp_low19_we;
+  logic [31:0] mtimecmp_high19_qs;
+  logic [31:0] mtimecmp_high19_wd;
+  logic mtimecmp_high19_we;
+  logic [31:0] mtimecmp_low20_qs;
+  logic [31:0] mtimecmp_low20_wd;
+  logic mtimecmp_low20_we;
+  logic [31:0] mtimecmp_high20_qs;
+  logic [31:0] mtimecmp_high20_wd;
+  logic mtimecmp_high20_we;
+  logic [31:0] mtimecmp_low21_qs;
+  logic [31:0] mtimecmp_low21_wd;
+  logic mtimecmp_low21_we;
+  logic [31:0] mtimecmp_high21_qs;
+  logic [31:0] mtimecmp_high21_wd;
+  logic mtimecmp_high21_we;
+  logic [31:0] mtimecmp_low22_qs;
+  logic [31:0] mtimecmp_low22_wd;
+  logic mtimecmp_low22_we;
+  logic [31:0] mtimecmp_high22_qs;
+  logic [31:0] mtimecmp_high22_wd;
+  logic mtimecmp_high22_we;
+  logic [31:0] mtimecmp_low23_qs;
+  logic [31:0] mtimecmp_low23_wd;
+  logic mtimecmp_low23_we;
+  logic [31:0] mtimecmp_high23_qs;
+  logic [31:0] mtimecmp_high23_wd;
+  logic mtimecmp_high23_we;
+  logic [31:0] mtimecmp_low24_qs;
+  logic [31:0] mtimecmp_low24_wd;
+  logic mtimecmp_low24_we;
+  logic [31:0] mtimecmp_high24_qs;
+  logic [31:0] mtimecmp_high24_wd;
+  logic mtimecmp_high24_we;
+  logic [31:0] mtimecmp_low25_qs;
+  logic [31:0] mtimecmp_low25_wd;
+  logic mtimecmp_low25_we;
+  logic [31:0] mtimecmp_high25_qs;
+  logic [31:0] mtimecmp_high25_wd;
+  logic mtimecmp_high25_we;
+  logic [31:0] mtimecmp_low26_qs;
+  logic [31:0] mtimecmp_low26_wd;
+  logic mtimecmp_low26_we;
+  logic [31:0] mtimecmp_high26_qs;
+  logic [31:0] mtimecmp_high26_wd;
+  logic mtimecmp_high26_we;
+  logic [31:0] mtimecmp_low27_qs;
+  logic [31:0] mtimecmp_low27_wd;
+  logic mtimecmp_low27_we;
+  logic [31:0] mtimecmp_high27_qs;
+  logic [31:0] mtimecmp_high27_wd;
+  logic mtimecmp_high27_we;
+  logic [31:0] mtimecmp_low28_qs;
+  logic [31:0] mtimecmp_low28_wd;
+  logic mtimecmp_low28_we;
+  logic [31:0] mtimecmp_high28_qs;
+  logic [31:0] mtimecmp_high28_wd;
+  logic mtimecmp_high28_we;
+  logic [31:0] mtimecmp_low29_qs;
+  logic [31:0] mtimecmp_low29_wd;
+  logic mtimecmp_low29_we;
+  logic [31:0] mtimecmp_high29_qs;
+  logic [31:0] mtimecmp_high29_wd;
+  logic mtimecmp_high29_we;
+  logic [31:0] mtimecmp_low30_qs;
+  logic [31:0] mtimecmp_low30_wd;
+  logic mtimecmp_low30_we;
+  logic [31:0] mtimecmp_high30_qs;
+  logic [31:0] mtimecmp_high30_wd;
+  logic mtimecmp_high30_we;
+  logic [31:0] mtimecmp_low31_qs;
+  logic [31:0] mtimecmp_low31_wd;
+  logic mtimecmp_low31_we;
+  logic [31:0] mtimecmp_high31_qs;
+  logic [31:0] mtimecmp_high31_wd;
+  logic mtimecmp_high31_we;
+  logic [31:0] mtimecmp_low32_qs;
+  logic [31:0] mtimecmp_low32_wd;
+  logic mtimecmp_low32_we;
+  logic [31:0] mtimecmp_high32_qs;
+  logic [31:0] mtimecmp_high32_wd;
+  logic mtimecmp_high32_we;
   logic [31:0] mtime_low_qs;
   logic [31:0] mtime_low_wd;
   logic mtime_low_we;
@@ -123,20 +375,20 @@ module clint_reg_top #(
   // Register instances
 
   // Subregister 0 of Multireg msip
-  // R[msip]: V(False)
+  // R[msip_0]: V(False)
 
   // F[p_0]: 0:0
   prim_subreg #(
       .DW      (1),
       .SWACCESS("RW"),
       .RESVAL  (1'h0)
-  ) u_msip_p_0 (
+  ) u_msip_0_p_0 (
       .clk_i (clk_i),
       .rst_ni(rst_ni),
 
       // from register interface
-      .we(msip_p_0_we),
-      .wd(msip_p_0_wd),
+      .we(msip_0_p_0_we),
+      .wd(msip_0_p_0_wd),
 
       // from internal hardware
       .de(1'b0),
@@ -147,7 +399,7 @@ module clint_reg_top #(
       .q (reg2hw.msip[0].q),
 
       // to register interface (read)
-      .qs(msip_p_0_qs)
+      .qs(msip_0_p_0_qs)
   );
 
 
@@ -156,13 +408,13 @@ module clint_reg_top #(
       .DW      (1),
       .SWACCESS("RW"),
       .RESVAL  (1'h0)
-  ) u_msip_p_1 (
+  ) u_msip_0_p_1 (
       .clk_i (clk_i),
       .rst_ni(rst_ni),
 
       // from register interface
-      .we(msip_p_1_we),
-      .wd(msip_p_1_wd),
+      .we(msip_0_p_1_we),
+      .wd(msip_0_p_1_wd),
 
       // from internal hardware
       .de(1'b0),
@@ -173,7 +425,7 @@ module clint_reg_top #(
       .q (reg2hw.msip[1].q),
 
       // to register interface (read)
-      .qs(msip_p_1_qs)
+      .qs(msip_0_p_1_qs)
   );
 
 
@@ -182,13 +434,13 @@ module clint_reg_top #(
       .DW      (1),
       .SWACCESS("RW"),
       .RESVAL  (1'h0)
-  ) u_msip_p_2 (
+  ) u_msip_0_p_2 (
       .clk_i (clk_i),
       .rst_ni(rst_ni),
 
       // from register interface
-      .we(msip_p_2_we),
-      .wd(msip_p_2_wd),
+      .we(msip_0_p_2_we),
+      .wd(msip_0_p_2_wd),
 
       // from internal hardware
       .de(1'b0),
@@ -199,7 +451,7 @@ module clint_reg_top #(
       .q (reg2hw.msip[2].q),
 
       // to register interface (read)
-      .qs(msip_p_2_qs)
+      .qs(msip_0_p_2_qs)
   );
 
 
@@ -208,13 +460,13 @@ module clint_reg_top #(
       .DW      (1),
       .SWACCESS("RW"),
       .RESVAL  (1'h0)
-  ) u_msip_p_3 (
+  ) u_msip_0_p_3 (
       .clk_i (clk_i),
       .rst_ni(rst_ni),
 
       // from register interface
-      .we(msip_p_3_we),
-      .wd(msip_p_3_wd),
+      .we(msip_0_p_3_we),
+      .wd(msip_0_p_3_wd),
 
       // from internal hardware
       .de(1'b0),
@@ -225,7 +477,7 @@ module clint_reg_top #(
       .q (reg2hw.msip[3].q),
 
       // to register interface (read)
-      .qs(msip_p_3_qs)
+      .qs(msip_0_p_3_qs)
   );
 
 
@@ -234,13 +486,13 @@ module clint_reg_top #(
       .DW      (1),
       .SWACCESS("RW"),
       .RESVAL  (1'h0)
-  ) u_msip_p_4 (
+  ) u_msip_0_p_4 (
       .clk_i (clk_i),
       .rst_ni(rst_ni),
 
       // from register interface
-      .we(msip_p_4_we),
-      .wd(msip_p_4_wd),
+      .we(msip_0_p_4_we),
+      .wd(msip_0_p_4_wd),
 
       // from internal hardware
       .de(1'b0),
@@ -251,9 +503,738 @@ module clint_reg_top #(
       .q (reg2hw.msip[4].q),
 
       // to register interface (read)
-      .qs(msip_p_4_qs)
+      .qs(msip_0_p_4_qs)
   );
 
+
+  // F[p_5]: 5:5
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_5 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_5_we),
+      .wd(msip_0_p_5_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[5].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_5_qs)
+  );
+
+
+  // F[p_6]: 6:6
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_6 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_6_we),
+      .wd(msip_0_p_6_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[6].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_6_qs)
+  );
+
+
+  // F[p_7]: 7:7
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_7 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_7_we),
+      .wd(msip_0_p_7_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[7].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_7_qs)
+  );
+
+
+  // F[p_8]: 8:8
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_8 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_8_we),
+      .wd(msip_0_p_8_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[8].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_8_qs)
+  );
+
+
+  // F[p_9]: 9:9
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_9 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_9_we),
+      .wd(msip_0_p_9_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[9].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_9_qs)
+  );
+
+
+  // F[p_10]: 10:10
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_10 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_10_we),
+      .wd(msip_0_p_10_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[10].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_10_qs)
+  );
+
+
+  // F[p_11]: 11:11
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_11 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_11_we),
+      .wd(msip_0_p_11_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[11].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_11_qs)
+  );
+
+
+  // F[p_12]: 12:12
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_12 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_12_we),
+      .wd(msip_0_p_12_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[12].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_12_qs)
+  );
+
+
+  // F[p_13]: 13:13
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_13 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_13_we),
+      .wd(msip_0_p_13_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[13].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_13_qs)
+  );
+
+
+  // F[p_14]: 14:14
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_14 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_14_we),
+      .wd(msip_0_p_14_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[14].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_14_qs)
+  );
+
+
+  // F[p_15]: 15:15
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_15 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_15_we),
+      .wd(msip_0_p_15_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[15].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_15_qs)
+  );
+
+
+  // F[p_16]: 16:16
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_16 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_16_we),
+      .wd(msip_0_p_16_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[16].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_16_qs)
+  );
+
+
+  // F[p_17]: 17:17
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_17 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_17_we),
+      .wd(msip_0_p_17_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[17].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_17_qs)
+  );
+
+
+  // F[p_18]: 18:18
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_18 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_18_we),
+      .wd(msip_0_p_18_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[18].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_18_qs)
+  );
+
+
+  // F[p_19]: 19:19
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_19 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_19_we),
+      .wd(msip_0_p_19_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[19].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_19_qs)
+  );
+
+
+  // F[p_20]: 20:20
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_20 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_20_we),
+      .wd(msip_0_p_20_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[20].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_20_qs)
+  );
+
+
+  // F[p_21]: 21:21
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_21 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_21_we),
+      .wd(msip_0_p_21_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[21].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_21_qs)
+  );
+
+
+  // F[p_22]: 22:22
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_22 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_22_we),
+      .wd(msip_0_p_22_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[22].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_22_qs)
+  );
+
+
+  // F[p_23]: 23:23
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_23 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_23_we),
+      .wd(msip_0_p_23_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[23].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_23_qs)
+  );
+
+
+  // F[p_24]: 24:24
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_24 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_24_we),
+      .wd(msip_0_p_24_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[24].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_24_qs)
+  );
+
+
+  // F[p_25]: 25:25
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_25 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_25_we),
+      .wd(msip_0_p_25_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[25].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_25_qs)
+  );
+
+
+  // F[p_26]: 26:26
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_26 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_26_we),
+      .wd(msip_0_p_26_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[26].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_26_qs)
+  );
+
+
+  // F[p_27]: 27:27
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_27 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_27_we),
+      .wd(msip_0_p_27_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[27].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_27_qs)
+  );
+
+
+  // F[p_28]: 28:28
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_28 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_28_we),
+      .wd(msip_0_p_28_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[28].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_28_qs)
+  );
+
+
+  // F[p_29]: 29:29
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_29 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_29_we),
+      .wd(msip_0_p_29_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[29].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_29_qs)
+  );
+
+
+  // F[p_30]: 30:30
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_30 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_30_we),
+      .wd(msip_0_p_30_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[30].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_30_qs)
+  );
+
+
+  // F[p_31]: 31:31
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_0_p_31 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_0_p_31_we),
+      .wd(msip_0_p_31_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[31].q),
+
+      // to register interface (read)
+      .qs(msip_0_p_31_qs)
+  );
+
+
+  // Subregister 32 of Multireg msip
+  // R[msip_1]: V(False)
+
+  prim_subreg #(
+      .DW      (1),
+      .SWACCESS("RW"),
+      .RESVAL  (1'h0)
+  ) u_msip_1 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(msip_1_we),
+      .wd(msip_1_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.msip[32].q),
+
+      // to register interface (read)
+      .qs(msip_1_qs)
+  );
 
 
   // R[mtimecmp_low0]: V(False)
@@ -526,6 +1507,1518 @@ module clint_reg_top #(
   );
 
 
+  // R[mtimecmp_low5]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low5 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low5_we),
+      .wd(mtimecmp_low5_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low5.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low5_qs)
+  );
+
+
+  // R[mtimecmp_high5]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high5 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high5_we),
+      .wd(mtimecmp_high5_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high5.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high5_qs)
+  );
+
+
+  // R[mtimecmp_low6]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low6 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low6_we),
+      .wd(mtimecmp_low6_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low6.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low6_qs)
+  );
+
+
+  // R[mtimecmp_high6]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high6 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high6_we),
+      .wd(mtimecmp_high6_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high6.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high6_qs)
+  );
+
+
+  // R[mtimecmp_low7]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low7 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low7_we),
+      .wd(mtimecmp_low7_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low7.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low7_qs)
+  );
+
+
+  // R[mtimecmp_high7]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high7 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high7_we),
+      .wd(mtimecmp_high7_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high7.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high7_qs)
+  );
+
+
+  // R[mtimecmp_low8]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low8 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low8_we),
+      .wd(mtimecmp_low8_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low8.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low8_qs)
+  );
+
+
+  // R[mtimecmp_high8]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high8 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high8_we),
+      .wd(mtimecmp_high8_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high8.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high8_qs)
+  );
+
+
+  // R[mtimecmp_low9]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low9 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low9_we),
+      .wd(mtimecmp_low9_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low9.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low9_qs)
+  );
+
+
+  // R[mtimecmp_high9]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high9 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high9_we),
+      .wd(mtimecmp_high9_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high9.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high9_qs)
+  );
+
+
+  // R[mtimecmp_low10]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low10 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low10_we),
+      .wd(mtimecmp_low10_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low10.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low10_qs)
+  );
+
+
+  // R[mtimecmp_high10]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high10 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high10_we),
+      .wd(mtimecmp_high10_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high10.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high10_qs)
+  );
+
+
+  // R[mtimecmp_low11]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low11 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low11_we),
+      .wd(mtimecmp_low11_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low11.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low11_qs)
+  );
+
+
+  // R[mtimecmp_high11]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high11 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high11_we),
+      .wd(mtimecmp_high11_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high11.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high11_qs)
+  );
+
+
+  // R[mtimecmp_low12]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low12 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low12_we),
+      .wd(mtimecmp_low12_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low12.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low12_qs)
+  );
+
+
+  // R[mtimecmp_high12]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high12 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high12_we),
+      .wd(mtimecmp_high12_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high12.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high12_qs)
+  );
+
+
+  // R[mtimecmp_low13]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low13 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low13_we),
+      .wd(mtimecmp_low13_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low13.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low13_qs)
+  );
+
+
+  // R[mtimecmp_high13]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high13 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high13_we),
+      .wd(mtimecmp_high13_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high13.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high13_qs)
+  );
+
+
+  // R[mtimecmp_low14]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low14 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low14_we),
+      .wd(mtimecmp_low14_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low14.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low14_qs)
+  );
+
+
+  // R[mtimecmp_high14]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high14 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high14_we),
+      .wd(mtimecmp_high14_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high14.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high14_qs)
+  );
+
+
+  // R[mtimecmp_low15]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low15 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low15_we),
+      .wd(mtimecmp_low15_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low15.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low15_qs)
+  );
+
+
+  // R[mtimecmp_high15]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high15 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high15_we),
+      .wd(mtimecmp_high15_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high15.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high15_qs)
+  );
+
+
+  // R[mtimecmp_low16]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low16 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low16_we),
+      .wd(mtimecmp_low16_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low16.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low16_qs)
+  );
+
+
+  // R[mtimecmp_high16]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high16 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high16_we),
+      .wd(mtimecmp_high16_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high16.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high16_qs)
+  );
+
+
+  // R[mtimecmp_low17]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low17 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low17_we),
+      .wd(mtimecmp_low17_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low17.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low17_qs)
+  );
+
+
+  // R[mtimecmp_high17]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high17 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high17_we),
+      .wd(mtimecmp_high17_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high17.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high17_qs)
+  );
+
+
+  // R[mtimecmp_low18]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low18 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low18_we),
+      .wd(mtimecmp_low18_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low18.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low18_qs)
+  );
+
+
+  // R[mtimecmp_high18]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high18 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high18_we),
+      .wd(mtimecmp_high18_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high18.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high18_qs)
+  );
+
+
+  // R[mtimecmp_low19]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low19 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low19_we),
+      .wd(mtimecmp_low19_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low19.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low19_qs)
+  );
+
+
+  // R[mtimecmp_high19]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high19 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high19_we),
+      .wd(mtimecmp_high19_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high19.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high19_qs)
+  );
+
+
+  // R[mtimecmp_low20]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low20 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low20_we),
+      .wd(mtimecmp_low20_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low20.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low20_qs)
+  );
+
+
+  // R[mtimecmp_high20]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high20 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high20_we),
+      .wd(mtimecmp_high20_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high20.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high20_qs)
+  );
+
+
+  // R[mtimecmp_low21]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low21 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low21_we),
+      .wd(mtimecmp_low21_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low21.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low21_qs)
+  );
+
+
+  // R[mtimecmp_high21]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high21 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high21_we),
+      .wd(mtimecmp_high21_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high21.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high21_qs)
+  );
+
+
+  // R[mtimecmp_low22]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low22 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low22_we),
+      .wd(mtimecmp_low22_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low22.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low22_qs)
+  );
+
+
+  // R[mtimecmp_high22]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high22 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high22_we),
+      .wd(mtimecmp_high22_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high22.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high22_qs)
+  );
+
+
+  // R[mtimecmp_low23]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low23 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low23_we),
+      .wd(mtimecmp_low23_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low23.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low23_qs)
+  );
+
+
+  // R[mtimecmp_high23]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high23 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high23_we),
+      .wd(mtimecmp_high23_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high23.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high23_qs)
+  );
+
+
+  // R[mtimecmp_low24]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low24 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low24_we),
+      .wd(mtimecmp_low24_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low24.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low24_qs)
+  );
+
+
+  // R[mtimecmp_high24]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high24 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high24_we),
+      .wd(mtimecmp_high24_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high24.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high24_qs)
+  );
+
+
+  // R[mtimecmp_low25]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low25 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low25_we),
+      .wd(mtimecmp_low25_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low25.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low25_qs)
+  );
+
+
+  // R[mtimecmp_high25]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high25 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high25_we),
+      .wd(mtimecmp_high25_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high25.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high25_qs)
+  );
+
+
+  // R[mtimecmp_low26]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low26 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low26_we),
+      .wd(mtimecmp_low26_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low26.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low26_qs)
+  );
+
+
+  // R[mtimecmp_high26]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high26 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high26_we),
+      .wd(mtimecmp_high26_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high26.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high26_qs)
+  );
+
+
+  // R[mtimecmp_low27]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low27 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low27_we),
+      .wd(mtimecmp_low27_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low27.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low27_qs)
+  );
+
+
+  // R[mtimecmp_high27]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high27 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high27_we),
+      .wd(mtimecmp_high27_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high27.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high27_qs)
+  );
+
+
+  // R[mtimecmp_low28]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low28 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low28_we),
+      .wd(mtimecmp_low28_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low28.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low28_qs)
+  );
+
+
+  // R[mtimecmp_high28]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high28 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high28_we),
+      .wd(mtimecmp_high28_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high28.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high28_qs)
+  );
+
+
+  // R[mtimecmp_low29]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low29 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low29_we),
+      .wd(mtimecmp_low29_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low29.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low29_qs)
+  );
+
+
+  // R[mtimecmp_high29]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high29 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high29_we),
+      .wd(mtimecmp_high29_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high29.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high29_qs)
+  );
+
+
+  // R[mtimecmp_low30]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low30 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low30_we),
+      .wd(mtimecmp_low30_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low30.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low30_qs)
+  );
+
+
+  // R[mtimecmp_high30]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high30 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high30_we),
+      .wd(mtimecmp_high30_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high30.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high30_qs)
+  );
+
+
+  // R[mtimecmp_low31]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low31 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low31_we),
+      .wd(mtimecmp_low31_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low31.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low31_qs)
+  );
+
+
+  // R[mtimecmp_high31]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high31 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high31_we),
+      .wd(mtimecmp_high31_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high31.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high31_qs)
+  );
+
+
+  // R[mtimecmp_low32]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_low32 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_low32_we),
+      .wd(mtimecmp_low32_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_low32.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_low32_qs)
+  );
+
+
+  // R[mtimecmp_high32]: V(False)
+
+  prim_subreg #(
+      .DW      (32),
+      .SWACCESS("RW"),
+      .RESVAL  (32'h0)
+  ) u_mtimecmp_high32 (
+      .clk_i (clk_i),
+      .rst_ni(rst_ni),
+
+      // from register interface
+      .we(mtimecmp_high32_we),
+      .wd(mtimecmp_high32_wd),
+
+      // from internal hardware
+      .de(1'b0),
+      .d ('0),
+
+      // to internal hardware
+      .qe(),
+      .q (reg2hw.mtimecmp_high32.q),
+
+      // to register interface (read)
+      .qs(mtimecmp_high32_qs)
+  );
+
+
   // R[mtime_low]: V(False)
 
   prim_subreg #(
@@ -582,22 +3075,79 @@ module clint_reg_top #(
 
 
 
-  logic [12:0] addr_hit;
+  logic [69:0] addr_hit;
   always_comb begin
     addr_hit = '0;
-    addr_hit[0] = (reg_addr == CLINT_MSIP_OFFSET);
-    addr_hit[1] = (reg_addr == CLINT_MTIMECMP_LOW0_OFFSET);
-    addr_hit[2] = (reg_addr == CLINT_MTIMECMP_HIGH0_OFFSET);
-    addr_hit[3] = (reg_addr == CLINT_MTIMECMP_LOW1_OFFSET);
-    addr_hit[4] = (reg_addr == CLINT_MTIMECMP_HIGH1_OFFSET);
-    addr_hit[5] = (reg_addr == CLINT_MTIMECMP_LOW2_OFFSET);
-    addr_hit[6] = (reg_addr == CLINT_MTIMECMP_HIGH2_OFFSET);
-    addr_hit[7] = (reg_addr == CLINT_MTIMECMP_LOW3_OFFSET);
-    addr_hit[8] = (reg_addr == CLINT_MTIMECMP_HIGH3_OFFSET);
-    addr_hit[9] = (reg_addr == CLINT_MTIMECMP_LOW4_OFFSET);
-    addr_hit[10] = (reg_addr == CLINT_MTIMECMP_HIGH4_OFFSET);
-    addr_hit[11] = (reg_addr == CLINT_MTIME_LOW_OFFSET);
-    addr_hit[12] = (reg_addr == CLINT_MTIME_HIGH_OFFSET);
+    addr_hit[0] = (reg_addr == CLINT_MSIP_0_OFFSET);
+    addr_hit[1] = (reg_addr == CLINT_MSIP_1_OFFSET);
+    addr_hit[2] = (reg_addr == CLINT_MTIMECMP_LOW0_OFFSET);
+    addr_hit[3] = (reg_addr == CLINT_MTIMECMP_HIGH0_OFFSET);
+    addr_hit[4] = (reg_addr == CLINT_MTIMECMP_LOW1_OFFSET);
+    addr_hit[5] = (reg_addr == CLINT_MTIMECMP_HIGH1_OFFSET);
+    addr_hit[6] = (reg_addr == CLINT_MTIMECMP_LOW2_OFFSET);
+    addr_hit[7] = (reg_addr == CLINT_MTIMECMP_HIGH2_OFFSET);
+    addr_hit[8] = (reg_addr == CLINT_MTIMECMP_LOW3_OFFSET);
+    addr_hit[9] = (reg_addr == CLINT_MTIMECMP_HIGH3_OFFSET);
+    addr_hit[10] = (reg_addr == CLINT_MTIMECMP_LOW4_OFFSET);
+    addr_hit[11] = (reg_addr == CLINT_MTIMECMP_HIGH4_OFFSET);
+    addr_hit[12] = (reg_addr == CLINT_MTIMECMP_LOW5_OFFSET);
+    addr_hit[13] = (reg_addr == CLINT_MTIMECMP_HIGH5_OFFSET);
+    addr_hit[14] = (reg_addr == CLINT_MTIMECMP_LOW6_OFFSET);
+    addr_hit[15] = (reg_addr == CLINT_MTIMECMP_HIGH6_OFFSET);
+    addr_hit[16] = (reg_addr == CLINT_MTIMECMP_LOW7_OFFSET);
+    addr_hit[17] = (reg_addr == CLINT_MTIMECMP_HIGH7_OFFSET);
+    addr_hit[18] = (reg_addr == CLINT_MTIMECMP_LOW8_OFFSET);
+    addr_hit[19] = (reg_addr == CLINT_MTIMECMP_HIGH8_OFFSET);
+    addr_hit[20] = (reg_addr == CLINT_MTIMECMP_LOW9_OFFSET);
+    addr_hit[21] = (reg_addr == CLINT_MTIMECMP_HIGH9_OFFSET);
+    addr_hit[22] = (reg_addr == CLINT_MTIMECMP_LOW10_OFFSET);
+    addr_hit[23] = (reg_addr == CLINT_MTIMECMP_HIGH10_OFFSET);
+    addr_hit[24] = (reg_addr == CLINT_MTIMECMP_LOW11_OFFSET);
+    addr_hit[25] = (reg_addr == CLINT_MTIMECMP_HIGH11_OFFSET);
+    addr_hit[26] = (reg_addr == CLINT_MTIMECMP_LOW12_OFFSET);
+    addr_hit[27] = (reg_addr == CLINT_MTIMECMP_HIGH12_OFFSET);
+    addr_hit[28] = (reg_addr == CLINT_MTIMECMP_LOW13_OFFSET);
+    addr_hit[29] = (reg_addr == CLINT_MTIMECMP_HIGH13_OFFSET);
+    addr_hit[30] = (reg_addr == CLINT_MTIMECMP_LOW14_OFFSET);
+    addr_hit[31] = (reg_addr == CLINT_MTIMECMP_HIGH14_OFFSET);
+    addr_hit[32] = (reg_addr == CLINT_MTIMECMP_LOW15_OFFSET);
+    addr_hit[33] = (reg_addr == CLINT_MTIMECMP_HIGH15_OFFSET);
+    addr_hit[34] = (reg_addr == CLINT_MTIMECMP_LOW16_OFFSET);
+    addr_hit[35] = (reg_addr == CLINT_MTIMECMP_HIGH16_OFFSET);
+    addr_hit[36] = (reg_addr == CLINT_MTIMECMP_LOW17_OFFSET);
+    addr_hit[37] = (reg_addr == CLINT_MTIMECMP_HIGH17_OFFSET);
+    addr_hit[38] = (reg_addr == CLINT_MTIMECMP_LOW18_OFFSET);
+    addr_hit[39] = (reg_addr == CLINT_MTIMECMP_HIGH18_OFFSET);
+    addr_hit[40] = (reg_addr == CLINT_MTIMECMP_LOW19_OFFSET);
+    addr_hit[41] = (reg_addr == CLINT_MTIMECMP_HIGH19_OFFSET);
+    addr_hit[42] = (reg_addr == CLINT_MTIMECMP_LOW20_OFFSET);
+    addr_hit[43] = (reg_addr == CLINT_MTIMECMP_HIGH20_OFFSET);
+    addr_hit[44] = (reg_addr == CLINT_MTIMECMP_LOW21_OFFSET);
+    addr_hit[45] = (reg_addr == CLINT_MTIMECMP_HIGH21_OFFSET);
+    addr_hit[46] = (reg_addr == CLINT_MTIMECMP_LOW22_OFFSET);
+    addr_hit[47] = (reg_addr == CLINT_MTIMECMP_HIGH22_OFFSET);
+    addr_hit[48] = (reg_addr == CLINT_MTIMECMP_LOW23_OFFSET);
+    addr_hit[49] = (reg_addr == CLINT_MTIMECMP_HIGH23_OFFSET);
+    addr_hit[50] = (reg_addr == CLINT_MTIMECMP_LOW24_OFFSET);
+    addr_hit[51] = (reg_addr == CLINT_MTIMECMP_HIGH24_OFFSET);
+    addr_hit[52] = (reg_addr == CLINT_MTIMECMP_LOW25_OFFSET);
+    addr_hit[53] = (reg_addr == CLINT_MTIMECMP_HIGH25_OFFSET);
+    addr_hit[54] = (reg_addr == CLINT_MTIMECMP_LOW26_OFFSET);
+    addr_hit[55] = (reg_addr == CLINT_MTIMECMP_HIGH26_OFFSET);
+    addr_hit[56] = (reg_addr == CLINT_MTIMECMP_LOW27_OFFSET);
+    addr_hit[57] = (reg_addr == CLINT_MTIMECMP_HIGH27_OFFSET);
+    addr_hit[58] = (reg_addr == CLINT_MTIMECMP_LOW28_OFFSET);
+    addr_hit[59] = (reg_addr == CLINT_MTIMECMP_HIGH28_OFFSET);
+    addr_hit[60] = (reg_addr == CLINT_MTIMECMP_LOW29_OFFSET);
+    addr_hit[61] = (reg_addr == CLINT_MTIMECMP_HIGH29_OFFSET);
+    addr_hit[62] = (reg_addr == CLINT_MTIMECMP_LOW30_OFFSET);
+    addr_hit[63] = (reg_addr == CLINT_MTIMECMP_HIGH30_OFFSET);
+    addr_hit[64] = (reg_addr == CLINT_MTIMECMP_LOW31_OFFSET);
+    addr_hit[65] = (reg_addr == CLINT_MTIMECMP_HIGH31_OFFSET);
+    addr_hit[66] = (reg_addr == CLINT_MTIMECMP_LOW32_OFFSET);
+    addr_hit[67] = (reg_addr == CLINT_MTIMECMP_HIGH32_OFFSET);
+    addr_hit[68] = (reg_addr == CLINT_MTIME_LOW_OFFSET);
+    addr_hit[69] = (reg_addr == CLINT_MTIME_HIGH_OFFSET);
   end
 
   assign addrmiss = (reg_re || reg_we) ? ~|addr_hit : 1'b0;
@@ -617,58 +3167,367 @@ module clint_reg_top #(
                (addr_hit[ 9] & (|(CLINT_PERMIT[ 9] & ~reg_be))) |
                (addr_hit[10] & (|(CLINT_PERMIT[10] & ~reg_be))) |
                (addr_hit[11] & (|(CLINT_PERMIT[11] & ~reg_be))) |
-               (addr_hit[12] & (|(CLINT_PERMIT[12] & ~reg_be)))));
+               (addr_hit[12] & (|(CLINT_PERMIT[12] & ~reg_be))) |
+               (addr_hit[13] & (|(CLINT_PERMIT[13] & ~reg_be))) |
+               (addr_hit[14] & (|(CLINT_PERMIT[14] & ~reg_be))) |
+               (addr_hit[15] & (|(CLINT_PERMIT[15] & ~reg_be))) |
+               (addr_hit[16] & (|(CLINT_PERMIT[16] & ~reg_be))) |
+               (addr_hit[17] & (|(CLINT_PERMIT[17] & ~reg_be))) |
+               (addr_hit[18] & (|(CLINT_PERMIT[18] & ~reg_be))) |
+               (addr_hit[19] & (|(CLINT_PERMIT[19] & ~reg_be))) |
+               (addr_hit[20] & (|(CLINT_PERMIT[20] & ~reg_be))) |
+               (addr_hit[21] & (|(CLINT_PERMIT[21] & ~reg_be))) |
+               (addr_hit[22] & (|(CLINT_PERMIT[22] & ~reg_be))) |
+               (addr_hit[23] & (|(CLINT_PERMIT[23] & ~reg_be))) |
+               (addr_hit[24] & (|(CLINT_PERMIT[24] & ~reg_be))) |
+               (addr_hit[25] & (|(CLINT_PERMIT[25] & ~reg_be))) |
+               (addr_hit[26] & (|(CLINT_PERMIT[26] & ~reg_be))) |
+               (addr_hit[27] & (|(CLINT_PERMIT[27] & ~reg_be))) |
+               (addr_hit[28] & (|(CLINT_PERMIT[28] & ~reg_be))) |
+               (addr_hit[29] & (|(CLINT_PERMIT[29] & ~reg_be))) |
+               (addr_hit[30] & (|(CLINT_PERMIT[30] & ~reg_be))) |
+               (addr_hit[31] & (|(CLINT_PERMIT[31] & ~reg_be))) |
+               (addr_hit[32] & (|(CLINT_PERMIT[32] & ~reg_be))) |
+               (addr_hit[33] & (|(CLINT_PERMIT[33] & ~reg_be))) |
+               (addr_hit[34] & (|(CLINT_PERMIT[34] & ~reg_be))) |
+               (addr_hit[35] & (|(CLINT_PERMIT[35] & ~reg_be))) |
+               (addr_hit[36] & (|(CLINT_PERMIT[36] & ~reg_be))) |
+               (addr_hit[37] & (|(CLINT_PERMIT[37] & ~reg_be))) |
+               (addr_hit[38] & (|(CLINT_PERMIT[38] & ~reg_be))) |
+               (addr_hit[39] & (|(CLINT_PERMIT[39] & ~reg_be))) |
+               (addr_hit[40] & (|(CLINT_PERMIT[40] & ~reg_be))) |
+               (addr_hit[41] & (|(CLINT_PERMIT[41] & ~reg_be))) |
+               (addr_hit[42] & (|(CLINT_PERMIT[42] & ~reg_be))) |
+               (addr_hit[43] & (|(CLINT_PERMIT[43] & ~reg_be))) |
+               (addr_hit[44] & (|(CLINT_PERMIT[44] & ~reg_be))) |
+               (addr_hit[45] & (|(CLINT_PERMIT[45] & ~reg_be))) |
+               (addr_hit[46] & (|(CLINT_PERMIT[46] & ~reg_be))) |
+               (addr_hit[47] & (|(CLINT_PERMIT[47] & ~reg_be))) |
+               (addr_hit[48] & (|(CLINT_PERMIT[48] & ~reg_be))) |
+               (addr_hit[49] & (|(CLINT_PERMIT[49] & ~reg_be))) |
+               (addr_hit[50] & (|(CLINT_PERMIT[50] & ~reg_be))) |
+               (addr_hit[51] & (|(CLINT_PERMIT[51] & ~reg_be))) |
+               (addr_hit[52] & (|(CLINT_PERMIT[52] & ~reg_be))) |
+               (addr_hit[53] & (|(CLINT_PERMIT[53] & ~reg_be))) |
+               (addr_hit[54] & (|(CLINT_PERMIT[54] & ~reg_be))) |
+               (addr_hit[55] & (|(CLINT_PERMIT[55] & ~reg_be))) |
+               (addr_hit[56] & (|(CLINT_PERMIT[56] & ~reg_be))) |
+               (addr_hit[57] & (|(CLINT_PERMIT[57] & ~reg_be))) |
+               (addr_hit[58] & (|(CLINT_PERMIT[58] & ~reg_be))) |
+               (addr_hit[59] & (|(CLINT_PERMIT[59] & ~reg_be))) |
+               (addr_hit[60] & (|(CLINT_PERMIT[60] & ~reg_be))) |
+               (addr_hit[61] & (|(CLINT_PERMIT[61] & ~reg_be))) |
+               (addr_hit[62] & (|(CLINT_PERMIT[62] & ~reg_be))) |
+               (addr_hit[63] & (|(CLINT_PERMIT[63] & ~reg_be))) |
+               (addr_hit[64] & (|(CLINT_PERMIT[64] & ~reg_be))) |
+               (addr_hit[65] & (|(CLINT_PERMIT[65] & ~reg_be))) |
+               (addr_hit[66] & (|(CLINT_PERMIT[66] & ~reg_be))) |
+               (addr_hit[67] & (|(CLINT_PERMIT[67] & ~reg_be))) |
+               (addr_hit[68] & (|(CLINT_PERMIT[68] & ~reg_be))) |
+               (addr_hit[69] & (|(CLINT_PERMIT[69] & ~reg_be)))));
   end
 
-  assign msip_p_0_we = addr_hit[0] & reg_we & !reg_error;
-  assign msip_p_0_wd = reg_wdata[0];
+  assign msip_0_p_0_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_0_wd = reg_wdata[0];
 
-  assign msip_p_1_we = addr_hit[0] & reg_we & !reg_error;
-  assign msip_p_1_wd = reg_wdata[1];
+  assign msip_0_p_1_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_1_wd = reg_wdata[1];
 
-  assign msip_p_2_we = addr_hit[0] & reg_we & !reg_error;
-  assign msip_p_2_wd = reg_wdata[2];
+  assign msip_0_p_2_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_2_wd = reg_wdata[2];
 
-  assign msip_p_3_we = addr_hit[0] & reg_we & !reg_error;
-  assign msip_p_3_wd = reg_wdata[3];
+  assign msip_0_p_3_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_3_wd = reg_wdata[3];
 
-  assign msip_p_4_we = addr_hit[0] & reg_we & !reg_error;
-  assign msip_p_4_wd = reg_wdata[4];
+  assign msip_0_p_4_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_4_wd = reg_wdata[4];
 
-  assign mtimecmp_low0_we = addr_hit[1] & reg_we & !reg_error;
+  assign msip_0_p_5_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_5_wd = reg_wdata[5];
+
+  assign msip_0_p_6_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_6_wd = reg_wdata[6];
+
+  assign msip_0_p_7_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_7_wd = reg_wdata[7];
+
+  assign msip_0_p_8_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_8_wd = reg_wdata[8];
+
+  assign msip_0_p_9_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_9_wd = reg_wdata[9];
+
+  assign msip_0_p_10_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_10_wd = reg_wdata[10];
+
+  assign msip_0_p_11_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_11_wd = reg_wdata[11];
+
+  assign msip_0_p_12_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_12_wd = reg_wdata[12];
+
+  assign msip_0_p_13_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_13_wd = reg_wdata[13];
+
+  assign msip_0_p_14_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_14_wd = reg_wdata[14];
+
+  assign msip_0_p_15_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_15_wd = reg_wdata[15];
+
+  assign msip_0_p_16_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_16_wd = reg_wdata[16];
+
+  assign msip_0_p_17_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_17_wd = reg_wdata[17];
+
+  assign msip_0_p_18_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_18_wd = reg_wdata[18];
+
+  assign msip_0_p_19_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_19_wd = reg_wdata[19];
+
+  assign msip_0_p_20_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_20_wd = reg_wdata[20];
+
+  assign msip_0_p_21_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_21_wd = reg_wdata[21];
+
+  assign msip_0_p_22_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_22_wd = reg_wdata[22];
+
+  assign msip_0_p_23_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_23_wd = reg_wdata[23];
+
+  assign msip_0_p_24_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_24_wd = reg_wdata[24];
+
+  assign msip_0_p_25_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_25_wd = reg_wdata[25];
+
+  assign msip_0_p_26_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_26_wd = reg_wdata[26];
+
+  assign msip_0_p_27_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_27_wd = reg_wdata[27];
+
+  assign msip_0_p_28_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_28_wd = reg_wdata[28];
+
+  assign msip_0_p_29_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_29_wd = reg_wdata[29];
+
+  assign msip_0_p_30_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_30_wd = reg_wdata[30];
+
+  assign msip_0_p_31_we = addr_hit[0] & reg_we & !reg_error;
+  assign msip_0_p_31_wd = reg_wdata[31];
+
+  assign msip_1_we = addr_hit[1] & reg_we & !reg_error;
+  assign msip_1_wd = reg_wdata[0];
+
+  assign mtimecmp_low0_we = addr_hit[2] & reg_we & !reg_error;
   assign mtimecmp_low0_wd = reg_wdata[31:0];
 
-  assign mtimecmp_high0_we = addr_hit[2] & reg_we & !reg_error;
+  assign mtimecmp_high0_we = addr_hit[3] & reg_we & !reg_error;
   assign mtimecmp_high0_wd = reg_wdata[31:0];
 
-  assign mtimecmp_low1_we = addr_hit[3] & reg_we & !reg_error;
+  assign mtimecmp_low1_we = addr_hit[4] & reg_we & !reg_error;
   assign mtimecmp_low1_wd = reg_wdata[31:0];
 
-  assign mtimecmp_high1_we = addr_hit[4] & reg_we & !reg_error;
+  assign mtimecmp_high1_we = addr_hit[5] & reg_we & !reg_error;
   assign mtimecmp_high1_wd = reg_wdata[31:0];
 
-  assign mtimecmp_low2_we = addr_hit[5] & reg_we & !reg_error;
+  assign mtimecmp_low2_we = addr_hit[6] & reg_we & !reg_error;
   assign mtimecmp_low2_wd = reg_wdata[31:0];
 
-  assign mtimecmp_high2_we = addr_hit[6] & reg_we & !reg_error;
+  assign mtimecmp_high2_we = addr_hit[7] & reg_we & !reg_error;
   assign mtimecmp_high2_wd = reg_wdata[31:0];
 
-  assign mtimecmp_low3_we = addr_hit[7] & reg_we & !reg_error;
+  assign mtimecmp_low3_we = addr_hit[8] & reg_we & !reg_error;
   assign mtimecmp_low3_wd = reg_wdata[31:0];
 
-  assign mtimecmp_high3_we = addr_hit[8] & reg_we & !reg_error;
+  assign mtimecmp_high3_we = addr_hit[9] & reg_we & !reg_error;
   assign mtimecmp_high3_wd = reg_wdata[31:0];
 
-  assign mtimecmp_low4_we = addr_hit[9] & reg_we & !reg_error;
+  assign mtimecmp_low4_we = addr_hit[10] & reg_we & !reg_error;
   assign mtimecmp_low4_wd = reg_wdata[31:0];
 
-  assign mtimecmp_high4_we = addr_hit[10] & reg_we & !reg_error;
+  assign mtimecmp_high4_we = addr_hit[11] & reg_we & !reg_error;
   assign mtimecmp_high4_wd = reg_wdata[31:0];
 
-  assign mtime_low_we = addr_hit[11] & reg_we & !reg_error;
+  assign mtimecmp_low5_we = addr_hit[12] & reg_we & !reg_error;
+  assign mtimecmp_low5_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high5_we = addr_hit[13] & reg_we & !reg_error;
+  assign mtimecmp_high5_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low6_we = addr_hit[14] & reg_we & !reg_error;
+  assign mtimecmp_low6_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high6_we = addr_hit[15] & reg_we & !reg_error;
+  assign mtimecmp_high6_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low7_we = addr_hit[16] & reg_we & !reg_error;
+  assign mtimecmp_low7_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high7_we = addr_hit[17] & reg_we & !reg_error;
+  assign mtimecmp_high7_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low8_we = addr_hit[18] & reg_we & !reg_error;
+  assign mtimecmp_low8_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high8_we = addr_hit[19] & reg_we & !reg_error;
+  assign mtimecmp_high8_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low9_we = addr_hit[20] & reg_we & !reg_error;
+  assign mtimecmp_low9_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high9_we = addr_hit[21] & reg_we & !reg_error;
+  assign mtimecmp_high9_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low10_we = addr_hit[22] & reg_we & !reg_error;
+  assign mtimecmp_low10_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high10_we = addr_hit[23] & reg_we & !reg_error;
+  assign mtimecmp_high10_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low11_we = addr_hit[24] & reg_we & !reg_error;
+  assign mtimecmp_low11_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high11_we = addr_hit[25] & reg_we & !reg_error;
+  assign mtimecmp_high11_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low12_we = addr_hit[26] & reg_we & !reg_error;
+  assign mtimecmp_low12_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high12_we = addr_hit[27] & reg_we & !reg_error;
+  assign mtimecmp_high12_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low13_we = addr_hit[28] & reg_we & !reg_error;
+  assign mtimecmp_low13_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high13_we = addr_hit[29] & reg_we & !reg_error;
+  assign mtimecmp_high13_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low14_we = addr_hit[30] & reg_we & !reg_error;
+  assign mtimecmp_low14_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high14_we = addr_hit[31] & reg_we & !reg_error;
+  assign mtimecmp_high14_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low15_we = addr_hit[32] & reg_we & !reg_error;
+  assign mtimecmp_low15_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high15_we = addr_hit[33] & reg_we & !reg_error;
+  assign mtimecmp_high15_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low16_we = addr_hit[34] & reg_we & !reg_error;
+  assign mtimecmp_low16_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high16_we = addr_hit[35] & reg_we & !reg_error;
+  assign mtimecmp_high16_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low17_we = addr_hit[36] & reg_we & !reg_error;
+  assign mtimecmp_low17_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high17_we = addr_hit[37] & reg_we & !reg_error;
+  assign mtimecmp_high17_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low18_we = addr_hit[38] & reg_we & !reg_error;
+  assign mtimecmp_low18_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high18_we = addr_hit[39] & reg_we & !reg_error;
+  assign mtimecmp_high18_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low19_we = addr_hit[40] & reg_we & !reg_error;
+  assign mtimecmp_low19_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high19_we = addr_hit[41] & reg_we & !reg_error;
+  assign mtimecmp_high19_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low20_we = addr_hit[42] & reg_we & !reg_error;
+  assign mtimecmp_low20_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high20_we = addr_hit[43] & reg_we & !reg_error;
+  assign mtimecmp_high20_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low21_we = addr_hit[44] & reg_we & !reg_error;
+  assign mtimecmp_low21_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high21_we = addr_hit[45] & reg_we & !reg_error;
+  assign mtimecmp_high21_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low22_we = addr_hit[46] & reg_we & !reg_error;
+  assign mtimecmp_low22_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high22_we = addr_hit[47] & reg_we & !reg_error;
+  assign mtimecmp_high22_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low23_we = addr_hit[48] & reg_we & !reg_error;
+  assign mtimecmp_low23_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high23_we = addr_hit[49] & reg_we & !reg_error;
+  assign mtimecmp_high23_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low24_we = addr_hit[50] & reg_we & !reg_error;
+  assign mtimecmp_low24_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high24_we = addr_hit[51] & reg_we & !reg_error;
+  assign mtimecmp_high24_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low25_we = addr_hit[52] & reg_we & !reg_error;
+  assign mtimecmp_low25_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high25_we = addr_hit[53] & reg_we & !reg_error;
+  assign mtimecmp_high25_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low26_we = addr_hit[54] & reg_we & !reg_error;
+  assign mtimecmp_low26_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high26_we = addr_hit[55] & reg_we & !reg_error;
+  assign mtimecmp_high26_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low27_we = addr_hit[56] & reg_we & !reg_error;
+  assign mtimecmp_low27_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high27_we = addr_hit[57] & reg_we & !reg_error;
+  assign mtimecmp_high27_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low28_we = addr_hit[58] & reg_we & !reg_error;
+  assign mtimecmp_low28_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high28_we = addr_hit[59] & reg_we & !reg_error;
+  assign mtimecmp_high28_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low29_we = addr_hit[60] & reg_we & !reg_error;
+  assign mtimecmp_low29_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high29_we = addr_hit[61] & reg_we & !reg_error;
+  assign mtimecmp_high29_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low30_we = addr_hit[62] & reg_we & !reg_error;
+  assign mtimecmp_low30_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high30_we = addr_hit[63] & reg_we & !reg_error;
+  assign mtimecmp_high30_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low31_we = addr_hit[64] & reg_we & !reg_error;
+  assign mtimecmp_low31_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high31_we = addr_hit[65] & reg_we & !reg_error;
+  assign mtimecmp_high31_wd = reg_wdata[31:0];
+
+  assign mtimecmp_low32_we = addr_hit[66] & reg_we & !reg_error;
+  assign mtimecmp_low32_wd = reg_wdata[31:0];
+
+  assign mtimecmp_high32_we = addr_hit[67] & reg_we & !reg_error;
+  assign mtimecmp_high32_wd = reg_wdata[31:0];
+
+  assign mtime_low_we = addr_hit[68] & reg_we & !reg_error;
   assign mtime_low_wd = reg_wdata[31:0];
 
-  assign mtime_high_we = addr_hit[12] & reg_we & !reg_error;
+  assign mtime_high_we = addr_hit[69] & reg_we & !reg_error;
   assign mtime_high_wd = reg_wdata[31:0];
 
   // Read data return
@@ -676,58 +3535,313 @@ module clint_reg_top #(
     reg_rdata_next = '0;
     unique case (1'b1)
       addr_hit[0]: begin
-        reg_rdata_next[0] = msip_p_0_qs;
-        reg_rdata_next[1] = msip_p_1_qs;
-        reg_rdata_next[2] = msip_p_2_qs;
-        reg_rdata_next[3] = msip_p_3_qs;
-        reg_rdata_next[4] = msip_p_4_qs;
+        reg_rdata_next[0]  = msip_0_p_0_qs;
+        reg_rdata_next[1]  = msip_0_p_1_qs;
+        reg_rdata_next[2]  = msip_0_p_2_qs;
+        reg_rdata_next[3]  = msip_0_p_3_qs;
+        reg_rdata_next[4]  = msip_0_p_4_qs;
+        reg_rdata_next[5]  = msip_0_p_5_qs;
+        reg_rdata_next[6]  = msip_0_p_6_qs;
+        reg_rdata_next[7]  = msip_0_p_7_qs;
+        reg_rdata_next[8]  = msip_0_p_8_qs;
+        reg_rdata_next[9]  = msip_0_p_9_qs;
+        reg_rdata_next[10] = msip_0_p_10_qs;
+        reg_rdata_next[11] = msip_0_p_11_qs;
+        reg_rdata_next[12] = msip_0_p_12_qs;
+        reg_rdata_next[13] = msip_0_p_13_qs;
+        reg_rdata_next[14] = msip_0_p_14_qs;
+        reg_rdata_next[15] = msip_0_p_15_qs;
+        reg_rdata_next[16] = msip_0_p_16_qs;
+        reg_rdata_next[17] = msip_0_p_17_qs;
+        reg_rdata_next[18] = msip_0_p_18_qs;
+        reg_rdata_next[19] = msip_0_p_19_qs;
+        reg_rdata_next[20] = msip_0_p_20_qs;
+        reg_rdata_next[21] = msip_0_p_21_qs;
+        reg_rdata_next[22] = msip_0_p_22_qs;
+        reg_rdata_next[23] = msip_0_p_23_qs;
+        reg_rdata_next[24] = msip_0_p_24_qs;
+        reg_rdata_next[25] = msip_0_p_25_qs;
+        reg_rdata_next[26] = msip_0_p_26_qs;
+        reg_rdata_next[27] = msip_0_p_27_qs;
+        reg_rdata_next[28] = msip_0_p_28_qs;
+        reg_rdata_next[29] = msip_0_p_29_qs;
+        reg_rdata_next[30] = msip_0_p_30_qs;
+        reg_rdata_next[31] = msip_0_p_31_qs;
       end
 
       addr_hit[1]: begin
-        reg_rdata_next[31:0] = mtimecmp_low0_qs;
+        reg_rdata_next[0] = msip_1_qs;
       end
 
       addr_hit[2]: begin
-        reg_rdata_next[31:0] = mtimecmp_high0_qs;
+        reg_rdata_next[31:0] = mtimecmp_low0_qs;
       end
 
       addr_hit[3]: begin
-        reg_rdata_next[31:0] = mtimecmp_low1_qs;
+        reg_rdata_next[31:0] = mtimecmp_high0_qs;
       end
 
       addr_hit[4]: begin
-        reg_rdata_next[31:0] = mtimecmp_high1_qs;
+        reg_rdata_next[31:0] = mtimecmp_low1_qs;
       end
 
       addr_hit[5]: begin
-        reg_rdata_next[31:0] = mtimecmp_low2_qs;
+        reg_rdata_next[31:0] = mtimecmp_high1_qs;
       end
 
       addr_hit[6]: begin
-        reg_rdata_next[31:0] = mtimecmp_high2_qs;
+        reg_rdata_next[31:0] = mtimecmp_low2_qs;
       end
 
       addr_hit[7]: begin
-        reg_rdata_next[31:0] = mtimecmp_low3_qs;
+        reg_rdata_next[31:0] = mtimecmp_high2_qs;
       end
 
       addr_hit[8]: begin
-        reg_rdata_next[31:0] = mtimecmp_high3_qs;
+        reg_rdata_next[31:0] = mtimecmp_low3_qs;
       end
 
       addr_hit[9]: begin
-        reg_rdata_next[31:0] = mtimecmp_low4_qs;
+        reg_rdata_next[31:0] = mtimecmp_high3_qs;
       end
 
       addr_hit[10]: begin
-        reg_rdata_next[31:0] = mtimecmp_high4_qs;
+        reg_rdata_next[31:0] = mtimecmp_low4_qs;
       end
 
       addr_hit[11]: begin
-        reg_rdata_next[31:0] = mtime_low_qs;
+        reg_rdata_next[31:0] = mtimecmp_high4_qs;
       end
 
       addr_hit[12]: begin
+        reg_rdata_next[31:0] = mtimecmp_low5_qs;
+      end
+
+      addr_hit[13]: begin
+        reg_rdata_next[31:0] = mtimecmp_high5_qs;
+      end
+
+      addr_hit[14]: begin
+        reg_rdata_next[31:0] = mtimecmp_low6_qs;
+      end
+
+      addr_hit[15]: begin
+        reg_rdata_next[31:0] = mtimecmp_high6_qs;
+      end
+
+      addr_hit[16]: begin
+        reg_rdata_next[31:0] = mtimecmp_low7_qs;
+      end
+
+      addr_hit[17]: begin
+        reg_rdata_next[31:0] = mtimecmp_high7_qs;
+      end
+
+      addr_hit[18]: begin
+        reg_rdata_next[31:0] = mtimecmp_low8_qs;
+      end
+
+      addr_hit[19]: begin
+        reg_rdata_next[31:0] = mtimecmp_high8_qs;
+      end
+
+      addr_hit[20]: begin
+        reg_rdata_next[31:0] = mtimecmp_low9_qs;
+      end
+
+      addr_hit[21]: begin
+        reg_rdata_next[31:0] = mtimecmp_high9_qs;
+      end
+
+      addr_hit[22]: begin
+        reg_rdata_next[31:0] = mtimecmp_low10_qs;
+      end
+
+      addr_hit[23]: begin
+        reg_rdata_next[31:0] = mtimecmp_high10_qs;
+      end
+
+      addr_hit[24]: begin
+        reg_rdata_next[31:0] = mtimecmp_low11_qs;
+      end
+
+      addr_hit[25]: begin
+        reg_rdata_next[31:0] = mtimecmp_high11_qs;
+      end
+
+      addr_hit[26]: begin
+        reg_rdata_next[31:0] = mtimecmp_low12_qs;
+      end
+
+      addr_hit[27]: begin
+        reg_rdata_next[31:0] = mtimecmp_high12_qs;
+      end
+
+      addr_hit[28]: begin
+        reg_rdata_next[31:0] = mtimecmp_low13_qs;
+      end
+
+      addr_hit[29]: begin
+        reg_rdata_next[31:0] = mtimecmp_high13_qs;
+      end
+
+      addr_hit[30]: begin
+        reg_rdata_next[31:0] = mtimecmp_low14_qs;
+      end
+
+      addr_hit[31]: begin
+        reg_rdata_next[31:0] = mtimecmp_high14_qs;
+      end
+
+      addr_hit[32]: begin
+        reg_rdata_next[31:0] = mtimecmp_low15_qs;
+      end
+
+      addr_hit[33]: begin
+        reg_rdata_next[31:0] = mtimecmp_high15_qs;
+      end
+
+      addr_hit[34]: begin
+        reg_rdata_next[31:0] = mtimecmp_low16_qs;
+      end
+
+      addr_hit[35]: begin
+        reg_rdata_next[31:0] = mtimecmp_high16_qs;
+      end
+
+      addr_hit[36]: begin
+        reg_rdata_next[31:0] = mtimecmp_low17_qs;
+      end
+
+      addr_hit[37]: begin
+        reg_rdata_next[31:0] = mtimecmp_high17_qs;
+      end
+
+      addr_hit[38]: begin
+        reg_rdata_next[31:0] = mtimecmp_low18_qs;
+      end
+
+      addr_hit[39]: begin
+        reg_rdata_next[31:0] = mtimecmp_high18_qs;
+      end
+
+      addr_hit[40]: begin
+        reg_rdata_next[31:0] = mtimecmp_low19_qs;
+      end
+
+      addr_hit[41]: begin
+        reg_rdata_next[31:0] = mtimecmp_high19_qs;
+      end
+
+      addr_hit[42]: begin
+        reg_rdata_next[31:0] = mtimecmp_low20_qs;
+      end
+
+      addr_hit[43]: begin
+        reg_rdata_next[31:0] = mtimecmp_high20_qs;
+      end
+
+      addr_hit[44]: begin
+        reg_rdata_next[31:0] = mtimecmp_low21_qs;
+      end
+
+      addr_hit[45]: begin
+        reg_rdata_next[31:0] = mtimecmp_high21_qs;
+      end
+
+      addr_hit[46]: begin
+        reg_rdata_next[31:0] = mtimecmp_low22_qs;
+      end
+
+      addr_hit[47]: begin
+        reg_rdata_next[31:0] = mtimecmp_high22_qs;
+      end
+
+      addr_hit[48]: begin
+        reg_rdata_next[31:0] = mtimecmp_low23_qs;
+      end
+
+      addr_hit[49]: begin
+        reg_rdata_next[31:0] = mtimecmp_high23_qs;
+      end
+
+      addr_hit[50]: begin
+        reg_rdata_next[31:0] = mtimecmp_low24_qs;
+      end
+
+      addr_hit[51]: begin
+        reg_rdata_next[31:0] = mtimecmp_high24_qs;
+      end
+
+      addr_hit[52]: begin
+        reg_rdata_next[31:0] = mtimecmp_low25_qs;
+      end
+
+      addr_hit[53]: begin
+        reg_rdata_next[31:0] = mtimecmp_high25_qs;
+      end
+
+      addr_hit[54]: begin
+        reg_rdata_next[31:0] = mtimecmp_low26_qs;
+      end
+
+      addr_hit[55]: begin
+        reg_rdata_next[31:0] = mtimecmp_high26_qs;
+      end
+
+      addr_hit[56]: begin
+        reg_rdata_next[31:0] = mtimecmp_low27_qs;
+      end
+
+      addr_hit[57]: begin
+        reg_rdata_next[31:0] = mtimecmp_high27_qs;
+      end
+
+      addr_hit[58]: begin
+        reg_rdata_next[31:0] = mtimecmp_low28_qs;
+      end
+
+      addr_hit[59]: begin
+        reg_rdata_next[31:0] = mtimecmp_high28_qs;
+      end
+
+      addr_hit[60]: begin
+        reg_rdata_next[31:0] = mtimecmp_low29_qs;
+      end
+
+      addr_hit[61]: begin
+        reg_rdata_next[31:0] = mtimecmp_high29_qs;
+      end
+
+      addr_hit[62]: begin
+        reg_rdata_next[31:0] = mtimecmp_low30_qs;
+      end
+
+      addr_hit[63]: begin
+        reg_rdata_next[31:0] = mtimecmp_high30_qs;
+      end
+
+      addr_hit[64]: begin
+        reg_rdata_next[31:0] = mtimecmp_low31_qs;
+      end
+
+      addr_hit[65]: begin
+        reg_rdata_next[31:0] = mtimecmp_high31_qs;
+      end
+
+      addr_hit[66]: begin
+        reg_rdata_next[31:0] = mtimecmp_low32_qs;
+      end
+
+      addr_hit[67]: begin
+        reg_rdata_next[31:0] = mtimecmp_high32_qs;
+      end
+
+      addr_hit[68]: begin
+        reg_rdata_next[31:0] = mtime_low_qs;
+      end
+
+      addr_hit[69]: begin
         reg_rdata_next[31:0] = mtime_high_qs;
       end
 

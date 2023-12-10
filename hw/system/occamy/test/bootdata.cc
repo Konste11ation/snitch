@@ -14,7 +14,7 @@ const BootData BOOTDATA = {.boot_addr = 0x1000000,
                            .tcdm_offset = 0x40000,
                            .global_mem_start = 0x80000000,
                            .global_mem_end = 0x100000000,
-                           .cluster_count = 2,
+                           .cluster_count = 16,
                            .s1_quadrant_count = 1,
                            .clint_base = 0x4000000};
 

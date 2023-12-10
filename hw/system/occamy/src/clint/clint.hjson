@@ -15,7 +15,7 @@
     { name: "NumCores",
       desc: "Number of cores",
       type: "int",
-      default: "5",
+      default: "33",
       local: "true"
     }
   ],
@@ -116,6 +116,482 @@
         hwaccess: "hro",
         fields: [
           { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 4" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW5",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 5" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH5",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 5" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW6",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 6" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH6",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 6" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW7",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 7" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH7",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 7" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW8",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 8" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH8",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 8" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW9",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 9" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH9",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 9" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW10",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 10" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH10",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 10" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW11",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 11" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH11",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 11" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW12",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 12" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH12",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 12" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW13",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 13" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH13",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 13" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW14",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 14" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH14",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 14" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW15",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 15" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH15",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 15" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW16",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 16" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH16",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 16" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW17",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 17" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH17",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 17" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW18",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 18" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH18",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 18" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW19",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 19" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH19",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 19" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW20",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 20" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH20",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 20" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW21",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 21" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH21",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 21" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW22",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 22" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH22",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 22" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW23",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 23" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH23",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 23" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW24",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 24" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH24",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 24" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW25",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 25" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH25",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 25" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW26",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 26" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH26",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 26" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW27",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 27" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH27",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 27" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW28",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 28" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH28",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 28" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW29",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 29" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH29",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 29" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW30",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 30" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH30",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 30" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW31",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 31" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH31",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 31" }
+        ]
+    },
+    {   name: "MTIMECMP_LOW32",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_LOW", desc: "Machine Time Compare (Low) Core 32" }
+        ]
+    },
+    {
+        name: "MTIMECMP_HIGH32",
+        desc: "Machine Timer Compare",
+        swaccess: "rw",
+        hwaccess: "hro",
+        fields: [
+          { bits: "31:0", name: "MTIMECMP_HIGH", desc: "Machine Time Compare (High) Core 32" }
         ]
     },
     { skipto: "0xBFF8" },

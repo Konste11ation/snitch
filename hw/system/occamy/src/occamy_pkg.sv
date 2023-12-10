@@ -20,7 +20,7 @@ package occamy_pkg;
   localparam int unsigned NarrowUserWidth = occamy_cluster_pkg::NarrowUserWidth;
   localparam int unsigned WideUserWidth = occamy_cluster_pkg::WideUserWidth;
 
-  localparam int unsigned NrClustersS1Quadrant = 2;
+  localparam int unsigned NrClustersS1Quadrant = 16;
   localparam int unsigned NrCoresCluster = occamy_cluster_pkg::NrCores;
   localparam int unsigned NrCoresS1Quadrant = NrClustersS1Quadrant * NrCoresCluster;
 
@@ -708,6 +708,20 @@ package occamy_pkg;
     WIDE_XBAR_QUADRANT_S1_IN_TOP,
     WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_0,
     WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_1,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_2,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_3,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_4,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_5,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_6,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_7,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_8,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_9,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_10,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_11,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_12,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_13,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_14,
+    WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_15,
     WIDE_XBAR_QUADRANT_S1_NUM_INPUTS
   } wide_xbar_quadrant_s1_inputs_e;
 
@@ -716,6 +730,20 @@ package occamy_pkg;
     WIDE_XBAR_QUADRANT_S1_OUT_TOP,
     WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_0,
     WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_1,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_2,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_3,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_4,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_5,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_6,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_7,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_8,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_9,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_10,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_11,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_12,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_13,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_14,
+    WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_15,
     WIDE_XBAR_QUADRANT_S1_NUM_OUTPUTS
   } wide_xbar_quadrant_s1_outputs_e;
 
@@ -733,38 +761,56 @@ package occamy_pkg;
   UniqueIds:          0,
   AxiAddrWidth:       48,
   AxiDataWidth:       512,
-  NoAddrRules:        2
+  NoAddrRules:        16
 };
 
   // AXI bus with 48 bit address, 512 bit data, 3 bit IDs, and 0 bit user data.
   `AXI_TYPEDEF_ALL_CT(axi_a48_d512_i3_u0, axi_a48_d512_i3_u0_req_t, axi_a48_d512_i3_u0_resp_t,
                       logic [47:0], logic [2:0], logic [511:0], logic [63:0], logic [0:0])
 
+  // AXI bus with 48 bit address, 512 bit data, 8 bit IDs, and 0 bit user data.
+  `AXI_TYPEDEF_ALL_CT(axi_a48_d512_i8_u0, axi_a48_d512_i8_u0_req_t, axi_a48_d512_i8_u0_resp_t,
+                      logic [47:0], logic [7:0], logic [511:0], logic [63:0], logic [0:0])
+
   typedef axi_a48_d512_i3_u0_req_t wide_xbar_quadrant_s1_in_req_t;
-  typedef axi_a48_d512_i5_u0_req_t wide_xbar_quadrant_s1_out_req_t;
+  typedef axi_a48_d512_i8_u0_req_t wide_xbar_quadrant_s1_out_req_t;
   typedef axi_a48_d512_i3_u0_resp_t wide_xbar_quadrant_s1_in_resp_t;
-  typedef axi_a48_d512_i5_u0_resp_t wide_xbar_quadrant_s1_out_resp_t;
+  typedef axi_a48_d512_i8_u0_resp_t wide_xbar_quadrant_s1_out_resp_t;
   typedef axi_a48_d512_i3_u0_aw_chan_t wide_xbar_quadrant_s1_in_aw_chan_t;
-  typedef axi_a48_d512_i5_u0_aw_chan_t wide_xbar_quadrant_s1_out_aw_chan_t;
+  typedef axi_a48_d512_i8_u0_aw_chan_t wide_xbar_quadrant_s1_out_aw_chan_t;
   typedef axi_a48_d512_i3_u0_w_chan_t wide_xbar_quadrant_s1_in_w_chan_t;
-  typedef axi_a48_d512_i5_u0_w_chan_t wide_xbar_quadrant_s1_out_w_chan_t;
+  typedef axi_a48_d512_i8_u0_w_chan_t wide_xbar_quadrant_s1_out_w_chan_t;
   typedef axi_a48_d512_i3_u0_b_chan_t wide_xbar_quadrant_s1_in_b_chan_t;
-  typedef axi_a48_d512_i5_u0_b_chan_t wide_xbar_quadrant_s1_out_b_chan_t;
+  typedef axi_a48_d512_i8_u0_b_chan_t wide_xbar_quadrant_s1_out_b_chan_t;
   typedef axi_a48_d512_i3_u0_ar_chan_t wide_xbar_quadrant_s1_in_ar_chan_t;
-  typedef axi_a48_d512_i5_u0_ar_chan_t wide_xbar_quadrant_s1_out_ar_chan_t;
+  typedef axi_a48_d512_i8_u0_ar_chan_t wide_xbar_quadrant_s1_out_ar_chan_t;
   typedef axi_a48_d512_i3_u0_r_chan_t wide_xbar_quadrant_s1_in_r_chan_t;
-  typedef axi_a48_d512_i5_u0_r_chan_t wide_xbar_quadrant_s1_out_r_chan_t;
+  typedef axi_a48_d512_i8_u0_r_chan_t wide_xbar_quadrant_s1_out_r_chan_t;
 
   // verilog_lint: waive parameter-name-style
   localparam int WIDE_XBAR_QUADRANT_S1_IW_IN = 3;
   // verilog_lint: waive parameter-name-style
-  localparam int WIDE_XBAR_QUADRANT_S1_IW_OUT = 5;
+  localparam int WIDE_XBAR_QUADRANT_S1_IW_OUT = 8;
 
   /// Inputs of the `narrow_xbar_quadrant_s1` crossbar.
   typedef enum int {
     NARROW_XBAR_QUADRANT_S1_IN_TOP,
     NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_0,
     NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_1,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_2,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_3,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_4,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_5,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_6,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_7,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_8,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_9,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_10,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_11,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_12,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_13,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_14,
+    NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_15,
     NARROW_XBAR_QUADRANT_S1_NUM_INPUTS
   } narrow_xbar_quadrant_s1_inputs_e;
 
@@ -773,6 +819,20 @@ package occamy_pkg;
     NARROW_XBAR_QUADRANT_S1_OUT_TOP,
     NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_0,
     NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_1,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_2,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_3,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_4,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_5,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_6,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_7,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_8,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_9,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_10,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_11,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_12,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_13,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_14,
+    NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_15,
     NARROW_XBAR_QUADRANT_S1_NUM_OUTPUTS
   } narrow_xbar_quadrant_s1_outputs_e;
 
@@ -790,32 +850,32 @@ package occamy_pkg;
   UniqueIds:          0,
   AxiAddrWidth:       48,
   AxiDataWidth:       64,
-  NoAddrRules:        2
+  NoAddrRules:        16
 };
 
-  // AXI bus with 48 bit address, 64 bit data, 6 bit IDs, and 5 bit user data.
-  `AXI_TYPEDEF_ALL_CT(axi_a48_d64_i6_u5, axi_a48_d64_i6_u5_req_t, axi_a48_d64_i6_u5_resp_t,
-                      logic [47:0], logic [5:0], logic [63:0], logic [7:0], logic [4:0])
+  // AXI bus with 48 bit address, 64 bit data, 9 bit IDs, and 5 bit user data.
+  `AXI_TYPEDEF_ALL_CT(axi_a48_d64_i9_u5, axi_a48_d64_i9_u5_req_t, axi_a48_d64_i9_u5_resp_t,
+                      logic [47:0], logic [8:0], logic [63:0], logic [7:0], logic [4:0])
 
   typedef axi_a48_d64_i4_u5_req_t narrow_xbar_quadrant_s1_in_req_t;
-  typedef axi_a48_d64_i6_u5_req_t narrow_xbar_quadrant_s1_out_req_t;
+  typedef axi_a48_d64_i9_u5_req_t narrow_xbar_quadrant_s1_out_req_t;
   typedef axi_a48_d64_i4_u5_resp_t narrow_xbar_quadrant_s1_in_resp_t;
-  typedef axi_a48_d64_i6_u5_resp_t narrow_xbar_quadrant_s1_out_resp_t;
+  typedef axi_a48_d64_i9_u5_resp_t narrow_xbar_quadrant_s1_out_resp_t;
   typedef axi_a48_d64_i4_u5_aw_chan_t narrow_xbar_quadrant_s1_in_aw_chan_t;
-  typedef axi_a48_d64_i6_u5_aw_chan_t narrow_xbar_quadrant_s1_out_aw_chan_t;
+  typedef axi_a48_d64_i9_u5_aw_chan_t narrow_xbar_quadrant_s1_out_aw_chan_t;
   typedef axi_a48_d64_i4_u5_w_chan_t narrow_xbar_quadrant_s1_in_w_chan_t;
-  typedef axi_a48_d64_i6_u5_w_chan_t narrow_xbar_quadrant_s1_out_w_chan_t;
+  typedef axi_a48_d64_i9_u5_w_chan_t narrow_xbar_quadrant_s1_out_w_chan_t;
   typedef axi_a48_d64_i4_u5_b_chan_t narrow_xbar_quadrant_s1_in_b_chan_t;
-  typedef axi_a48_d64_i6_u5_b_chan_t narrow_xbar_quadrant_s1_out_b_chan_t;
+  typedef axi_a48_d64_i9_u5_b_chan_t narrow_xbar_quadrant_s1_out_b_chan_t;
   typedef axi_a48_d64_i4_u5_ar_chan_t narrow_xbar_quadrant_s1_in_ar_chan_t;
-  typedef axi_a48_d64_i6_u5_ar_chan_t narrow_xbar_quadrant_s1_out_ar_chan_t;
+  typedef axi_a48_d64_i9_u5_ar_chan_t narrow_xbar_quadrant_s1_out_ar_chan_t;
   typedef axi_a48_d64_i4_u5_r_chan_t narrow_xbar_quadrant_s1_in_r_chan_t;
-  typedef axi_a48_d64_i6_u5_r_chan_t narrow_xbar_quadrant_s1_out_r_chan_t;
+  typedef axi_a48_d64_i9_u5_r_chan_t narrow_xbar_quadrant_s1_out_r_chan_t;
 
   // verilog_lint: waive parameter-name-style
   localparam int NARROW_XBAR_QUADRANT_S1_IW_IN = 4;
   // verilog_lint: waive parameter-name-style
-  localparam int NARROW_XBAR_QUADRANT_S1_IW_OUT = 6;
+  localparam int NARROW_XBAR_QUADRANT_S1_IW_OUT = 9;
 
   // APB bus with 48 bit address, 32 bit data.
   `APB_TYPEDEF_REQ_T(apb_a48_d32_req_t, logic [47:0], logic [31:0], logic [3:0])
@@ -843,14 +903,6 @@ package occamy_pkg;
   // AXI bus with 48 bit address, 32 bit data, 1 bit IDs, and 5 bit user data.
   `AXI_TYPEDEF_ALL_CT(axi_a48_d32_i1_u5, axi_a48_d32_i1_u5_req_t, axi_a48_d32_i1_u5_resp_t,
                       logic [47:0], logic [0:0], logic [31:0], logic [3:0], logic [4:0])
-
-  // AXI bus with 48 bit address, 64 bit data, 2 bit IDs, and 5 bit user data.
-  `AXI_TYPEDEF_ALL_CT(axi_a48_d64_i2_u5, axi_a48_d64_i2_u5_req_t, axi_a48_d64_i2_u5_resp_t,
-                      logic [47:0], logic [1:0], logic [63:0], logic [7:0], logic [4:0])
-
-  // AXI bus with 48 bit address, 512 bit data, 1 bit IDs, and 0 bit user data.
-  `AXI_TYPEDEF_ALL_CT(axi_a48_d512_i1_u0, axi_a48_d512_i1_u0_req_t, axi_a48_d512_i1_u0_resp_t,
-                      logic [47:0], logic [0:0], logic [511:0], logic [63:0], logic [0:0])
 
 
 endpackage

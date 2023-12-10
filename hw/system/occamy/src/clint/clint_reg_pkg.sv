@@ -7,7 +7,7 @@
 package clint_reg_pkg;
 
   // Param list
-  parameter int NumCores = 5;
+  parameter int NumCores = 33;
 
   // Address widths within the block
   parameter int BlockAw = 16;
@@ -62,6 +62,230 @@ package clint_reg_pkg;
 
   typedef struct packed {
     logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low5_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high5_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low6_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high6_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low7_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high7_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low8_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high8_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low9_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high9_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low10_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high10_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low11_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high11_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low12_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high12_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low13_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high13_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low14_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high14_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low15_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high15_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low16_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high16_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low17_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high17_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low18_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high18_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low19_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high19_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low20_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high20_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low21_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high21_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low22_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high22_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low23_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high23_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low24_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high24_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low25_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high25_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low26_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high26_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low27_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high27_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low28_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high28_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low29_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high29_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low30_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high30_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low31_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high31_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_low32_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
+  } clint_reg2hw_mtimecmp_high32_reg_t;
+
+  typedef struct packed {
+    logic [31:0] q;
   } clint_reg2hw_mtime_low_reg_t;
 
   typedef struct packed {
@@ -80,17 +304,73 @@ package clint_reg_pkg;
 
   // Register -> HW type
   typedef struct packed {
-    clint_reg2hw_msip_mreg_t [4:0] msip; // [388:384]
-    clint_reg2hw_mtimecmp_low0_reg_t mtimecmp_low0; // [383:352]
-    clint_reg2hw_mtimecmp_high0_reg_t mtimecmp_high0; // [351:320]
-    clint_reg2hw_mtimecmp_low1_reg_t mtimecmp_low1; // [319:288]
-    clint_reg2hw_mtimecmp_high1_reg_t mtimecmp_high1; // [287:256]
-    clint_reg2hw_mtimecmp_low2_reg_t mtimecmp_low2; // [255:224]
-    clint_reg2hw_mtimecmp_high2_reg_t mtimecmp_high2; // [223:192]
-    clint_reg2hw_mtimecmp_low3_reg_t mtimecmp_low3; // [191:160]
-    clint_reg2hw_mtimecmp_high3_reg_t mtimecmp_high3; // [159:128]
-    clint_reg2hw_mtimecmp_low4_reg_t mtimecmp_low4; // [127:96]
-    clint_reg2hw_mtimecmp_high4_reg_t mtimecmp_high4; // [95:64]
+    clint_reg2hw_msip_mreg_t [32:0] msip; // [2208:2176]
+    clint_reg2hw_mtimecmp_low0_reg_t mtimecmp_low0; // [2175:2144]
+    clint_reg2hw_mtimecmp_high0_reg_t mtimecmp_high0; // [2143:2112]
+    clint_reg2hw_mtimecmp_low1_reg_t mtimecmp_low1; // [2111:2080]
+    clint_reg2hw_mtimecmp_high1_reg_t mtimecmp_high1; // [2079:2048]
+    clint_reg2hw_mtimecmp_low2_reg_t mtimecmp_low2; // [2047:2016]
+    clint_reg2hw_mtimecmp_high2_reg_t mtimecmp_high2; // [2015:1984]
+    clint_reg2hw_mtimecmp_low3_reg_t mtimecmp_low3; // [1983:1952]
+    clint_reg2hw_mtimecmp_high3_reg_t mtimecmp_high3; // [1951:1920]
+    clint_reg2hw_mtimecmp_low4_reg_t mtimecmp_low4; // [1919:1888]
+    clint_reg2hw_mtimecmp_high4_reg_t mtimecmp_high4; // [1887:1856]
+    clint_reg2hw_mtimecmp_low5_reg_t mtimecmp_low5; // [1855:1824]
+    clint_reg2hw_mtimecmp_high5_reg_t mtimecmp_high5; // [1823:1792]
+    clint_reg2hw_mtimecmp_low6_reg_t mtimecmp_low6; // [1791:1760]
+    clint_reg2hw_mtimecmp_high6_reg_t mtimecmp_high6; // [1759:1728]
+    clint_reg2hw_mtimecmp_low7_reg_t mtimecmp_low7; // [1727:1696]
+    clint_reg2hw_mtimecmp_high7_reg_t mtimecmp_high7; // [1695:1664]
+    clint_reg2hw_mtimecmp_low8_reg_t mtimecmp_low8; // [1663:1632]
+    clint_reg2hw_mtimecmp_high8_reg_t mtimecmp_high8; // [1631:1600]
+    clint_reg2hw_mtimecmp_low9_reg_t mtimecmp_low9; // [1599:1568]
+    clint_reg2hw_mtimecmp_high9_reg_t mtimecmp_high9; // [1567:1536]
+    clint_reg2hw_mtimecmp_low10_reg_t mtimecmp_low10; // [1535:1504]
+    clint_reg2hw_mtimecmp_high10_reg_t mtimecmp_high10; // [1503:1472]
+    clint_reg2hw_mtimecmp_low11_reg_t mtimecmp_low11; // [1471:1440]
+    clint_reg2hw_mtimecmp_high11_reg_t mtimecmp_high11; // [1439:1408]
+    clint_reg2hw_mtimecmp_low12_reg_t mtimecmp_low12; // [1407:1376]
+    clint_reg2hw_mtimecmp_high12_reg_t mtimecmp_high12; // [1375:1344]
+    clint_reg2hw_mtimecmp_low13_reg_t mtimecmp_low13; // [1343:1312]
+    clint_reg2hw_mtimecmp_high13_reg_t mtimecmp_high13; // [1311:1280]
+    clint_reg2hw_mtimecmp_low14_reg_t mtimecmp_low14; // [1279:1248]
+    clint_reg2hw_mtimecmp_high14_reg_t mtimecmp_high14; // [1247:1216]
+    clint_reg2hw_mtimecmp_low15_reg_t mtimecmp_low15; // [1215:1184]
+    clint_reg2hw_mtimecmp_high15_reg_t mtimecmp_high15; // [1183:1152]
+    clint_reg2hw_mtimecmp_low16_reg_t mtimecmp_low16; // [1151:1120]
+    clint_reg2hw_mtimecmp_high16_reg_t mtimecmp_high16; // [1119:1088]
+    clint_reg2hw_mtimecmp_low17_reg_t mtimecmp_low17; // [1087:1056]
+    clint_reg2hw_mtimecmp_high17_reg_t mtimecmp_high17; // [1055:1024]
+    clint_reg2hw_mtimecmp_low18_reg_t mtimecmp_low18; // [1023:992]
+    clint_reg2hw_mtimecmp_high18_reg_t mtimecmp_high18; // [991:960]
+    clint_reg2hw_mtimecmp_low19_reg_t mtimecmp_low19; // [959:928]
+    clint_reg2hw_mtimecmp_high19_reg_t mtimecmp_high19; // [927:896]
+    clint_reg2hw_mtimecmp_low20_reg_t mtimecmp_low20; // [895:864]
+    clint_reg2hw_mtimecmp_high20_reg_t mtimecmp_high20; // [863:832]
+    clint_reg2hw_mtimecmp_low21_reg_t mtimecmp_low21; // [831:800]
+    clint_reg2hw_mtimecmp_high21_reg_t mtimecmp_high21; // [799:768]
+    clint_reg2hw_mtimecmp_low22_reg_t mtimecmp_low22; // [767:736]
+    clint_reg2hw_mtimecmp_high22_reg_t mtimecmp_high22; // [735:704]
+    clint_reg2hw_mtimecmp_low23_reg_t mtimecmp_low23; // [703:672]
+    clint_reg2hw_mtimecmp_high23_reg_t mtimecmp_high23; // [671:640]
+    clint_reg2hw_mtimecmp_low24_reg_t mtimecmp_low24; // [639:608]
+    clint_reg2hw_mtimecmp_high24_reg_t mtimecmp_high24; // [607:576]
+    clint_reg2hw_mtimecmp_low25_reg_t mtimecmp_low25; // [575:544]
+    clint_reg2hw_mtimecmp_high25_reg_t mtimecmp_high25; // [543:512]
+    clint_reg2hw_mtimecmp_low26_reg_t mtimecmp_low26; // [511:480]
+    clint_reg2hw_mtimecmp_high26_reg_t mtimecmp_high26; // [479:448]
+    clint_reg2hw_mtimecmp_low27_reg_t mtimecmp_low27; // [447:416]
+    clint_reg2hw_mtimecmp_high27_reg_t mtimecmp_high27; // [415:384]
+    clint_reg2hw_mtimecmp_low28_reg_t mtimecmp_low28; // [383:352]
+    clint_reg2hw_mtimecmp_high28_reg_t mtimecmp_high28; // [351:320]
+    clint_reg2hw_mtimecmp_low29_reg_t mtimecmp_low29; // [319:288]
+    clint_reg2hw_mtimecmp_high29_reg_t mtimecmp_high29; // [287:256]
+    clint_reg2hw_mtimecmp_low30_reg_t mtimecmp_low30; // [255:224]
+    clint_reg2hw_mtimecmp_high30_reg_t mtimecmp_high30; // [223:192]
+    clint_reg2hw_mtimecmp_low31_reg_t mtimecmp_low31; // [191:160]
+    clint_reg2hw_mtimecmp_high31_reg_t mtimecmp_high31; // [159:128]
+    clint_reg2hw_mtimecmp_low32_reg_t mtimecmp_low32; // [127:96]
+    clint_reg2hw_mtimecmp_high32_reg_t mtimecmp_high32; // [95:64]
     clint_reg2hw_mtime_low_reg_t mtime_low; // [63:32]
     clint_reg2hw_mtime_high_reg_t mtime_high; // [31:0]
   } clint_reg2hw_t;
@@ -102,7 +382,8 @@ package clint_reg_pkg;
   } clint_hw2reg_t;
 
   // Register offsets
-  parameter logic [BlockAw-1:0] CLINT_MSIP_OFFSET = 16'h 0;
+  parameter logic [BlockAw-1:0] CLINT_MSIP_0_OFFSET = 16'h 0;
+  parameter logic [BlockAw-1:0] CLINT_MSIP_1_OFFSET = 16'h 4;
   parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW0_OFFSET = 16'h 4000;
   parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH0_OFFSET = 16'h 4004;
   parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW1_OFFSET = 16'h 4008;
@@ -113,12 +394,69 @@ package clint_reg_pkg;
   parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH3_OFFSET = 16'h 401c;
   parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW4_OFFSET = 16'h 4020;
   parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH4_OFFSET = 16'h 4024;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW5_OFFSET = 16'h 4028;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH5_OFFSET = 16'h 402c;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW6_OFFSET = 16'h 4030;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH6_OFFSET = 16'h 4034;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW7_OFFSET = 16'h 4038;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH7_OFFSET = 16'h 403c;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW8_OFFSET = 16'h 4040;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH8_OFFSET = 16'h 4044;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW9_OFFSET = 16'h 4048;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH9_OFFSET = 16'h 404c;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW10_OFFSET = 16'h 4050;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH10_OFFSET = 16'h 4054;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW11_OFFSET = 16'h 4058;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH11_OFFSET = 16'h 405c;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW12_OFFSET = 16'h 4060;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH12_OFFSET = 16'h 4064;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW13_OFFSET = 16'h 4068;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH13_OFFSET = 16'h 406c;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW14_OFFSET = 16'h 4070;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH14_OFFSET = 16'h 4074;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW15_OFFSET = 16'h 4078;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH15_OFFSET = 16'h 407c;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW16_OFFSET = 16'h 4080;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH16_OFFSET = 16'h 4084;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW17_OFFSET = 16'h 4088;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH17_OFFSET = 16'h 408c;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW18_OFFSET = 16'h 4090;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH18_OFFSET = 16'h 4094;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW19_OFFSET = 16'h 4098;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH19_OFFSET = 16'h 409c;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW20_OFFSET = 16'h 40a0;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH20_OFFSET = 16'h 40a4;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW21_OFFSET = 16'h 40a8;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH21_OFFSET = 16'h 40ac;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW22_OFFSET = 16'h 40b0;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH22_OFFSET = 16'h 40b4;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW23_OFFSET = 16'h 40b8;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH23_OFFSET = 16'h 40bc;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW24_OFFSET = 16'h 40c0;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH24_OFFSET = 16'h 40c4;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW25_OFFSET = 16'h 40c8;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH25_OFFSET = 16'h 40cc;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW26_OFFSET = 16'h 40d0;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH26_OFFSET = 16'h 40d4;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW27_OFFSET = 16'h 40d8;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH27_OFFSET = 16'h 40dc;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW28_OFFSET = 16'h 40e0;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH28_OFFSET = 16'h 40e4;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW29_OFFSET = 16'h 40e8;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH29_OFFSET = 16'h 40ec;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW30_OFFSET = 16'h 40f0;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH30_OFFSET = 16'h 40f4;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW31_OFFSET = 16'h 40f8;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH31_OFFSET = 16'h 40fc;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_LOW32_OFFSET = 16'h 4100;
+  parameter logic [BlockAw-1:0] CLINT_MTIMECMP_HIGH32_OFFSET = 16'h 4104;
   parameter logic [BlockAw-1:0] CLINT_MTIME_LOW_OFFSET = 16'h bff8;
   parameter logic [BlockAw-1:0] CLINT_MTIME_HIGH_OFFSET = 16'h bffc;
 
   // Register index
   typedef enum int {
-    CLINT_MSIP,
+    CLINT_MSIP_0,
+    CLINT_MSIP_1,
     CLINT_MTIMECMP_LOW0,
     CLINT_MTIMECMP_HIGH0,
     CLINT_MTIMECMP_LOW1,
@@ -129,25 +467,138 @@ package clint_reg_pkg;
     CLINT_MTIMECMP_HIGH3,
     CLINT_MTIMECMP_LOW4,
     CLINT_MTIMECMP_HIGH4,
+    CLINT_MTIMECMP_LOW5,
+    CLINT_MTIMECMP_HIGH5,
+    CLINT_MTIMECMP_LOW6,
+    CLINT_MTIMECMP_HIGH6,
+    CLINT_MTIMECMP_LOW7,
+    CLINT_MTIMECMP_HIGH7,
+    CLINT_MTIMECMP_LOW8,
+    CLINT_MTIMECMP_HIGH8,
+    CLINT_MTIMECMP_LOW9,
+    CLINT_MTIMECMP_HIGH9,
+    CLINT_MTIMECMP_LOW10,
+    CLINT_MTIMECMP_HIGH10,
+    CLINT_MTIMECMP_LOW11,
+    CLINT_MTIMECMP_HIGH11,
+    CLINT_MTIMECMP_LOW12,
+    CLINT_MTIMECMP_HIGH12,
+    CLINT_MTIMECMP_LOW13,
+    CLINT_MTIMECMP_HIGH13,
+    CLINT_MTIMECMP_LOW14,
+    CLINT_MTIMECMP_HIGH14,
+    CLINT_MTIMECMP_LOW15,
+    CLINT_MTIMECMP_HIGH15,
+    CLINT_MTIMECMP_LOW16,
+    CLINT_MTIMECMP_HIGH16,
+    CLINT_MTIMECMP_LOW17,
+    CLINT_MTIMECMP_HIGH17,
+    CLINT_MTIMECMP_LOW18,
+    CLINT_MTIMECMP_HIGH18,
+    CLINT_MTIMECMP_LOW19,
+    CLINT_MTIMECMP_HIGH19,
+    CLINT_MTIMECMP_LOW20,
+    CLINT_MTIMECMP_HIGH20,
+    CLINT_MTIMECMP_LOW21,
+    CLINT_MTIMECMP_HIGH21,
+    CLINT_MTIMECMP_LOW22,
+    CLINT_MTIMECMP_HIGH22,
+    CLINT_MTIMECMP_LOW23,
+    CLINT_MTIMECMP_HIGH23,
+    CLINT_MTIMECMP_LOW24,
+    CLINT_MTIMECMP_HIGH24,
+    CLINT_MTIMECMP_LOW25,
+    CLINT_MTIMECMP_HIGH25,
+    CLINT_MTIMECMP_LOW26,
+    CLINT_MTIMECMP_HIGH26,
+    CLINT_MTIMECMP_LOW27,
+    CLINT_MTIMECMP_HIGH27,
+    CLINT_MTIMECMP_LOW28,
+    CLINT_MTIMECMP_HIGH28,
+    CLINT_MTIMECMP_LOW29,
+    CLINT_MTIMECMP_HIGH29,
+    CLINT_MTIMECMP_LOW30,
+    CLINT_MTIMECMP_HIGH30,
+    CLINT_MTIMECMP_LOW31,
+    CLINT_MTIMECMP_HIGH31,
+    CLINT_MTIMECMP_LOW32,
+    CLINT_MTIMECMP_HIGH32,
     CLINT_MTIME_LOW,
     CLINT_MTIME_HIGH
   } clint_id_e;
 
   // Register width information to check illegal writes
-  parameter logic [3:0] CLINT_PERMIT [13] = '{
-    4'b 0001, // index[ 0] CLINT_MSIP
-    4'b 1111, // index[ 1] CLINT_MTIMECMP_LOW0
-    4'b 1111, // index[ 2] CLINT_MTIMECMP_HIGH0
-    4'b 1111, // index[ 3] CLINT_MTIMECMP_LOW1
-    4'b 1111, // index[ 4] CLINT_MTIMECMP_HIGH1
-    4'b 1111, // index[ 5] CLINT_MTIMECMP_LOW2
-    4'b 1111, // index[ 6] CLINT_MTIMECMP_HIGH2
-    4'b 1111, // index[ 7] CLINT_MTIMECMP_LOW3
-    4'b 1111, // index[ 8] CLINT_MTIMECMP_HIGH3
-    4'b 1111, // index[ 9] CLINT_MTIMECMP_LOW4
-    4'b 1111, // index[10] CLINT_MTIMECMP_HIGH4
-    4'b 1111, // index[11] CLINT_MTIME_LOW
-    4'b 1111  // index[12] CLINT_MTIME_HIGH
+  parameter logic [3:0] CLINT_PERMIT [70] = '{
+    4'b 1111, // index[ 0] CLINT_MSIP_0
+    4'b 0001, // index[ 1] CLINT_MSIP_1
+    4'b 1111, // index[ 2] CLINT_MTIMECMP_LOW0
+    4'b 1111, // index[ 3] CLINT_MTIMECMP_HIGH0
+    4'b 1111, // index[ 4] CLINT_MTIMECMP_LOW1
+    4'b 1111, // index[ 5] CLINT_MTIMECMP_HIGH1
+    4'b 1111, // index[ 6] CLINT_MTIMECMP_LOW2
+    4'b 1111, // index[ 7] CLINT_MTIMECMP_HIGH2
+    4'b 1111, // index[ 8] CLINT_MTIMECMP_LOW3
+    4'b 1111, // index[ 9] CLINT_MTIMECMP_HIGH3
+    4'b 1111, // index[10] CLINT_MTIMECMP_LOW4
+    4'b 1111, // index[11] CLINT_MTIMECMP_HIGH4
+    4'b 1111, // index[12] CLINT_MTIMECMP_LOW5
+    4'b 1111, // index[13] CLINT_MTIMECMP_HIGH5
+    4'b 1111, // index[14] CLINT_MTIMECMP_LOW6
+    4'b 1111, // index[15] CLINT_MTIMECMP_HIGH6
+    4'b 1111, // index[16] CLINT_MTIMECMP_LOW7
+    4'b 1111, // index[17] CLINT_MTIMECMP_HIGH7
+    4'b 1111, // index[18] CLINT_MTIMECMP_LOW8
+    4'b 1111, // index[19] CLINT_MTIMECMP_HIGH8
+    4'b 1111, // index[20] CLINT_MTIMECMP_LOW9
+    4'b 1111, // index[21] CLINT_MTIMECMP_HIGH9
+    4'b 1111, // index[22] CLINT_MTIMECMP_LOW10
+    4'b 1111, // index[23] CLINT_MTIMECMP_HIGH10
+    4'b 1111, // index[24] CLINT_MTIMECMP_LOW11
+    4'b 1111, // index[25] CLINT_MTIMECMP_HIGH11
+    4'b 1111, // index[26] CLINT_MTIMECMP_LOW12
+    4'b 1111, // index[27] CLINT_MTIMECMP_HIGH12
+    4'b 1111, // index[28] CLINT_MTIMECMP_LOW13
+    4'b 1111, // index[29] CLINT_MTIMECMP_HIGH13
+    4'b 1111, // index[30] CLINT_MTIMECMP_LOW14
+    4'b 1111, // index[31] CLINT_MTIMECMP_HIGH14
+    4'b 1111, // index[32] CLINT_MTIMECMP_LOW15
+    4'b 1111, // index[33] CLINT_MTIMECMP_HIGH15
+    4'b 1111, // index[34] CLINT_MTIMECMP_LOW16
+    4'b 1111, // index[35] CLINT_MTIMECMP_HIGH16
+    4'b 1111, // index[36] CLINT_MTIMECMP_LOW17
+    4'b 1111, // index[37] CLINT_MTIMECMP_HIGH17
+    4'b 1111, // index[38] CLINT_MTIMECMP_LOW18
+    4'b 1111, // index[39] CLINT_MTIMECMP_HIGH18
+    4'b 1111, // index[40] CLINT_MTIMECMP_LOW19
+    4'b 1111, // index[41] CLINT_MTIMECMP_HIGH19
+    4'b 1111, // index[42] CLINT_MTIMECMP_LOW20
+    4'b 1111, // index[43] CLINT_MTIMECMP_HIGH20
+    4'b 1111, // index[44] CLINT_MTIMECMP_LOW21
+    4'b 1111, // index[45] CLINT_MTIMECMP_HIGH21
+    4'b 1111, // index[46] CLINT_MTIMECMP_LOW22
+    4'b 1111, // index[47] CLINT_MTIMECMP_HIGH22
+    4'b 1111, // index[48] CLINT_MTIMECMP_LOW23
+    4'b 1111, // index[49] CLINT_MTIMECMP_HIGH23
+    4'b 1111, // index[50] CLINT_MTIMECMP_LOW24
+    4'b 1111, // index[51] CLINT_MTIMECMP_HIGH24
+    4'b 1111, // index[52] CLINT_MTIMECMP_LOW25
+    4'b 1111, // index[53] CLINT_MTIMECMP_HIGH25
+    4'b 1111, // index[54] CLINT_MTIMECMP_LOW26
+    4'b 1111, // index[55] CLINT_MTIMECMP_HIGH26
+    4'b 1111, // index[56] CLINT_MTIMECMP_LOW27
+    4'b 1111, // index[57] CLINT_MTIMECMP_HIGH27
+    4'b 1111, // index[58] CLINT_MTIMECMP_LOW28
+    4'b 1111, // index[59] CLINT_MTIMECMP_HIGH28
+    4'b 1111, // index[60] CLINT_MTIMECMP_LOW29
+    4'b 1111, // index[61] CLINT_MTIMECMP_HIGH29
+    4'b 1111, // index[62] CLINT_MTIMECMP_LOW30
+    4'b 1111, // index[63] CLINT_MTIMECMP_HIGH30
+    4'b 1111, // index[64] CLINT_MTIMECMP_LOW31
+    4'b 1111, // index[65] CLINT_MTIMECMP_HIGH31
+    4'b 1111, // index[66] CLINT_MTIMECMP_LOW32
+    4'b 1111, // index[67] CLINT_MTIMECMP_HIGH32
+    4'b 1111, // index[68] CLINT_MTIME_LOW
+    4'b 1111  // index[69] CLINT_MTIME_HIGH
   };
 
 endpackage
