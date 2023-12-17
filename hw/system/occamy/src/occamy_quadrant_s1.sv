@@ -15,8 +15,6 @@
 /// Occamy Stage 1 Quadrant
 module occamy_quadrant_s1
   import occamy_pkg::*;
-  import floo_pkg::*;
-  import floo_narrow_wide_pkg::*;
 (
     input  logic                                             clk_i,
     input  logic                                             rst_ni,
@@ -39,23 +37,11 @@ module occamy_quadrant_s1
 );
 
   // Calculate cluster base address based on `tile id`.
-  addr_t [15:0] cluster_base_addr;
+  addr_t [3:0] cluster_base_addr;
   assign cluster_base_addr[0] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 0 * ClusterAddressSpace;
   assign cluster_base_addr[1] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 1 * ClusterAddressSpace;
   assign cluster_base_addr[2] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 2 * ClusterAddressSpace;
   assign cluster_base_addr[3] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 3 * ClusterAddressSpace;
-  assign cluster_base_addr[4] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 4 * ClusterAddressSpace;
-  assign cluster_base_addr[5] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 5 * ClusterAddressSpace;
-  assign cluster_base_addr[6] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 6 * ClusterAddressSpace;
-  assign cluster_base_addr[7] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 7 * ClusterAddressSpace;
-  assign cluster_base_addr[8] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 8 * ClusterAddressSpace;
-  assign cluster_base_addr[9] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 9 * ClusterAddressSpace;
-  assign cluster_base_addr[10] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 10 * ClusterAddressSpace;
-  assign cluster_base_addr[11] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 11 * ClusterAddressSpace;
-  assign cluster_base_addr[12] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 12 * ClusterAddressSpace;
-  assign cluster_base_addr[13] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 13 * ClusterAddressSpace;
-  assign cluster_base_addr[14] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 14 * ClusterAddressSpace;
-  assign cluster_base_addr[15] = ClusterBaseOffset + tile_id_i * NrClustersS1Quadrant * ClusterAddressSpace + 15 * ClusterAddressSpace;
 
   // Define types for IOTLBs
   `AXI_TLB_TYPEDEF_ALL(tlb, logic [AddrWidth-12-1:0], logic [AddrWidth-12-1:0])
@@ -69,361 +55,100 @@ module occamy_quadrant_s1
   tlb_entry_t [7:0] narrow_tlb_entries;
   logic wide_tlb_enable;
   tlb_entry_t [7:0] wide_tlb_entries;
-  // AXI bus with 48 bit address, 64 bit data, 2 bit IDs, and 5 bit user data.
-  `AXI_TYPEDEF_ALL_CT(axi_a48_d64_i2_u5, axi_a48_d64_i2_u5_req_t, axi_a48_d64_i2_u5_resp_t,
-                      logic [47:0], logic [1:0], logic [63:0], logic [7:0], logic [4:0])
-
-  // AXI bus with 48 bit address, 512 bit data, 1 bit IDs, and 0 bit user data.
-  `AXI_TYPEDEF_ALL_CT(axi_a48_d512_i1_u0, axi_a48_d512_i1_u0_req_t, axi_a48_d512_i1_u0_resp_t,
-                      logic [47:0], logic [0:0], logic [511:0], logic [63:0], logic [0:0])
-
-  // AXI bus with 48 bit address, 512 bit data, 2 bit IDs, and 0 bit user data.
-  `AXI_TYPEDEF_ALL_CT(axi_a48_d512_i2_u0, axi_a48_d512_i2_u0_req_t, axi_a48_d512_i2_u0_resp_t,
-                      logic [47:0], logic [1:0], logic [511:0], logic [63:0], logic [0:0])
 
   ///////////////////
-  //   FlooNoC     //
+  //   CROSSBARS   //
   ///////////////////
-  localparam int unsigned NumX = 4;
-  localparam int unsigned NumY = 4;
-  localparam int unsigned NumMax = (NumX > NumY) ? NumX : NumY;
 
-  `FLOO_NOC_TYPEDEF_XY_ID_T(xy_id_t, NumX + 1, NumY + 1)
+  /// Address map of the `wide_xbar_quadrant_s1` crossbar.
+  xbar_rule_48_t [3:0] WideXbarQuadrantS1Addrmap;
+  assign WideXbarQuadrantS1Addrmap = '{
+  '{ idx: 1, start_addr: cluster_base_addr[0], end_addr: cluster_base_addr[0] + ClusterAddressSpace },
+  '{ idx: 2, start_addr: cluster_base_addr[1], end_addr: cluster_base_addr[1] + ClusterAddressSpace },
+  '{ idx: 3, start_addr: cluster_base_addr[2], end_addr: cluster_base_addr[2] + ClusterAddressSpace },
+  '{ idx: 4, start_addr: cluster_base_addr[3], end_addr: cluster_base_addr[3] + ClusterAddressSpace }
+};
 
-  localparam addr_t ClusterBasedAddr = occamy_pkg::ClusterBaseOffset;
-  localparam addr_t MemSize = occamy_pkg::ClusterAddressSpace;
+  wide_xbar_quadrant_s1_in_req_t   [4:0] wide_xbar_quadrant_s1_in_req;
+  wide_xbar_quadrant_s1_in_resp_t  [4:0] wide_xbar_quadrant_s1_in_rsp;
+  wide_xbar_quadrant_s1_out_req_t  [4:0] wide_xbar_quadrant_s1_out_req;
+  wide_xbar_quadrant_s1_out_resp_t [4:0] wide_xbar_quadrant_s1_out_rsp;
 
-  // Narrow Wide Chimney parameters
-  localparam bit CutAx = 1'b1;
-  localparam bit CutRsp = 1'b0;
-  localparam bit NarrowRoBSimple = 1'b1;
-  localparam int unsigned NarrowMaxTxnsPerId = 4;
-  localparam int unsigned NarrowReorderBufferSize = 32'd256;
-  localparam bit WideRoBSimple = 1'b0;
-  localparam int unsigned WideMaxTxnsPerId = 32;
-  localparam int unsigned WideReorderBufferSize = 32'd64;
-  localparam int unsigned NarrowMaxTxns = 32;
-  localparam int unsigned WideMaxTxns = 32;
-  localparam route_algo_e RouteAlgo = XYRouting;
-  localparam int unsigned XYAddrOffsetX = $clog2(MemSize);  // clog2(256KB) = 18
-  localparam int unsigned XYAddrOffsetY = $clog2(MemSize) + $clog2(NumX);  // 18+2 = 20
-  localparam int unsigned XYIdWidthX = $clog2(NumX);
-  localparam int unsigned XYIdWidthY = $clog2(NumY);
-  localparam int unsigned ChannelFifoDepth = 2;
-  localparam int unsigned OutputFifoDepth = 32;
-  localparam int unsigned NumDirections = 5;
-
-  // In total we have 16 snax inside each group
-  // Each snax has 256kB memory 0x4_0000;
-  // Starting address of Group0 is 0x1000_0000
-  // We place it tightly as a 4x4 array
-  localparam addr_t StartAddr = ClusterBasedAddr;
-  localparam addr_t EndAddr = StartAddr + occamy_pkg::S1QuadrantAddressSpace;
-  // Addr Map
-  //+----------------+-------------+-------------+-------------+-------------+
-  //|                | 1,4         | 2,4         | 3,4         | 4,4         |
-  //|                | 0x1030_0000 | 0x1034_0000 | 0x1038_0000 | 0x103c_0000 |
-  //|                | 0x1033_ffff | 0x1037_ffff | 0x103b_ffff | 0x103f_ffff |
-  //+----------------+-------------+-------------+-------------+-------------+
-  //|                | 1,3         | 2,3         | 3,3         | 4,3         |
-  //|                | 0x1020_0000 | 0x1024_0000 | 0x1028_0000 | 0x102c_0000 |
-  //|                | 0x1023_ffff | 0x1027_ffff | 0x102b_ffff | 0x102f_ffff |
-  //+----------------+-------------+-------------+-------------+-------------+
-  //|                | 1,2         | 2,2         | 3,2         | 4,2         |
-  //|                | 0x1010_0000 | 0x1014_0000 | 0x1018_0000 | 0x101c_0000 |
-  //|                | 0x1013_ffff | 0x1017_ffff | 0x101b_ffff | 0x101f_0000 |
-  //+----------------+-------------+-------------+-------------+-------------+
-  //|                | 1,1         | 2,1         | 3,1         | 4,1         |
-  //|                | 0x1000_0000 | 0x1004_0000 | 0x1008_0000 | 0x100c_0000 |
-  //|                | 0x1003_ffff | 0x1007_ffff | 0x100b_ffff | 0x100f_ffff |
-  //+----------------+-------------+-------------+-------------+-------------+
-  //| 0,0            |             |             |             |             |
-  //| 0x10_0000_0000 |             |             |             |             |
-  //| 0x10_3fff_ffff |             |             |             |             |
-  //+----------------+-------------+-------------+-------------+-------------+
-
-  localparam bit en_default_idx = 1'b1;
-  localparam xy_id_t default_idx = '{x: '0, y: '0};
-
-  /////////////////////
-  //   AXI Signals   //
-  /////////////////////
-
-  floo_narrow_wide_pkg::axi_narrow_in_req_t  [NumX-1:0][NumY-1:0] narrow_man_req;
-  floo_narrow_wide_pkg::axi_narrow_in_rsp_t  [NumX-1:0][NumY-1:0] narrow_man_rsp;
-  floo_narrow_wide_pkg::axi_wide_in_req_t    [NumX-1:0][NumY-1:0] wide_man_req;
-  floo_narrow_wide_pkg::axi_wide_in_rsp_t    [NumX-1:0][NumY-1:0] wide_man_rsp;
-
-  floo_narrow_wide_pkg::axi_narrow_out_req_t [NumX-1:0][NumY-1:0] narrow_sub_req;
-  floo_narrow_wide_pkg::axi_narrow_out_rsp_t [NumX-1:0][NumY-1:0] narrow_sub_rsp;
-  floo_narrow_wide_pkg::axi_wide_out_req_t   [NumX-1:0][NumY-1:0] wide_sub_req;
-  floo_narrow_wide_pkg::axi_wide_out_rsp_t   [NumX-1:0][NumY-1:0] wide_sub_rsp;
-
-  floo_narrow_wide_pkg::axi_wide_in_req_t                         wide_noc_quadrant_s1_in_req;
-  floo_narrow_wide_pkg::axi_wide_in_rsp_t                         wide_noc_quadrant_s1_in_rsp;
-  floo_narrow_wide_pkg::axi_wide_out_req_t                        wide_noc_quadrant_s1_out_req;
-  floo_narrow_wide_pkg::axi_wide_out_rsp_t                        wide_noc_quadrant_s1_out_rsp;
-  floo_narrow_wide_pkg::axi_narrow_in_req_t                       narrow_noc_quadrant_s1_in_req;
-  floo_narrow_wide_pkg::axi_narrow_in_rsp_t                       narrow_noc_quadrant_s1_in_rsp;
-  floo_narrow_wide_pkg::axi_narrow_out_req_t                      narrow_noc_quadrant_s1_out_req;
-  floo_narrow_wide_pkg::axi_narrow_out_rsp_t                      narrow_noc_quadrant_s1_out_rsp;
-
-  /////////////////////
-  //   NoC Signals   //
-  /////////////////////
-
-  // NoC Signals for snax
-  floo_narrow_wide_pkg::floo_req_t [NumX-1:0][NumY-1:0]
-      narrow_chimney_man_req, narrow_chimney_sub_req;
-  floo_narrow_wide_pkg::floo_rsp_t [NumX-1:0][NumY-1:0]
-      narrow_chimney_man_rsp, narrow_chimney_sub_rsp;
-  floo_narrow_wide_pkg::floo_wide_t [NumX-1:0][NumY-1:0] wide_chimney_man, wide_chimney_sub;
-
-  // NoC signals for top
-  floo_narrow_wide_pkg::floo_req_t narrow_quad_man_req, narrow_quad_sub_req;
-  floo_narrow_wide_pkg::floo_rsp_t narrow_quad_man_rsp, narrow_quad_sub_rsp;
-  floo_narrow_wide_pkg::floo_wide_t wide_quad_man, wide_quad_sub;
-
-  floo_narrow_wide_pkg::floo_req_t  [NumX-1:0][  NumY:0] req_hor_pos;
-  floo_narrow_wide_pkg::floo_req_t  [NumX-1:0][  NumY:0] req_hor_neg;
-  floo_narrow_wide_pkg::floo_req_t  [  NumY:0][NumX-1:0] req_ver_pos;
-  floo_narrow_wide_pkg::floo_req_t  [  NumY:0][NumX-1:0] req_ver_neg;
-  floo_narrow_wide_pkg::floo_rsp_t  [NumX-1:0][  NumY:0] rsp_hor_pos;
-  floo_narrow_wide_pkg::floo_rsp_t  [NumX-1:0][  NumY:0] rsp_hor_neg;
-  floo_narrow_wide_pkg::floo_rsp_t  [  NumY:0][NumX-1:0] rsp_ver_pos;
-  floo_narrow_wide_pkg::floo_rsp_t  [  NumY:0][NumX-1:0] rsp_ver_neg;
-  floo_narrow_wide_pkg::floo_wide_t [NumX-1:0][  NumY:0] wide_hor_pos;
-  floo_narrow_wide_pkg::floo_wide_t [NumX-1:0][  NumY:0] wide_hor_neg;
-  floo_narrow_wide_pkg::floo_wide_t [  NumY:0][NumX-1:0] wide_ver_pos;
-  floo_narrow_wide_pkg::floo_wide_t [  NumY:0][NumX-1:0] wide_ver_neg;
-
-
-  // NI for the top
-  floo_narrow_wide_chimney #(
-      .RouteAlgo              (RouteAlgo),
-      .XYAddrOffsetX          (XYAddrOffsetX),
-      .XYAddrOffsetY          (XYAddrOffsetY),
-      .XYIdOffsetX            (32'd1),
-      .XYIdOffsetY            (32'd1),
-      .XYIdWidthX             (XYIdWidthX),
-      .XYIdWidthY             (XYIdWidthY),
-      .NarrowMaxTxns          (NarrowMaxTxns),
-      .WideMaxTxns            (WideMaxTxns),
-      .NarrowReorderBufferSize(NarrowReorderBufferSize),
-      .WideReorderBufferSize  (WideReorderBufferSize),
-      .CutAx                  (CutAx),
-      .CutRsp                 (CutRsp),
-      .id_t                   (xy_id_t),
-      .axi_narrow_in_req_t    (floo_narrow_wide_pkg::axi_narrow_in_req_t),
-      .axi_narrow_in_rsp_t    (floo_narrow_wide_pkg::axi_narrow_in_rsp_t),
-      .axi_narrow_out_req_t   (floo_narrow_wide_pkg::axi_narrow_out_req_t),
-      .axi_narrow_out_rsp_t   (floo_narrow_wide_pkg::axi_narrow_out_rsp_t),
-      .axi_wide_in_req_t      (floo_narrow_wide_pkg::axi_wide_in_req_t),
-      .axi_wide_in_rsp_t      (floo_narrow_wide_pkg::axi_wide_in_rsp_t),
-      .axi_wide_out_req_t     (floo_narrow_wide_pkg::axi_wide_out_req_t),
-      .axi_wide_out_rsp_t     (floo_narrow_wide_pkg::axi_wide_out_rsp_t),
-      .floo_req_t             (floo_narrow_wide_pkg::floo_req_t),
-      .floo_rsp_t             (floo_narrow_wide_pkg::floo_rsp_t),
-      .floo_wide_t            (floo_narrow_wide_pkg::floo_wide_t)
-  ) i_top_chimney (
-      .clk_i               (clk_quadrant),
-      .rst_ni              (rst_quadrant_n),
-      .sram_cfg_i          ('0),
-      .test_enable_i       (1'b0),
-      .id_i                (default_idx),
-      .en_default_idx_i    ('0),
-      .default_idx_i       ('0),
-      .id_map_i            ('0),
-      .axi_narrow_in_req_i (narrow_noc_quadrant_s1_in_req),
-      .axi_narrow_in_rsp_o (narrow_noc_quadrant_s1_in_rsp),
-      .axi_narrow_out_req_o(narrow_noc_quadrant_s1_out_req),
-      .axi_narrow_out_rsp_i(narrow_noc_quadrant_s1_out_rsp),
-      .axi_wide_in_req_i   (wide_noc_quadrant_s1_in_req),
-      .axi_wide_in_rsp_o   (wide_noc_quadrant_s1_in_rsp),
-      .axi_wide_out_req_o  (wide_noc_quadrant_s1_out_req),
-      .axi_wide_out_rsp_i  (wide_noc_quadrant_s1_out_rsp),
-      .floo_req_i          (narrow_quad_sub_req),
-      .floo_req_o          (narrow_quad_man_req),
-      .floo_rsp_i          (narrow_quad_man_rsp),
-      .floo_rsp_o          (narrow_quad_sub_rsp),
-      .floo_wide_i         (wide_quad_sub),
-      .floo_wide_o         (wide_quad_man)
+  axi_xbar #(
+      .Cfg          (WideXbarQuadrantS1Cfg),
+      .Connectivity (25'b0111110111110111110111110),
+      .ATOPs        (0),
+      .slv_aw_chan_t(axi_a48_d512_i3_u0_aw_chan_t),
+      .mst_aw_chan_t(axi_a48_d512_i6_u0_aw_chan_t),
+      .w_chan_t     (axi_a48_d512_i3_u0_w_chan_t),
+      .slv_b_chan_t (axi_a48_d512_i3_u0_b_chan_t),
+      .mst_b_chan_t (axi_a48_d512_i6_u0_b_chan_t),
+      .slv_ar_chan_t(axi_a48_d512_i3_u0_ar_chan_t),
+      .mst_ar_chan_t(axi_a48_d512_i6_u0_ar_chan_t),
+      .slv_r_chan_t (axi_a48_d512_i3_u0_r_chan_t),
+      .mst_r_chan_t (axi_a48_d512_i6_u0_r_chan_t),
+      .slv_req_t    (axi_a48_d512_i3_u0_req_t),
+      .slv_resp_t   (axi_a48_d512_i3_u0_resp_t),
+      .mst_req_t    (axi_a48_d512_i6_u0_req_t),
+      .mst_resp_t   (axi_a48_d512_i6_u0_resp_t),
+      .rule_t       (xbar_rule_48_t)
+  ) i_wide_xbar_quadrant_s1 (
+      .clk_i                (clk_quadrant),
+      .rst_ni               (rst_quadrant_n),
+      .test_i               (test_mode_i),
+      .slv_ports_req_i      (wide_xbar_quadrant_s1_in_req),
+      .slv_ports_resp_o     (wide_xbar_quadrant_s1_in_rsp),
+      .mst_ports_req_o      (wide_xbar_quadrant_s1_out_req),
+      .mst_ports_resp_i     (wide_xbar_quadrant_s1_out_rsp),
+      .addr_map_i           (WideXbarQuadrantS1Addrmap),
+      .en_default_mst_port_i('1),
+      .default_mst_port_i   ('0)
   );
-  //////////////////
-  //   NoC Mesh   //
-  //////////////////
 
-  for (genvar y = 0; y < (NumY + 1); y++) begin : gen_y
-    for (genvar x = 0; x < (NumX + 1); x++) begin : gen_x
-      xy_id_t current_id;
-      floo_req_t [floo_pkg::NumDirections-1:0] req_out, req_in;
-      floo_rsp_t [floo_pkg::NumDirections-1:0] rsp_out, rsp_in;
-      floo_wide_t [floo_pkg::NumDirections-1:0] wide_out, wide_in;
-      assign current_id = '{x: x, y: y};
-      if ((x >= 1) && (y >= 1)) begin
-        floo_narrow_wide_chimney #(
-            .RouteAlgo              (RouteAlgo),
-            .XYAddrOffsetX          (XYAddrOffsetX),
-            .XYAddrOffsetY          (XYAddrOffsetY),
-            .StartAddr              (StartAddr),
-            .EndAddr                (EndAddr),
-            .XYIdOffsetX            (32'd1),
-            .XYIdOffsetY            (32'd1),
-            .XYIdWidthX             (XYIdWidthX),
-            .XYIdWidthY             (XYIdWidthY),
-            .NarrowMaxTxns          (NarrowMaxTxns),
-            .WideMaxTxns            (WideMaxTxns),
-            .NarrowReorderBufferSize(NarrowReorderBufferSize),
-            .WideReorderBufferSize  (WideReorderBufferSize),
-            .CutAx                  (CutAx),
-            .CutRsp                 (CutRsp),
-            .id_t                   (xy_id_t),
-            .axi_narrow_in_req_t    (floo_narrow_wide_pkg::axi_narrow_in_req_t),
-            .axi_narrow_in_rsp_t    (floo_narrow_wide_pkg::axi_narrow_in_rsp_t),
-            .axi_narrow_out_req_t   (floo_narrow_wide_pkg::axi_narrow_out_req_t),
-            .axi_narrow_out_rsp_t   (floo_narrow_wide_pkg::axi_narrow_out_rsp_t),
-            .axi_wide_in_req_t      (floo_narrow_wide_pkg::axi_wide_in_req_t),
-            .axi_wide_in_rsp_t      (floo_narrow_wide_pkg::axi_wide_in_rsp_t),
-            .axi_wide_out_req_t     (floo_narrow_wide_pkg::axi_wide_out_req_t),
-            .axi_wide_out_rsp_t     (floo_narrow_wide_pkg::axi_wide_out_rsp_t),
-            .floo_req_t             (floo_narrow_wide_pkg::floo_req_t),
-            .floo_rsp_t             (floo_narrow_wide_pkg::floo_rsp_t),
-            .floo_wide_t            (floo_narrow_wide_pkg::floo_wide_t)
-        ) i_cluster_chimney (
-            .clk_i               (clk_quadrant),
-            .rst_ni              (rst_quadrant_n),
-            .sram_cfg_i          ('0),
-            .test_enable_i       (1'b0),
-            .id_i                (current_id),
-            .en_default_idx_i    (en_default_idx),
-            .default_idx_i       (default_idx),
-            .id_map_i            ('0),
-            .axi_narrow_in_req_i (narrow_man_req[x-1][y-1]),
-            .axi_narrow_in_rsp_o (narrow_man_rsp[x-1][y-1]),
-            .axi_narrow_out_req_o(narrow_sub_req[x-1][y-1]),
-            .axi_narrow_out_rsp_i(narrow_sub_rsp[x-1][y-1]),
-            .axi_wide_in_req_i   (wide_man_req[x-1][y-1]),
-            .axi_wide_in_rsp_o   (wide_man_rsp[x-1][y-1]),
-            .axi_wide_out_req_o  (wide_sub_req[x-1][y-1]),
-            .axi_wide_out_rsp_i  (wide_sub_rsp[x-1][y-1]),
-            .floo_req_i          (narrow_chimney_sub_req[x-1][y-1]),
-            .floo_req_o          (narrow_chimney_man_req[x-1][y-1]),
-            .floo_rsp_i          (narrow_chimney_man_rsp[x-1][y-1]),
-            .floo_rsp_o          (narrow_chimney_sub_rsp[x-1][y-1]),
-            .floo_wide_i         (wide_chimney_sub[x-1][y-1]),
-            .floo_wide_o         (wide_chimney_man[x-1][y-1])
-        );
-      end
+  /// Address map of the `narrow_xbar_quadrant_s1` crossbar.
+  xbar_rule_48_t [3:0] NarrowXbarQuadrantS1Addrmap;
+  assign NarrowXbarQuadrantS1Addrmap = '{
+  '{ idx: 1, start_addr: cluster_base_addr[0], end_addr: cluster_base_addr[0] + ClusterAddressSpace },
+  '{ idx: 2, start_addr: cluster_base_addr[1], end_addr: cluster_base_addr[1] + ClusterAddressSpace },
+  '{ idx: 3, start_addr: cluster_base_addr[2], end_addr: cluster_base_addr[2] + ClusterAddressSpace },
+  '{ idx: 4, start_addr: cluster_base_addr[3], end_addr: cluster_base_addr[3] + ClusterAddressSpace }
+};
 
-      floo_narrow_wide_router #(
-          .NumRoutes       (NumDirections),
-          .ChannelFifoDepth(ChannelFifoDepth),
-          .OutputFifoDepth (OutputFifoDepth),
-          .RouteAlgo       (RouteAlgo),
-          .XYRouteOpt      (1'b0),
-          .id_t            (xy_id_t)
-      ) i_router (
-          .clk_i         (clk_quadrant),
-          .rst_ni        (rst_quadrant_n),
-          .test_enable_i (1'b0),
-          .id_i          (current_id),
-          .id_route_map_i('0),
-          .floo_req_i    (req_in),
-          .floo_req_o    (req_out),
-          .floo_rsp_i    (rsp_in),
-          .floo_rsp_o    (rsp_out),
-          .floo_wide_i   (wide_in),
-          .floo_wide_o   (wide_out)
-      );
+  narrow_xbar_quadrant_s1_in_req_t   [4:0] narrow_xbar_quadrant_s1_in_req;
+  narrow_xbar_quadrant_s1_in_resp_t  [4:0] narrow_xbar_quadrant_s1_in_rsp;
+  narrow_xbar_quadrant_s1_out_req_t  [4:0] narrow_xbar_quadrant_s1_out_req;
+  narrow_xbar_quadrant_s1_out_resp_t [4:0] narrow_xbar_quadrant_s1_out_rsp;
 
-      // Eject
-      if ((x == 0) && (y == 0)) begin
-        assign req_in[Eject] = narrow_quad_man_req;
-        assign narrow_quad_sub_req = req_out[Eject];
-        assign rsp_in[Eject] = narrow_quad_sub_rsp;
-        assign narrow_quad_man_rsp = rsp_out[Eject];
-        assign wide_in[Eject] = wide_quad_man;
-        assign wide_quad_sub = wide_out[Eject];
-      end else if ((x >= 1) && (y >= 1)) begin
-        assign req_in[Eject] = narrow_chimney_man_req[x-1][y-1];
-        assign narrow_chimney_sub_req[x-1][y-1] = req_out[Eject];
-        assign rsp_in[Eject] = narrow_chimney_sub_rsp[x-1][y-1];
-        assign narrow_chimney_man_rsp[x-1][y-1] = rsp_out[Eject];
-        assign wide_in[Eject] = wide_chimney_man[x-1][y-1];
-        assign wide_chimney_sub[x-1][y-1] = wide_out[Eject];
-      end
-
-      // East
-      if (x == NumX) begin
-        assign req_in[East]  = '0;
-        //assign req_hor_pos[x][y] = req_out[East];
-        assign rsp_in[East]  = '0;
-        //assign rsp_hor_pos[x][y] = rsp_out[East];
-        assign wide_in[East] = '0;
-        //assign wide_hor_pos[x][y] = wide_out[East];
-      end else begin
-        assign req_in[East] = req_hor_neg[x][y];
-        assign req_hor_pos[x][y] = req_out[East];
-        assign rsp_in[East] = rsp_hor_neg[x][y];
-        assign rsp_hor_pos[x][y] = rsp_out[East];
-        assign wide_in[East] = wide_hor_neg[x][y];
-        assign wide_hor_pos[x][y] = wide_out[East];
-      end
-
-      // West
-      if (x == 0) begin
-        assign req_in[West]  = '0;
-        //assign req_hor_neg[x][y] = req_out[West];
-        assign rsp_in[West]  = '0;
-        //assign rsp_hor_neg[x][y] = rsp_out[West];
-        assign wide_in[West] = '0;
-        //assign wide_hor_neg[x][y] = wide_out[West];
-      end else begin
-        assign req_in[West] = req_hor_pos[x-1][y];
-        assign req_hor_neg[x-1][y] = req_out[West];
-        assign rsp_in[West] = rsp_hor_pos[x-1][y];
-        assign rsp_hor_neg[x-1][y] = rsp_out[West];
-        assign wide_in[West] = wide_hor_pos[x-1][y];
-        assign wide_hor_neg[x-1][y] = wide_out[West];
-      end
-
-      // North
-      if (y == NumY) begin
-        assign req_in[North]  = '0;
-        //assign req_ver_pos[y+1][x] = req_out[North];
-        assign rsp_in[North]  = '0;
-        //assign rsp_ver_pos[y+1][x] = rsp_out[North];
-        assign wide_in[North] = '0;
-        //assign wide_ver_pos[y+1][x] = wide_out[North];
-      end else begin
-        assign req_in[North] = req_ver_neg[x][y];
-        assign req_ver_pos[x][y] = req_out[North];
-        assign rsp_in[North] = rsp_ver_neg[x][y];
-        assign rsp_ver_pos[x][y] = rsp_out[North];
-        assign wide_in[North] = wide_ver_neg[x][y];
-        assign wide_ver_pos[x][y] = wide_out[North];
-      end
-
-
-      // South
-      if (y == 0) begin
-        assign req_in[South]  = '0;
-        //assign req_ver_neg[y][x] = req_out[South];
-        assign rsp_in[South]  = '0;
-        //assign rsp_ver_neg[y][x] = rsp_out[South];
-        assign wide_in[South] = '0;
-        //assign wide_ver_neg[y][x] = wide_out[South];
-      end else begin
-        assign req_in[South] = req_ver_pos[x][y-1];
-        assign req_ver_neg[x][y-1] = req_out[South];
-        assign rsp_in[South] = rsp_ver_pos[x][y-1];
-        assign rsp_ver_neg[x][y-1] = rsp_out[South];
-        assign wide_in[South] = wide_ver_pos[x][y-1];
-        assign wide_ver_neg[x][y-1] = wide_out[South];
-      end
-    end
-  end
-
+  axi_xbar #(
+      .Cfg          (NarrowXbarQuadrantS1Cfg),
+      .Connectivity (25'b0111110111110111110111110),
+      .ATOPs        (1),
+      .slv_aw_chan_t(axi_a48_d64_i4_u5_aw_chan_t),
+      .mst_aw_chan_t(axi_a48_d64_i7_u5_aw_chan_t),
+      .w_chan_t     (axi_a48_d64_i4_u5_w_chan_t),
+      .slv_b_chan_t (axi_a48_d64_i4_u5_b_chan_t),
+      .mst_b_chan_t (axi_a48_d64_i7_u5_b_chan_t),
+      .slv_ar_chan_t(axi_a48_d64_i4_u5_ar_chan_t),
+      .mst_ar_chan_t(axi_a48_d64_i7_u5_ar_chan_t),
+      .slv_r_chan_t (axi_a48_d64_i4_u5_r_chan_t),
+      .mst_r_chan_t (axi_a48_d64_i7_u5_r_chan_t),
+      .slv_req_t    (axi_a48_d64_i4_u5_req_t),
+      .slv_resp_t   (axi_a48_d64_i4_u5_resp_t),
+      .mst_req_t    (axi_a48_d64_i7_u5_req_t),
+      .mst_resp_t   (axi_a48_d64_i7_u5_resp_t),
+      .rule_t       (xbar_rule_48_t)
+  ) i_narrow_xbar_quadrant_s1 (
+      .clk_i                (clk_quadrant),
+      .rst_ni               (rst_quadrant_n),
+      .test_i               (test_mode_i),
+      .slv_ports_req_i      (narrow_xbar_quadrant_s1_in_req),
+      .slv_ports_resp_o     (narrow_xbar_quadrant_s1_in_rsp),
+      .mst_ports_req_o      (narrow_xbar_quadrant_s1_out_req),
+      .mst_ports_resp_i     (narrow_xbar_quadrant_s1_out_rsp),
+      .addr_map_i           (NarrowXbarQuadrantS1Addrmap),
+      .en_default_mst_port_i('1),
+      .default_mst_port_i   ('0)
+  );
 
 
 
@@ -432,6 +157,7 @@ module occamy_quadrant_s1
   ///////////////////////////////
   axi_a48_d64_i7_u5_req_t  narrow_cluster_in_ctrl_req;
   axi_a48_d64_i7_u5_resp_t narrow_cluster_in_ctrl_rsp;
+
   axi_a48_d64_i7_u5_req_t  narrow_cluster_in_ctrl_cut_req;
   axi_a48_d64_i7_u5_resp_t narrow_cluster_in_ctrl_cut_rsp;
 
@@ -452,7 +178,6 @@ module occamy_quadrant_s1
       .mst_req_o(narrow_cluster_in_ctrl_cut_req),
       .mst_resp_i(narrow_cluster_in_ctrl_cut_rsp)
   );
-
   axi_a48_d64_i7_u5_req_t  narrow_cluster_in_isolate_req;
   axi_a48_d64_i7_u5_resp_t narrow_cluster_in_isolate_rsp;
 
@@ -476,6 +201,7 @@ module occamy_quadrant_s1
       .isolate_i(isolate[0]),
       .isolated_o(isolated[0])
   );
+
   axi_id_remap #(
       .AxiSlvPortIdWidth(7),
       .AxiSlvPortMaxUniqIds(16),
@@ -490,36 +216,37 @@ module occamy_quadrant_s1
       .rst_ni(rst_quadrant_n),
       .slv_req_i(narrow_cluster_in_isolate_req),
       .slv_resp_o(narrow_cluster_in_isolate_rsp),
-      .mst_req_o(narrow_noc_quadrant_s1_in_req),
-      .mst_resp_i(narrow_noc_quadrant_s1_in_rsp)
+      .mst_req_o(narrow_xbar_quadrant_s1_in_req[NARROW_XBAR_QUADRANT_S1_IN_TOP]),
+      .mst_resp_i(narrow_xbar_quadrant_s1_in_rsp[NARROW_XBAR_QUADRANT_S1_IN_TOP])
   );
+
 
 
   /////////////////////////////////////
   // Narrow Out + TLB + IW Converter //
   /////////////////////////////////////
-  //Now we fix the parameters, TODO:resemble the solder style
-  axi_a48_d64_i2_u5_req_t  narrow_cluster_out_tlb_req;
-  axi_a48_d64_i2_u5_resp_t narrow_cluster_out_tlb_rsp;
+  axi_a48_d64_i7_u5_req_t  narrow_cluster_out_tlb_req;
+  axi_a48_d64_i7_u5_resp_t narrow_cluster_out_tlb_rsp;
+
   axi_tlb_noreg #(
       .AxiSlvPortAddrWidth(48),
       .AxiMstPortAddrWidth(48),
       .AxiDataWidth(64),
-      .AxiIdWidth(2),
+      .AxiIdWidth(7),
       .AxiUserWidth(5),
       .AxiSlvPortMaxTxns(32),
       .L1NumEntries(8),
       .L1CutAx(1'b1),
-      .slv_req_t(axi_a48_d64_i2_u5_req_t),
-      .mst_req_t(axi_a48_d64_i2_u5_req_t),
-      .axi_resp_t(axi_a48_d64_i2_u5_resp_t),
+      .slv_req_t(axi_a48_d64_i7_u5_req_t),
+      .mst_req_t(axi_a48_d64_i7_u5_req_t),
+      .axi_resp_t(axi_a48_d64_i7_u5_resp_t),
       .entry_t(tlb_entry_t)
   ) i_narrow_cluster_out_tlb (
       .clk_i(clk_quadrant),
       .rst_ni(rst_quadrant_n),
       .test_en_i(test_mode_i),
-      .slv_req_i(narrow_noc_quadrant_s1_out_req),
-      .slv_resp_o(narrow_noc_quadrant_s1_out_rsp),
+      .slv_req_i(narrow_xbar_quadrant_s1_out_req[NARROW_XBAR_QUADRANT_S1_OUT_TOP]),
+      .slv_resp_o(narrow_xbar_quadrant_s1_out_rsp[NARROW_XBAR_QUADRANT_S1_OUT_TOP]),
       .mst_req_o(narrow_cluster_out_tlb_req),
       .mst_resp_i(narrow_cluster_out_tlb_rsp),
       .entries_i(narrow_tlb_entries),
@@ -529,56 +256,23 @@ module occamy_quadrant_s1
   axi_a48_d64_i4_u5_req_t  narrow_cluster_out_iwc_req;
   axi_a48_d64_i4_u5_resp_t narrow_cluster_out_iwc_rsp;
 
-  typedef logic [1:0] i_narrow_cluster_out_iwc_pre_id_t;
-  axi_id_prepend #(
-      .slv_aw_chan_t    (axi_a48_d64_i2_u5_aw_chan_t),
-      .slv_w_chan_t     (axi_a48_d64_i2_u5_w_chan_t),
-      .slv_b_chan_t     (axi_a48_d64_i2_u5_b_chan_t),
-      .slv_ar_chan_t    (axi_a48_d64_i2_u5_ar_chan_t),
-      .slv_r_chan_t     (axi_a48_d64_i2_u5_r_chan_t),
-      .mst_aw_chan_t    (axi_a48_d64_i4_u5_aw_chan_t),
-      .mst_w_chan_t     (axi_a48_d64_i4_u5_w_chan_t),
-      .mst_b_chan_t     (axi_a48_d64_i4_u5_b_chan_t),
-      .mst_ar_chan_t    (axi_a48_d64_i4_u5_ar_chan_t),
-      .mst_r_chan_t     (axi_a48_d64_i4_u5_r_chan_t),
-      .NoBus            (1),
-      .AxiIdWidthSlvPort(2),
-      .AxiIdWidthMstPort(4)
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(7),
+      .AxiSlvPortMaxUniqIds(16),
+      .AxiMaxTxnsPerId(4),
+      .AxiMstPortIdWidth(4),
+      .slv_req_t(axi_a48_d64_i7_u5_req_t),
+      .slv_resp_t(axi_a48_d64_i7_u5_resp_t),
+      .mst_req_t(axi_a48_d64_i4_u5_req_t),
+      .mst_resp_t(axi_a48_d64_i4_u5_resp_t)
   ) i_narrow_cluster_out_iwc (
-      .pre_id_i        (i_narrow_cluster_out_iwc_pre_id_t'(0)),
-      .slv_aw_chans_i  (narrow_cluster_out_tlb_req.aw),
-      .slv_aw_valids_i (narrow_cluster_out_tlb_req.aw_valid),
-      .slv_aw_readies_o(narrow_cluster_out_tlb_rsp.aw_ready),
-      .slv_w_chans_i   (narrow_cluster_out_tlb_req.w),
-      .slv_w_valids_i  (narrow_cluster_out_tlb_req.w_valid),
-      .slv_w_readies_o (narrow_cluster_out_tlb_rsp.w_ready),
-      .slv_b_chans_o   (narrow_cluster_out_tlb_rsp.b),
-      .slv_b_valids_o  (narrow_cluster_out_tlb_rsp.b_valid),
-      .slv_b_readies_i (narrow_cluster_out_tlb_req.b_ready),
-      .slv_ar_chans_i  (narrow_cluster_out_tlb_req.ar),
-      .slv_ar_valids_i (narrow_cluster_out_tlb_req.ar_valid),
-      .slv_ar_readies_o(narrow_cluster_out_tlb_rsp.ar_ready),
-      .slv_r_chans_o   (narrow_cluster_out_tlb_rsp.r),
-      .slv_r_valids_o  (narrow_cluster_out_tlb_rsp.r_valid),
-      .slv_r_readies_i (narrow_cluster_out_tlb_req.r_ready),
-      .mst_aw_chans_o  (narrow_cluster_out_iwc_req.aw),
-      .mst_aw_valids_o (narrow_cluster_out_iwc_req.aw_valid),
-      .mst_aw_readies_i(narrow_cluster_out_iwc_rsp.aw_ready),
-      .mst_w_chans_o   (narrow_cluster_out_iwc_req.w),
-      .mst_w_valids_o  (narrow_cluster_out_iwc_req.w_valid),
-      .mst_w_readies_i (narrow_cluster_out_iwc_rsp.w_ready),
-      .mst_b_chans_i   (narrow_cluster_out_iwc_rsp.b),
-      .mst_b_valids_i  (narrow_cluster_out_iwc_rsp.b_valid),
-      .mst_b_readies_o (narrow_cluster_out_iwc_req.b_ready),
-      .mst_ar_chans_o  (narrow_cluster_out_iwc_req.ar),
-      .mst_ar_valids_o (narrow_cluster_out_iwc_req.ar_valid),
-      .mst_ar_readies_i(narrow_cluster_out_iwc_rsp.ar_ready),
-      .mst_r_chans_i   (narrow_cluster_out_iwc_rsp.r),
-      .mst_r_valids_i  (narrow_cluster_out_iwc_rsp.r_valid),
-      .mst_r_readies_o (narrow_cluster_out_iwc_req.r_ready)
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(narrow_cluster_out_tlb_req),
+      .slv_resp_o(narrow_cluster_out_tlb_rsp),
+      .mst_req_o(narrow_cluster_out_iwc_req),
+      .mst_resp_i(narrow_cluster_out_iwc_rsp)
   );
-
-
   axi_a48_d64_i4_u5_req_t  narrow_cluster_out_isolate_req;
   axi_a48_d64_i4_u5_resp_t narrow_cluster_out_isolate_rsp;
 
@@ -625,38 +319,40 @@ module occamy_quadrant_s1
   );
 
 
+
   /////////////////////////////////////////
   // Wide Out + RO Cache + IW Converter  //
   /////////////////////////////////////////
-  axi_a48_d512_i1_u0_req_t  wide_cluster_out_tlb_req;
-  axi_a48_d512_i1_u0_resp_t wide_cluster_out_tlb_rsp;
+  axi_a48_d512_i6_u0_req_t  wide_cluster_out_tlb_req;
+  axi_a48_d512_i6_u0_resp_t wide_cluster_out_tlb_rsp;
+
   axi_tlb_noreg #(
       .AxiSlvPortAddrWidth(48),
       .AxiMstPortAddrWidth(48),
       .AxiDataWidth(512),
-      .AxiIdWidth(1),
+      .AxiIdWidth(6),
       .AxiUserWidth(1),
       .AxiSlvPortMaxTxns(32),
       .L1NumEntries(8),
       .L1CutAx(1'b1),
-      .slv_req_t(axi_a48_d512_i1_u0_req_t),
-      .mst_req_t(axi_a48_d512_i1_u0_req_t),
-      .axi_resp_t(axi_a48_d512_i1_u0_resp_t),
+      .slv_req_t(axi_a48_d512_i6_u0_req_t),
+      .mst_req_t(axi_a48_d512_i6_u0_req_t),
+      .axi_resp_t(axi_a48_d512_i6_u0_resp_t),
       .entry_t(tlb_entry_t)
   ) i_wide_cluster_out_tlb (
       .clk_i(clk_quadrant),
       .rst_ni(rst_quadrant_n),
       .test_en_i(test_mode_i),
-      .slv_req_i(wide_noc_quadrant_s1_out_req),
-      .slv_resp_o(wide_noc_quadrant_s1_out_rsp),
+      .slv_req_i(wide_xbar_quadrant_s1_out_req[WIDE_XBAR_QUADRANT_S1_OUT_TOP]),
+      .slv_resp_o(wide_xbar_quadrant_s1_out_rsp[WIDE_XBAR_QUADRANT_S1_OUT_TOP]),
       .mst_req_o(wide_cluster_out_tlb_req),
       .mst_resp_i(wide_cluster_out_tlb_rsp),
       .entries_i(wide_tlb_entries),
       .bypass_i(~wide_tlb_enable)
   );
 
-  axi_a48_d512_i2_u0_req_t  snitch_ro_cache_req;
-  axi_a48_d512_i2_u0_resp_t snitch_ro_cache_rsp;
+  axi_a48_d512_i7_u0_req_t  snitch_ro_cache_req;
+  axi_a48_d512_i7_u0_resp_t snitch_ro_cache_rsp;
 
   snitch_read_only_cache #(
       .LineWidth(1024),
@@ -664,14 +360,14 @@ module occamy_quadrant_s1
       .SetCount(2),
       .AxiAddrWidth(48),
       .AxiDataWidth(512),
-      .AxiIdWidth(1),
+      .AxiIdWidth(6),
       .AxiUserWidth(1),
       .MaxTrans(32),
       .NrAddrRules(4),
-      .slv_req_t(axi_a48_d512_i1_u0_req_t),
-      .slv_rsp_t(axi_a48_d512_i1_u0_resp_t),
-      .mst_req_t(axi_a48_d512_i2_u0_req_t),
-      .mst_rsp_t(axi_a48_d512_i2_u0_resp_t),
+      .slv_req_t(axi_a48_d512_i6_u0_req_t),
+      .slv_rsp_t(axi_a48_d512_i6_u0_resp_t),
+      .mst_req_t(axi_a48_d512_i7_u0_req_t),
+      .mst_rsp_t(axi_a48_d512_i7_u0_resp_t),
       .sram_cfg_data_t(sram_cfg_t),
       .sram_cfg_tag_t(sram_cfg_t)
   ) i_snitch_ro_cache (
@@ -690,18 +386,18 @@ module occamy_quadrant_s1
       .sram_cfg_tag_i(sram_cfg_i.rocache_tag)
   );
 
-  axi_a48_d512_i2_u0_req_t  snitch_ro_cache_cut_req;
-  axi_a48_d512_i2_u0_resp_t snitch_ro_cache_cut_rsp;
+  axi_a48_d512_i7_u0_req_t  snitch_ro_cache_cut_req;
+  axi_a48_d512_i7_u0_resp_t snitch_ro_cache_cut_rsp;
 
   axi_multicut #(
       .NoCuts(1),
-      .aw_chan_t(axi_a48_d512_i2_u0_aw_chan_t),
-      .w_chan_t(axi_a48_d512_i2_u0_w_chan_t),
-      .b_chan_t(axi_a48_d512_i2_u0_b_chan_t),
-      .ar_chan_t(axi_a48_d512_i2_u0_ar_chan_t),
-      .r_chan_t(axi_a48_d512_i2_u0_r_chan_t),
-      .axi_req_t(axi_a48_d512_i2_u0_req_t),
-      .axi_resp_t(axi_a48_d512_i2_u0_resp_t)
+      .aw_chan_t(axi_a48_d512_i7_u0_aw_chan_t),
+      .w_chan_t(axi_a48_d512_i7_u0_w_chan_t),
+      .b_chan_t(axi_a48_d512_i7_u0_b_chan_t),
+      .ar_chan_t(axi_a48_d512_i7_u0_ar_chan_t),
+      .r_chan_t(axi_a48_d512_i7_u0_r_chan_t),
+      .axi_req_t(axi_a48_d512_i7_u0_req_t),
+      .axi_resp_t(axi_a48_d512_i7_u0_resp_t)
   ) i_snitch_ro_cache_cut (
       .clk_i(clk_quadrant),
       .rst_ni(rst_quadrant_n),
@@ -710,59 +406,26 @@ module occamy_quadrant_s1
       .mst_req_o(snitch_ro_cache_cut_req),
       .mst_resp_i(snitch_ro_cache_cut_rsp)
   );
-
   axi_a48_d512_i4_u0_req_t  wide_cluster_out_iwc_req;
   axi_a48_d512_i4_u0_resp_t wide_cluster_out_iwc_rsp;
-  typedef logic [1:0] i_wide_cluster_out_iwc_pre_id_t;
-  axi_id_prepend #(
-      .slv_aw_chan_t    (axi_a48_d512_i2_u0_aw_chan_t),
-      .slv_w_chan_t     (axi_a48_d512_i2_u0_w_chan_t),
-      .slv_b_chan_t     (axi_a48_d512_i2_u0_b_chan_t),
-      .slv_ar_chan_t    (axi_a48_d512_i2_u0_ar_chan_t),
-      .slv_r_chan_t     (axi_a48_d512_i2_u0_r_chan_t),
-      .mst_aw_chan_t    (axi_a48_d512_i4_u0_aw_chan_t),
-      .mst_w_chan_t     (axi_a48_d512_i4_u0_w_chan_t),
-      .mst_b_chan_t     (axi_a48_d512_i4_u0_b_chan_t),
-      .mst_ar_chan_t    (axi_a48_d512_i4_u0_ar_chan_t),
-      .mst_r_chan_t     (axi_a48_d512_i4_u0_r_chan_t),
-      .NoBus            (1),
-      .AxiIdWidthSlvPort(2),
-      .AxiIdWidthMstPort(4)
+
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(7),
+      .AxiSlvPortMaxUniqIds(16),
+      .AxiMaxTxnsPerId(32),
+      .AxiMstPortIdWidth(4),
+      .slv_req_t(axi_a48_d512_i7_u0_req_t),
+      .slv_resp_t(axi_a48_d512_i7_u0_resp_t),
+      .mst_req_t(axi_a48_d512_i4_u0_req_t),
+      .mst_resp_t(axi_a48_d512_i4_u0_resp_t)
   ) i_wide_cluster_out_iwc (
-      .pre_id_i        (i_wide_cluster_out_iwc_pre_id_t'(0)),
-      .slv_aw_chans_i  (snitch_ro_cache_cut_req.aw),
-      .slv_aw_valids_i (snitch_ro_cache_cut_req.aw_valid),
-      .slv_aw_readies_o(snitch_ro_cache_cut_rsp.aw_ready),
-      .slv_w_chans_i   (snitch_ro_cache_cut_req.w),
-      .slv_w_valids_i  (snitch_ro_cache_cut_req.w_valid),
-      .slv_w_readies_o (snitch_ro_cache_cut_rsp.w_ready),
-      .slv_b_chans_o   (snitch_ro_cache_cut_rsp.b),
-      .slv_b_valids_o  (snitch_ro_cache_cut_rsp.b_valid),
-      .slv_b_readies_i (snitch_ro_cache_cut_req.b_ready),
-      .slv_ar_chans_i  (snitch_ro_cache_cut_req.ar),
-      .slv_ar_valids_i (snitch_ro_cache_cut_req.ar_valid),
-      .slv_ar_readies_o(snitch_ro_cache_cut_rsp.ar_ready),
-      .slv_r_chans_o   (snitch_ro_cache_cut_rsp.r),
-      .slv_r_valids_o  (snitch_ro_cache_cut_rsp.r_valid),
-      .slv_r_readies_i (snitch_ro_cache_cut_req.r_ready),
-      .mst_aw_chans_o  (wide_cluster_out_iwc_req.aw),
-      .mst_aw_valids_o (wide_cluster_out_iwc_req.aw_valid),
-      .mst_aw_readies_i(wide_cluster_out_iwc_rsp.aw_ready),
-      .mst_w_chans_o   (wide_cluster_out_iwc_req.w),
-      .mst_w_valids_o  (wide_cluster_out_iwc_req.w_valid),
-      .mst_w_readies_i (wide_cluster_out_iwc_rsp.w_ready),
-      .mst_b_chans_i   (wide_cluster_out_iwc_rsp.b),
-      .mst_b_valids_i  (wide_cluster_out_iwc_rsp.b_valid),
-      .mst_b_readies_o (wide_cluster_out_iwc_req.b_ready),
-      .mst_ar_chans_o  (wide_cluster_out_iwc_req.ar),
-      .mst_ar_valids_o (wide_cluster_out_iwc_req.ar_valid),
-      .mst_ar_readies_i(wide_cluster_out_iwc_rsp.ar_ready),
-      .mst_r_chans_i   (wide_cluster_out_iwc_rsp.r),
-      .mst_r_valids_i  (wide_cluster_out_iwc_rsp.r_valid),
-      .mst_r_readies_o (wide_cluster_out_iwc_req.r_ready)
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(snitch_ro_cache_cut_req),
+      .slv_resp_o(snitch_ro_cache_cut_rsp),
+      .mst_req_o(wide_cluster_out_iwc_req),
+      .mst_resp_i(wide_cluster_out_iwc_rsp)
   );
-
-
   axi_a48_d512_i4_u0_req_t  wide_cluster_out_isolate_req;
   axi_a48_d512_i4_u0_resp_t wide_cluster_out_isolate_rsp;
 
@@ -786,6 +449,7 @@ module occamy_quadrant_s1
       .isolate_i(isolate[3]),
       .isolated_o(isolated[3])
   );
+
   axi_a48_d512_i4_u0_req_t  wide_cluster_out_isolate_cut_req;
   axi_a48_d512_i4_u0_resp_t wide_cluster_out_isolate_cut_rsp;
 
@@ -821,6 +485,7 @@ module occamy_quadrant_s1
 
   axi_a48_d512_i5_u0_req_t  wide_cluster_in_iwc_cut_req;
   axi_a48_d512_i5_u0_resp_t wide_cluster_in_iwc_cut_rsp;
+
   axi_multicut #(
       .NoCuts(1),
       .aw_chan_t(axi_a48_d512_i5_u0_aw_chan_t),
@@ -861,6 +526,7 @@ module occamy_quadrant_s1
       .isolate_i(isolate[2]),
       .isolated_o(isolated[2])
   );
+
   axi_a48_d512_i5_u0_req_t  wide_cluster_in_isolate_cut_req;
   axi_a48_d512_i5_u0_resp_t wide_cluster_in_isolate_cut_rsp;
 
@@ -884,7 +550,7 @@ module occamy_quadrant_s1
   axi_id_remap #(
       .AxiSlvPortIdWidth(5),
       .AxiSlvPortMaxUniqIds(8),
-      .AxiMaxTxnsPerId(32),
+      .AxiMaxTxnsPerId(4),
       .AxiMstPortIdWidth(3),
       .slv_req_t(axi_a48_d512_i5_u0_req_t),
       .slv_resp_t(axi_a48_d512_i5_u0_resp_t),
@@ -895,9 +561,10 @@ module occamy_quadrant_s1
       .rst_ni(rst_quadrant_n),
       .slv_req_i(wide_cluster_in_isolate_cut_req),
       .slv_resp_o(wide_cluster_in_isolate_cut_rsp),
-      .mst_req_o(wide_noc_quadrant_s1_in_req),
-      .mst_resp_i(wide_noc_quadrant_s1_in_rsp)
+      .mst_req_o(wide_xbar_quadrant_s1_in_req[WIDE_XBAR_QUADRANT_S1_IN_TOP]),
+      .mst_resp_i(wide_xbar_quadrant_s1_in_rsp[WIDE_XBAR_QUADRANT_S1_IN_TOP])
   );
+
   assign wide_cluster_in_iwc_req = quadrant_wide_in_req_i;
   assign quadrant_wide_in_rsp_o  = wide_cluster_in_iwc_rsp;
 
@@ -940,6 +607,61 @@ module occamy_quadrant_s1
   ///////////////
   // Cluster 0 //
   ///////////////
+  axi_a48_d64_i2_u5_req_t  narrow_in_iwc_0_req;
+  axi_a48_d64_i2_u5_resp_t narrow_in_iwc_0_rsp;
+
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(7),
+      .AxiSlvPortMaxUniqIds(4),
+      .AxiMaxTxnsPerId(4),
+      .AxiMstPortIdWidth(2),
+      .slv_req_t(axi_a48_d64_i7_u5_req_t),
+      .slv_resp_t(axi_a48_d64_i7_u5_resp_t),
+      .mst_req_t(axi_a48_d64_i2_u5_req_t),
+      .mst_resp_t(axi_a48_d64_i2_u5_resp_t)
+  ) i_narrow_in_iwc_0 (
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(narrow_xbar_quadrant_s1_out_req[NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_0]),
+      .slv_resp_o(narrow_xbar_quadrant_s1_out_rsp[NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_0]),
+      .mst_req_o(narrow_in_iwc_0_req),
+      .mst_resp_i(narrow_in_iwc_0_rsp)
+  );
+  axi_a48_d64_i4_u5_req_t  narrow_out_0_req;
+  axi_a48_d64_i4_u5_resp_t narrow_out_0_rsp;
+
+  assign narrow_xbar_quadrant_s1_in_req[NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_0] = narrow_out_0_req;
+  assign narrow_out_0_rsp = narrow_xbar_quadrant_s1_in_rsp[NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_0];
+
+  axi_a48_d512_i1_u0_req_t  wide_in_iwc_0_req;
+  axi_a48_d512_i1_u0_resp_t wide_in_iwc_0_rsp;
+
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(6),
+      .AxiSlvPortMaxUniqIds(2),
+      .AxiMaxTxnsPerId(32),
+      .AxiMstPortIdWidth(1),
+      .slv_req_t(axi_a48_d512_i6_u0_req_t),
+      .slv_resp_t(axi_a48_d512_i6_u0_resp_t),
+      .mst_req_t(axi_a48_d512_i1_u0_req_t),
+      .mst_resp_t(axi_a48_d512_i1_u0_resp_t)
+  ) i_wide_in_iwc_0 (
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(wide_xbar_quadrant_s1_out_req[WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_0]),
+      .slv_resp_o(wide_xbar_quadrant_s1_out_rsp[WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_0]),
+      .mst_req_o(wide_in_iwc_0_req),
+      .mst_resp_i(wide_in_iwc_0_rsp)
+  );
+  axi_a48_d512_i3_u0_req_t  wide_out_0_req;
+  axi_a48_d512_i3_u0_resp_t wide_out_0_rsp;
+
+  assign wide_xbar_quadrant_s1_in_req[WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_0] = wide_out_0_req;
+  assign wide_out_0_rsp = wide_xbar_quadrant_s1_in_rsp[WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_0];
+
+
+
+
 
   logic [9:0] hart_base_id_0;
   assign hart_base_id_0 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 0 * NrCoresCluster;
@@ -952,14 +674,14 @@ module occamy_quadrant_s1
       .msip_i(msip_i[0*NrCoresCluster+:NrCoresCluster]),
       .hart_base_id_i(hart_base_id_0),
       .cluster_base_addr_i(cluster_base_addr[0]),
-      .narrow_in_req_i(narrow_sub_req[0][0]),
-      .narrow_in_resp_o(narrow_sub_rsp[0][0]),
-      .narrow_out_req_o(narrow_man_req[0][0]),
-      .narrow_out_resp_i(narrow_man_rsp[0][0]),
-      .wide_out_req_o(wide_man_req[0][0]),
-      .wide_out_resp_i(wide_man_rsp[0][0]),
-      .wide_in_req_i(wide_sub_req[0][0]),
-      .wide_in_resp_o(wide_sub_rsp[0][0]),
+      .narrow_in_req_i(narrow_in_iwc_0_req),
+      .narrow_in_resp_o(narrow_in_iwc_0_rsp),
+      .narrow_out_req_o(narrow_out_0_req),
+      .narrow_out_resp_i(narrow_out_0_rsp),
+      .wide_out_req_o(wide_out_0_req),
+      .wide_out_resp_i(wide_out_0_rsp),
+      .wide_in_req_i(wide_in_iwc_0_req),
+      .wide_in_resp_o(wide_in_iwc_0_rsp),
       .sram_cfgs_i(sram_cfg_i.cluster)
   );
 
@@ -967,6 +689,61 @@ module occamy_quadrant_s1
   ///////////////
   // Cluster 1 //
   ///////////////
+  axi_a48_d64_i2_u5_req_t  narrow_in_iwc_1_req;
+  axi_a48_d64_i2_u5_resp_t narrow_in_iwc_1_rsp;
+
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(7),
+      .AxiSlvPortMaxUniqIds(4),
+      .AxiMaxTxnsPerId(4),
+      .AxiMstPortIdWidth(2),
+      .slv_req_t(axi_a48_d64_i7_u5_req_t),
+      .slv_resp_t(axi_a48_d64_i7_u5_resp_t),
+      .mst_req_t(axi_a48_d64_i2_u5_req_t),
+      .mst_resp_t(axi_a48_d64_i2_u5_resp_t)
+  ) i_narrow_in_iwc_1 (
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(narrow_xbar_quadrant_s1_out_req[NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_1]),
+      .slv_resp_o(narrow_xbar_quadrant_s1_out_rsp[NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_1]),
+      .mst_req_o(narrow_in_iwc_1_req),
+      .mst_resp_i(narrow_in_iwc_1_rsp)
+  );
+  axi_a48_d64_i4_u5_req_t  narrow_out_1_req;
+  axi_a48_d64_i4_u5_resp_t narrow_out_1_rsp;
+
+  assign narrow_xbar_quadrant_s1_in_req[NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_1] = narrow_out_1_req;
+  assign narrow_out_1_rsp = narrow_xbar_quadrant_s1_in_rsp[NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_1];
+
+  axi_a48_d512_i1_u0_req_t  wide_in_iwc_1_req;
+  axi_a48_d512_i1_u0_resp_t wide_in_iwc_1_rsp;
+
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(6),
+      .AxiSlvPortMaxUniqIds(2),
+      .AxiMaxTxnsPerId(32),
+      .AxiMstPortIdWidth(1),
+      .slv_req_t(axi_a48_d512_i6_u0_req_t),
+      .slv_resp_t(axi_a48_d512_i6_u0_resp_t),
+      .mst_req_t(axi_a48_d512_i1_u0_req_t),
+      .mst_resp_t(axi_a48_d512_i1_u0_resp_t)
+  ) i_wide_in_iwc_1 (
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(wide_xbar_quadrant_s1_out_req[WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_1]),
+      .slv_resp_o(wide_xbar_quadrant_s1_out_rsp[WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_1]),
+      .mst_req_o(wide_in_iwc_1_req),
+      .mst_resp_i(wide_in_iwc_1_rsp)
+  );
+  axi_a48_d512_i3_u0_req_t  wide_out_1_req;
+  axi_a48_d512_i3_u0_resp_t wide_out_1_rsp;
+
+  assign wide_xbar_quadrant_s1_in_req[WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_1] = wide_out_1_req;
+  assign wide_out_1_rsp = wide_xbar_quadrant_s1_in_rsp[WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_1];
+
+
+
+
 
   logic [9:0] hart_base_id_1;
   assign hart_base_id_1 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 1 * NrCoresCluster;
@@ -979,14 +756,14 @@ module occamy_quadrant_s1
       .msip_i(msip_i[1*NrCoresCluster+:NrCoresCluster]),
       .hart_base_id_i(hart_base_id_1),
       .cluster_base_addr_i(cluster_base_addr[1]),
-      .narrow_in_req_i(narrow_sub_req[1][0]),
-      .narrow_in_resp_o(narrow_sub_rsp[1][0]),
-      .narrow_out_req_o(narrow_man_req[1][0]),
-      .narrow_out_resp_i(narrow_man_rsp[1][0]),
-      .wide_out_req_o(wide_man_req[1][0]),
-      .wide_out_resp_i(wide_man_rsp[1][0]),
-      .wide_in_req_i(wide_sub_req[1][0]),
-      .wide_in_resp_o(wide_sub_rsp[1][0]),
+      .narrow_in_req_i(narrow_in_iwc_1_req),
+      .narrow_in_resp_o(narrow_in_iwc_1_rsp),
+      .narrow_out_req_o(narrow_out_1_req),
+      .narrow_out_resp_i(narrow_out_1_rsp),
+      .wide_out_req_o(wide_out_1_req),
+      .wide_out_resp_i(wide_out_1_rsp),
+      .wide_in_req_i(wide_in_iwc_1_req),
+      .wide_in_resp_o(wide_in_iwc_1_rsp),
       .sram_cfgs_i(sram_cfg_i.cluster)
   );
 
@@ -994,6 +771,61 @@ module occamy_quadrant_s1
   ///////////////
   // Cluster 2 //
   ///////////////
+  axi_a48_d64_i2_u5_req_t  narrow_in_iwc_2_req;
+  axi_a48_d64_i2_u5_resp_t narrow_in_iwc_2_rsp;
+
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(7),
+      .AxiSlvPortMaxUniqIds(4),
+      .AxiMaxTxnsPerId(4),
+      .AxiMstPortIdWidth(2),
+      .slv_req_t(axi_a48_d64_i7_u5_req_t),
+      .slv_resp_t(axi_a48_d64_i7_u5_resp_t),
+      .mst_req_t(axi_a48_d64_i2_u5_req_t),
+      .mst_resp_t(axi_a48_d64_i2_u5_resp_t)
+  ) i_narrow_in_iwc_2 (
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(narrow_xbar_quadrant_s1_out_req[NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_2]),
+      .slv_resp_o(narrow_xbar_quadrant_s1_out_rsp[NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_2]),
+      .mst_req_o(narrow_in_iwc_2_req),
+      .mst_resp_i(narrow_in_iwc_2_rsp)
+  );
+  axi_a48_d64_i4_u5_req_t  narrow_out_2_req;
+  axi_a48_d64_i4_u5_resp_t narrow_out_2_rsp;
+
+  assign narrow_xbar_quadrant_s1_in_req[NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_2] = narrow_out_2_req;
+  assign narrow_out_2_rsp = narrow_xbar_quadrant_s1_in_rsp[NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_2];
+
+  axi_a48_d512_i1_u0_req_t  wide_in_iwc_2_req;
+  axi_a48_d512_i1_u0_resp_t wide_in_iwc_2_rsp;
+
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(6),
+      .AxiSlvPortMaxUniqIds(2),
+      .AxiMaxTxnsPerId(32),
+      .AxiMstPortIdWidth(1),
+      .slv_req_t(axi_a48_d512_i6_u0_req_t),
+      .slv_resp_t(axi_a48_d512_i6_u0_resp_t),
+      .mst_req_t(axi_a48_d512_i1_u0_req_t),
+      .mst_resp_t(axi_a48_d512_i1_u0_resp_t)
+  ) i_wide_in_iwc_2 (
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(wide_xbar_quadrant_s1_out_req[WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_2]),
+      .slv_resp_o(wide_xbar_quadrant_s1_out_rsp[WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_2]),
+      .mst_req_o(wide_in_iwc_2_req),
+      .mst_resp_i(wide_in_iwc_2_rsp)
+  );
+  axi_a48_d512_i3_u0_req_t  wide_out_2_req;
+  axi_a48_d512_i3_u0_resp_t wide_out_2_rsp;
+
+  assign wide_xbar_quadrant_s1_in_req[WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_2] = wide_out_2_req;
+  assign wide_out_2_rsp = wide_xbar_quadrant_s1_in_rsp[WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_2];
+
+
+
+
 
   logic [9:0] hart_base_id_2;
   assign hart_base_id_2 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 2 * NrCoresCluster;
@@ -1006,14 +838,14 @@ module occamy_quadrant_s1
       .msip_i(msip_i[2*NrCoresCluster+:NrCoresCluster]),
       .hart_base_id_i(hart_base_id_2),
       .cluster_base_addr_i(cluster_base_addr[2]),
-      .narrow_in_req_i(narrow_sub_req[2][0]),
-      .narrow_in_resp_o(narrow_sub_rsp[2][0]),
-      .narrow_out_req_o(narrow_man_req[2][0]),
-      .narrow_out_resp_i(narrow_man_rsp[2][0]),
-      .wide_out_req_o(wide_man_req[2][0]),
-      .wide_out_resp_i(wide_man_rsp[2][0]),
-      .wide_in_req_i(wide_sub_req[2][0]),
-      .wide_in_resp_o(wide_sub_rsp[2][0]),
+      .narrow_in_req_i(narrow_in_iwc_2_req),
+      .narrow_in_resp_o(narrow_in_iwc_2_rsp),
+      .narrow_out_req_o(narrow_out_2_req),
+      .narrow_out_resp_i(narrow_out_2_rsp),
+      .wide_out_req_o(wide_out_2_req),
+      .wide_out_resp_i(wide_out_2_rsp),
+      .wide_in_req_i(wide_in_iwc_2_req),
+      .wide_in_resp_o(wide_in_iwc_2_rsp),
       .sram_cfgs_i(sram_cfg_i.cluster)
   );
 
@@ -1021,6 +853,61 @@ module occamy_quadrant_s1
   ///////////////
   // Cluster 3 //
   ///////////////
+  axi_a48_d64_i2_u5_req_t  narrow_in_iwc_3_req;
+  axi_a48_d64_i2_u5_resp_t narrow_in_iwc_3_rsp;
+
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(7),
+      .AxiSlvPortMaxUniqIds(4),
+      .AxiMaxTxnsPerId(4),
+      .AxiMstPortIdWidth(2),
+      .slv_req_t(axi_a48_d64_i7_u5_req_t),
+      .slv_resp_t(axi_a48_d64_i7_u5_resp_t),
+      .mst_req_t(axi_a48_d64_i2_u5_req_t),
+      .mst_resp_t(axi_a48_d64_i2_u5_resp_t)
+  ) i_narrow_in_iwc_3 (
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(narrow_xbar_quadrant_s1_out_req[NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_3]),
+      .slv_resp_o(narrow_xbar_quadrant_s1_out_rsp[NARROW_XBAR_QUADRANT_S1_OUT_CLUSTER_3]),
+      .mst_req_o(narrow_in_iwc_3_req),
+      .mst_resp_i(narrow_in_iwc_3_rsp)
+  );
+  axi_a48_d64_i4_u5_req_t  narrow_out_3_req;
+  axi_a48_d64_i4_u5_resp_t narrow_out_3_rsp;
+
+  assign narrow_xbar_quadrant_s1_in_req[NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_3] = narrow_out_3_req;
+  assign narrow_out_3_rsp = narrow_xbar_quadrant_s1_in_rsp[NARROW_XBAR_QUADRANT_S1_IN_CLUSTER_3];
+
+  axi_a48_d512_i1_u0_req_t  wide_in_iwc_3_req;
+  axi_a48_d512_i1_u0_resp_t wide_in_iwc_3_rsp;
+
+  axi_id_remap #(
+      .AxiSlvPortIdWidth(6),
+      .AxiSlvPortMaxUniqIds(2),
+      .AxiMaxTxnsPerId(32),
+      .AxiMstPortIdWidth(1),
+      .slv_req_t(axi_a48_d512_i6_u0_req_t),
+      .slv_resp_t(axi_a48_d512_i6_u0_resp_t),
+      .mst_req_t(axi_a48_d512_i1_u0_req_t),
+      .mst_resp_t(axi_a48_d512_i1_u0_resp_t)
+  ) i_wide_in_iwc_3 (
+      .clk_i(clk_quadrant),
+      .rst_ni(rst_quadrant_n),
+      .slv_req_i(wide_xbar_quadrant_s1_out_req[WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_3]),
+      .slv_resp_o(wide_xbar_quadrant_s1_out_rsp[WIDE_XBAR_QUADRANT_S1_OUT_CLUSTER_3]),
+      .mst_req_o(wide_in_iwc_3_req),
+      .mst_resp_i(wide_in_iwc_3_rsp)
+  );
+  axi_a48_d512_i3_u0_req_t  wide_out_3_req;
+  axi_a48_d512_i3_u0_resp_t wide_out_3_rsp;
+
+  assign wide_xbar_quadrant_s1_in_req[WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_3] = wide_out_3_req;
+  assign wide_out_3_rsp = wide_xbar_quadrant_s1_in_rsp[WIDE_XBAR_QUADRANT_S1_IN_CLUSTER_3];
+
+
+
+
 
   logic [9:0] hart_base_id_3;
   assign hart_base_id_3 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 3 * NrCoresCluster;
@@ -1033,338 +920,14 @@ module occamy_quadrant_s1
       .msip_i(msip_i[3*NrCoresCluster+:NrCoresCluster]),
       .hart_base_id_i(hart_base_id_3),
       .cluster_base_addr_i(cluster_base_addr[3]),
-      .narrow_in_req_i(narrow_sub_req[3][0]),
-      .narrow_in_resp_o(narrow_sub_rsp[3][0]),
-      .narrow_out_req_o(narrow_man_req[3][0]),
-      .narrow_out_resp_i(narrow_man_rsp[3][0]),
-      .wide_out_req_o(wide_man_req[3][0]),
-      .wide_out_resp_i(wide_man_rsp[3][0]),
-      .wide_in_req_i(wide_sub_req[3][0]),
-      .wide_in_resp_o(wide_sub_rsp[3][0]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 4 //
-  ///////////////
-
-  logic [9:0] hart_base_id_4;
-  assign hart_base_id_4 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 4 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_4 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[4*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[4*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[4*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_4),
-      .cluster_base_addr_i(cluster_base_addr[4]),
-      .narrow_in_req_i(narrow_sub_req[0][1]),
-      .narrow_in_resp_o(narrow_sub_rsp[0][1]),
-      .narrow_out_req_o(narrow_man_req[0][1]),
-      .narrow_out_resp_i(narrow_man_rsp[0][1]),
-      .wide_out_req_o(wide_man_req[0][1]),
-      .wide_out_resp_i(wide_man_rsp[0][1]),
-      .wide_in_req_i(wide_sub_req[0][1]),
-      .wide_in_resp_o(wide_sub_rsp[0][1]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 5 //
-  ///////////////
-
-  logic [9:0] hart_base_id_5;
-  assign hart_base_id_5 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 5 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_5 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[5*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[5*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[5*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_5),
-      .cluster_base_addr_i(cluster_base_addr[5]),
-      .narrow_in_req_i(narrow_sub_req[1][1]),
-      .narrow_in_resp_o(narrow_sub_rsp[1][1]),
-      .narrow_out_req_o(narrow_man_req[1][1]),
-      .narrow_out_resp_i(narrow_man_rsp[1][1]),
-      .wide_out_req_o(wide_man_req[1][1]),
-      .wide_out_resp_i(wide_man_rsp[1][1]),
-      .wide_in_req_i(wide_sub_req[1][1]),
-      .wide_in_resp_o(wide_sub_rsp[1][1]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 6 //
-  ///////////////
-
-  logic [9:0] hart_base_id_6;
-  assign hart_base_id_6 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 6 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_6 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[6*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[6*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[6*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_6),
-      .cluster_base_addr_i(cluster_base_addr[6]),
-      .narrow_in_req_i(narrow_sub_req[2][1]),
-      .narrow_in_resp_o(narrow_sub_rsp[2][1]),
-      .narrow_out_req_o(narrow_man_req[2][1]),
-      .narrow_out_resp_i(narrow_man_rsp[2][1]),
-      .wide_out_req_o(wide_man_req[2][1]),
-      .wide_out_resp_i(wide_man_rsp[2][1]),
-      .wide_in_req_i(wide_sub_req[2][1]),
-      .wide_in_resp_o(wide_sub_rsp[2][1]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 7 //
-  ///////////////
-
-  logic [9:0] hart_base_id_7;
-  assign hart_base_id_7 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 7 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_7 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[7*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[7*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[7*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_7),
-      .cluster_base_addr_i(cluster_base_addr[7]),
-      .narrow_in_req_i(narrow_sub_req[3][1]),
-      .narrow_in_resp_o(narrow_sub_rsp[3][1]),
-      .narrow_out_req_o(narrow_man_req[3][1]),
-      .narrow_out_resp_i(narrow_man_rsp[3][1]),
-      .wide_out_req_o(wide_man_req[3][1]),
-      .wide_out_resp_i(wide_man_rsp[3][1]),
-      .wide_in_req_i(wide_sub_req[3][1]),
-      .wide_in_resp_o(wide_sub_rsp[3][1]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 8 //
-  ///////////////
-
-  logic [9:0] hart_base_id_8;
-  assign hart_base_id_8 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 8 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_8 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[8*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[8*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[8*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_8),
-      .cluster_base_addr_i(cluster_base_addr[8]),
-      .narrow_in_req_i(narrow_sub_req[0][2]),
-      .narrow_in_resp_o(narrow_sub_rsp[0][2]),
-      .narrow_out_req_o(narrow_man_req[0][2]),
-      .narrow_out_resp_i(narrow_man_rsp[0][2]),
-      .wide_out_req_o(wide_man_req[0][2]),
-      .wide_out_resp_i(wide_man_rsp[0][2]),
-      .wide_in_req_i(wide_sub_req[0][2]),
-      .wide_in_resp_o(wide_sub_rsp[0][2]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 9 //
-  ///////////////
-
-  logic [9:0] hart_base_id_9;
-  assign hart_base_id_9 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 9 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_9 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[9*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[9*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[9*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_9),
-      .cluster_base_addr_i(cluster_base_addr[9]),
-      .narrow_in_req_i(narrow_sub_req[1][2]),
-      .narrow_in_resp_o(narrow_sub_rsp[1][2]),
-      .narrow_out_req_o(narrow_man_req[1][2]),
-      .narrow_out_resp_i(narrow_man_rsp[1][2]),
-      .wide_out_req_o(wide_man_req[1][2]),
-      .wide_out_resp_i(wide_man_rsp[1][2]),
-      .wide_in_req_i(wide_sub_req[1][2]),
-      .wide_in_resp_o(wide_sub_rsp[1][2]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 10 //
-  ///////////////
-
-  logic [9:0] hart_base_id_10;
-  assign hart_base_id_10 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 10 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_10 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[10*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[10*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[10*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_10),
-      .cluster_base_addr_i(cluster_base_addr[10]),
-      .narrow_in_req_i(narrow_sub_req[2][2]),
-      .narrow_in_resp_o(narrow_sub_rsp[2][2]),
-      .narrow_out_req_o(narrow_man_req[2][2]),
-      .narrow_out_resp_i(narrow_man_rsp[2][2]),
-      .wide_out_req_o(wide_man_req[2][2]),
-      .wide_out_resp_i(wide_man_rsp[2][2]),
-      .wide_in_req_i(wide_sub_req[2][2]),
-      .wide_in_resp_o(wide_sub_rsp[2][2]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 11 //
-  ///////////////
-
-  logic [9:0] hart_base_id_11;
-  assign hart_base_id_11 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 11 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_11 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[11*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[11*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[11*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_11),
-      .cluster_base_addr_i(cluster_base_addr[11]),
-      .narrow_in_req_i(narrow_sub_req[3][2]),
-      .narrow_in_resp_o(narrow_sub_rsp[3][2]),
-      .narrow_out_req_o(narrow_man_req[3][2]),
-      .narrow_out_resp_i(narrow_man_rsp[3][2]),
-      .wide_out_req_o(wide_man_req[3][2]),
-      .wide_out_resp_i(wide_man_rsp[3][2]),
-      .wide_in_req_i(wide_sub_req[3][2]),
-      .wide_in_resp_o(wide_sub_rsp[3][2]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 12 //
-  ///////////////
-
-  logic [9:0] hart_base_id_12;
-  assign hart_base_id_12 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 12 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_12 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[12*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[12*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[12*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_12),
-      .cluster_base_addr_i(cluster_base_addr[12]),
-      .narrow_in_req_i(narrow_sub_req[0][3]),
-      .narrow_in_resp_o(narrow_sub_rsp[0][3]),
-      .narrow_out_req_o(narrow_man_req[0][3]),
-      .narrow_out_resp_i(narrow_man_rsp[0][3]),
-      .wide_out_req_o(wide_man_req[0][3]),
-      .wide_out_resp_i(wide_man_rsp[0][3]),
-      .wide_in_req_i(wide_sub_req[0][3]),
-      .wide_in_resp_o(wide_sub_rsp[0][3]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 13 //
-  ///////////////
-
-  logic [9:0] hart_base_id_13;
-  assign hart_base_id_13 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 13 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_13 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[13*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[13*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[13*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_13),
-      .cluster_base_addr_i(cluster_base_addr[13]),
-      .narrow_in_req_i(narrow_sub_req[1][3]),
-      .narrow_in_resp_o(narrow_sub_rsp[1][3]),
-      .narrow_out_req_o(narrow_man_req[1][3]),
-      .narrow_out_resp_i(narrow_man_rsp[1][3]),
-      .wide_out_req_o(wide_man_req[1][3]),
-      .wide_out_resp_i(wide_man_rsp[1][3]),
-      .wide_in_req_i(wide_sub_req[1][3]),
-      .wide_in_resp_o(wide_sub_rsp[1][3]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 14 //
-  ///////////////
-
-  logic [9:0] hart_base_id_14;
-  assign hart_base_id_14 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 14 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_14 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[14*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[14*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[14*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_14),
-      .cluster_base_addr_i(cluster_base_addr[14]),
-      .narrow_in_req_i(narrow_sub_req[2][3]),
-      .narrow_in_resp_o(narrow_sub_rsp[2][3]),
-      .narrow_out_req_o(narrow_man_req[2][3]),
-      .narrow_out_resp_i(narrow_man_rsp[2][3]),
-      .wide_out_req_o(wide_man_req[2][3]),
-      .wide_out_resp_i(wide_man_rsp[2][3]),
-      .wide_in_req_i(wide_sub_req[2][3]),
-      .wide_in_resp_o(wide_sub_rsp[2][3]),
-      .sram_cfgs_i(sram_cfg_i.cluster)
-  );
-
-
-  ///////////////
-  // Cluster 15 //
-  ///////////////
-
-  logic [9:0] hart_base_id_15;
-  assign hart_base_id_15 = HartIdOffset + tile_id_i * NrCoresS1Quadrant + 15 * NrCoresCluster;
-
-  occamy_cluster_wrapper i_occamy_cluster_15 (
-      .clk_i(clk_quadrant),
-      .rst_ni(rst_quadrant_n),
-      .meip_i(meip_i[15*NrCoresCluster+:NrCoresCluster]),
-      .mtip_i(mtip_i[15*NrCoresCluster+:NrCoresCluster]),
-      .msip_i(msip_i[15*NrCoresCluster+:NrCoresCluster]),
-      .hart_base_id_i(hart_base_id_15),
-      .cluster_base_addr_i(cluster_base_addr[15]),
-      .narrow_in_req_i(narrow_sub_req[3][3]),
-      .narrow_in_resp_o(narrow_sub_rsp[3][3]),
-      .narrow_out_req_o(narrow_man_req[3][3]),
-      .narrow_out_resp_i(narrow_man_rsp[3][3]),
-      .wide_out_req_o(wide_man_req[3][3]),
-      .wide_out_resp_i(wide_man_rsp[3][3]),
-      .wide_in_req_i(wide_sub_req[3][3]),
-      .wide_in_resp_o(wide_sub_rsp[3][3]),
+      .narrow_in_req_i(narrow_in_iwc_3_req),
+      .narrow_in_resp_o(narrow_in_iwc_3_rsp),
+      .narrow_out_req_o(narrow_out_3_req),
+      .narrow_out_resp_i(narrow_out_3_rsp),
+      .wide_out_req_o(wide_out_3_req),
+      .wide_out_resp_i(wide_out_3_rsp),
+      .wide_in_req_i(wide_in_iwc_3_req),
+      .wide_in_resp_o(wide_in_iwc_3_rsp),
       .sram_cfgs_i(sram_cfg_i.cluster)
   );
 

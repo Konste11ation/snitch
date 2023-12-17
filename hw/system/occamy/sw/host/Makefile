@@ -10,7 +10,7 @@ APPS += offload
 APPS += axpy
 APPS += snax-mac
 APPS += snax-mac-mc
-#APPS += snax-mac-simple/untiled
+APPS += snax-gemm
 #APPS += snax-mac-simple/tiled
 TARGET ?= all
 

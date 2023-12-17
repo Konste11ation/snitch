@@ -263,8 +263,8 @@ module occamy_cluster_wrapper (
   localparam int unsigned NumSequencerInstr [2] = '{16, 16};
   localparam int unsigned NumSsrs [2] = '{3, 1};
   localparam int unsigned SsrMuxRespDepth [2] = '{4, 4};
-  localparam int unsigned SNAX [2] = '{1, 1};
-  localparam int unsigned SnaxTcdmPorts [2] = '{4, 4};
+  localparam int unsigned SNAX [2] = '{2, 0};
+  localparam int unsigned SnaxTcdmPorts [2] = '{24, 0};
 
   // Snitch cluster under test.
   snitch_cluster #(

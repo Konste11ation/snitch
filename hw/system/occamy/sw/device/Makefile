@@ -9,6 +9,7 @@ APPS = offload
 APPS += axpy
 APPS += snax-mac
 APPS += snax-mac-mc
+APPS += snax-gemm
 TARGET ?= all
 
 APP_SUBDIRS = $(addprefix apps/,$(APPS))

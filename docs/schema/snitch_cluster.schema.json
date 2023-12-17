@@ -419,12 +419,12 @@
                                 "snax_acc": {
                                     "type": "number",
                                     "description": "Enable SNAX accelerators. Interger Coded",
-                                    "default": 1
+                                    "default": 0
                                 },  
                                 "snax_tcdm_ports": {
                                     "type": "number",
                                     "description": "Number of SNAX TCDM ports per core",
-                                    "default": 4
+                                    "default": 0
                                 },                                
                                 "num_int_outstanding_loads": {
                                     "type": "number",
