@@ -7,7 +7,7 @@
 
 #pragma once
 #include "sim.hh"
-
+#include <iostream>
 namespace sim {
 
 struct GlobalMemory {
@@ -61,8 +61,7 @@ struct GlobalMemory {
             bool any_changed = false;
             for (size_t i = byte_start; i < byte_end; i++, data_idx++) {
                 if (!strb || strb[data_idx]) {
-                    // std::cout << "[TB] Write byte " << std::hex << i << " = "
-                    // << (uint32_t)data[data_idx] << "\n";
+                    std::cerr << "[TB] Write byte " << std::hex << i << " = " << (uint32_t)data[data_idx] << "\n";
                     auto host = find_mapping(i);
                     if (host) {
                         *host = data[data_idx];

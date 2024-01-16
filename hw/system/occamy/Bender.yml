@@ -34,7 +34,7 @@ dependencies:
   clint: {git: https://github.com/pulp-platform/clint.git, rev: v0.1.0}
   hwpe-mac-engine:    { git: https://github.com/KULeuven-MICAS/hwpe-mac-engine.git, rev: 5d3b4525b665169fc8321c8a811f3c83ad3c72e8 }
   floo_noc: {git: https://github.com/Konste11ation/FlooNoC.git, rev: ee0a2770a874a09da1a18c5e0a5e1253c471d393}
-  snax-gemm: {git: https://github.com/KULeuven-MICAS/snax-gemm.git, rev: 7e04484633da28513bdbe96a73a86a8476f69da4}
+  snax-gemm: {git: https://github.com/KULeuven-MICAS/snax-gemm.git, rev: fa2e02519312f681a1f4b4abe42d94d83a589aad}
 sources:
   # Level 0:
   - src/occamy_cluster_wrapper.sv

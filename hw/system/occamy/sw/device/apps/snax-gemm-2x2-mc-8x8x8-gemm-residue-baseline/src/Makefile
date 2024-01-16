@@ -1,0 +1,20 @@
+# Usage of absolute paths is required to externally include this Makefile
+MK_DIR   := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+SRC_DIR := $(realpath $(MK_DIR))
+CFG_DIR = $(SRC_DIR)/../cfg
+CODE_CFG ?= $(CFG_DIR)/gemm_mc_params.hjson
+
+CODE = $(SRC_DIR)/snax-gemm-2x2-mc-8x8x8-gemm-residue-baseline.c
+
+$(CODE): $(SRC_DIR)/gemmgen.py $(CODE_CFG)
+	$< -c $(CODE_CFG) > $@
+
+.PHONY: clean-code clean
+
+gen-code: $(CODE) FORCE
+FORCE: 
+
+clean-code:
+	rm -f $(CODE)
+
+clean: clean-code

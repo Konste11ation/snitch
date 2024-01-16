@@ -50,6 +50,7 @@ void Sim::start() {
               nullptr);
     std::cerr << "Wrote " << bdlen << " bytes of bootdata to 0x" << std::hex
               << bdp << "\n";
+    std::cerr << "DEBUG: TEST TO PRINT" << "\n";
 }
 
 void Sim::read_chunk(addr_t taddr, size_t len, void *dst) {

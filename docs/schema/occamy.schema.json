@@ -321,6 +321,16 @@
                     "default": 0,
                     "description": "Enable the FlooNoC inside an S1 quadrant. 0 means using xbar"
                 },
+                "noc_x_num": {
+                    "type": "integer",
+                    "default": 2,
+                    "description": "Number of clusters in a row of NoC."
+                },
+                "noc_y_num": {
+                    "type": "integer",
+                    "default": 2,
+                    "description": "Number of clusters in a col of NoC."
+                },
                 "ro_cache_cfg": {
                     "type": "object",
                     "description": "Constant cache configuration.",
